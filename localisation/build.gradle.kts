@@ -10,42 +10,24 @@ plugins {
 
 kotlin {
     androidLibrary {
-        namespace = libs.versions.namespace.get() + ".shared"
+        namespace = libs.versions.namespace.get() + ".localisation"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
-        androidResources {
-            enable = true
-        }
     }
-    
+
     jvm()
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
         implementation(libs.compose.runtime)
-        implementation(libs.compose.foundation)
-        implementation(libs.compose.ui)
         implementation(libs.compose.components.resources)
-        implementation(libs.compose.uiToolingPreview)
-        implementation(libs.androidx.lifecycle.viewmodelCompose)
-        implementation(libs.androidx.lifecycle.runtimeCompose)
-
-        implementation(libs.kotlinx.datetime)
-    }
-
-    sourceSets {
-        all {
-            languageSettings {
-                optIn("kotlin.time.ExperimentalTime")
-            }
-        }
     }
 }
 
-dependencies {
-    androidRuntimeClasspath(libs.compose.uiTooling)
+compose.resources {
+    publicResClass = true
 }
