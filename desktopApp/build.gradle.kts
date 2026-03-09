@@ -8,7 +8,7 @@ plugins {
 
 kotlin {
     dependencies {
-        implementation(projects.shared)
+        implementation(projects.host)
         implementation(projects.localisation)
 
         implementation(compose.desktop.currentOs)

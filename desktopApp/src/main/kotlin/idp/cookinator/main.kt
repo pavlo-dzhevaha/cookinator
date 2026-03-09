@@ -4,6 +4,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import cookinator.localisation.generated.resources.Res
 import cookinator.localisation.generated.resources.app_name
+import idp.cookinator.host.App
 import org.jetbrains.compose.resources.stringResource
 
 fun main() = application {

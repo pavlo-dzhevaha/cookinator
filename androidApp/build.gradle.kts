@@ -14,7 +14,7 @@ kotlin {
     }
 
     dependencies {
-        implementation(projects.shared)
+        implementation(projects.host)
         implementation(projects.localisation)
         implementation(libs.androidx.activity.compose)
         implementation(libs.compose.uiToolingPreview)

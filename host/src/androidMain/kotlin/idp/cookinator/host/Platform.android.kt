@@ -1,4 +1,4 @@
-package idp.cookinator
+package idp.cookinator.host
 
 import android.os.Build
 

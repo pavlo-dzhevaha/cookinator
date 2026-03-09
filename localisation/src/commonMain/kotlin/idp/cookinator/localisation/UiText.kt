@@ -21,7 +21,7 @@ sealed interface UiText {
 
         fun StringResource.asUiText(vararg args: Any) = Resource(this, args.toList())
 
-        fun String.asUiText() = Dynamic(this)
+        fun String?.asUiText() = this?.let { Dynamic(this) }.orEmpty()
 
         fun UiText?.orEmpty() = this ?: Empty
     }
