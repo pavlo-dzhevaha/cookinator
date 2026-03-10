@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -30,24 +31,11 @@ kotlin {
         implementation(libs.compose.foundation)
         implementation(libs.compose.ui)
         implementation(libs.compose.material3)
-        implementation(libs.compose.components.resources)
-        implementation(libs.compose.uiToolingPreview)
-        implementation(libs.androidx.lifecycle.viewmodelCompose)
         implementation(libs.androidx.lifecycle.runtimeCompose)
-        implementation(libs.kotlinx.datetime)
+        implementation(libs.androidx.navigation3.ui)
 
         implementation(projects.coreUi)
+        implementation(projects.navigation)
+        implementation(projects.featureOnboarding)
     }
-
-    sourceSets {
-        all {
-            languageSettings {
-                optIn("kotlin.time.ExperimentalTime")
-            }
-        }
-    }
-}
-
-dependencies {
-    androidRuntimeClasspath(libs.compose.uiTooling)
 }
