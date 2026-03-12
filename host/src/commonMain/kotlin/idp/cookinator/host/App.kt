@@ -16,9 +16,10 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
-import idp.cookinator.coreui.styling.Theme
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.styling.theme.ThemeStyle
+import idp.cookinator.feature.navigation.extension.navigate
 import idp.cookinator.feature.navigation.features.NavigationOnboarding
 import idp.cookinator.feature.navigation.features.featureOnboardingSerializer
 import idp.cookinator.feature.onboarding.navigation.graph
@@ -92,8 +93,10 @@ private fun TestUi(
             )
             Button(
                 onClick = {
-                    backStack.clear()
-                    backStack.add(NavigationOnboarding.Welcome)
+                    backStack.navigate(
+                        key = NavigationOnboarding.Welcome,
+                        clearBackStack = true,
+                    )
                 },
             ) {
                 Text("Go to onboarding")

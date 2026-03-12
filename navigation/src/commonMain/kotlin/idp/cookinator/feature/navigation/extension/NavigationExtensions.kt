@@ -20,3 +20,20 @@ fun NavBackStack<NavKey>.navigateUp(): NavKey? = when {
     size > 1 -> removeLastOrNull()
     else -> null
 }
+
+/**
+ * Navigates to the specified [NavKey] by adding it to the end of the [NavBackStack].
+ */
+fun NavBackStack<NavKey>.replace(key: NavKey) {
+    set(lastIndex, key)
+}
+
+fun NavBackStack<NavKey>.navigate(
+    key: NavKey,
+    clearBackStack: Boolean = false,
+) {
+    if (clearBackStack) {
+        clear()
+    }
+    add(key)
+}

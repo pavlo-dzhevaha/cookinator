@@ -1,4 +1,4 @@
-package idp.cookinator.coreui.styling
+package idp.cookinator.coreui.styling.theme
 
 import androidx.compose.runtime.Composable
 import idp.cookinator.coreui.styling.attribute.ThemeColor
@@ -7,6 +7,9 @@ import idp.cookinator.coreui.styling.attribute.ThemeTypography
 import idp.cookinator.coreui.styling.provider.LocalThemeColor
 import idp.cookinator.coreui.styling.provider.LocalThemeSize
 import idp.cookinator.coreui.styling.provider.LocalThemeTypography
+import idp.cookinator.coreui.styling.theme.Theme.color
+import idp.cookinator.coreui.styling.theme.Theme.size
+import idp.cookinator.coreui.styling.theme.Theme.typography
 
 /**
  * Provides access to the theme properties, allowing for consistent styling across the application.

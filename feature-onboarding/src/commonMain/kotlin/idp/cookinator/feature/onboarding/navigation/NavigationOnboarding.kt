@@ -10,13 +10,23 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
+import idp.cookinator.feature.navigation.extension.navigate
 import idp.cookinator.feature.navigation.extension.navigateUp
 import idp.cookinator.feature.navigation.features.NavigationOnboarding
+import idp.cookinator.feature.onboarding.screen.welcome.WelcomeScreen
 
 fun NavigationOnboarding.graph(
     backStack: NavBackStack<NavKey>,
 ): NavEntry<NavKey> = when (this) {
     NavigationOnboarding.Welcome -> NavEntry(this) {
+        WelcomeScreen(
+            onStartTutorial = {
+                backStack.navigate(NavigationOnboarding.Tutorial)
+            },
+        )
+    }
+
+    NavigationOnboarding.Tutorial -> NavEntry(this) {
         Box(
             modifier = Modifier
                 .fillMaxSize(),
@@ -25,17 +35,13 @@ fun NavigationOnboarding.graph(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text("Welcome to Onboarding!")
+                Text("Welcome to Tutorial!")
                 Button(
                     onClick = { backStack.navigateUp() },
                 ) {
-                    Text("Go Back")
+                    Text("Go Back if possible")
                 }
             }
         }
-    }
-
-    NavigationOnboarding.Tutorial -> NavEntry(this) {
-        // TODO implement tutorial screen
     }
 }

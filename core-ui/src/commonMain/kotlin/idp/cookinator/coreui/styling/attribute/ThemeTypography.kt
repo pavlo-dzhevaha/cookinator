@@ -13,10 +13,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import cookinator.core_ui.generated.resources.Poppins_Bold
 import cookinator.core_ui.generated.resources.Poppins_Regular
+import cookinator.core_ui.generated.resources.Poppins_SemiBold
 import cookinator.core_ui.generated.resources.Res
-import idp.cookinator.coreui.styling.Theme
+import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.styling.theme.AppTheme
 import org.jetbrains.compose.resources.Font
 
@@ -54,7 +54,7 @@ data class ThemeTextStyle(
 @Composable
 fun attributeTypography(): ThemeTypography {
     val appFontFamily = FontFamily(
-        Font(Res.font.Poppins_Bold, FontWeight.Bold),
+        Font(Res.font.Poppins_SemiBold, FontWeight.SemiBold),
         Font(Res.font.Poppins_Regular, FontWeight.Normal),
     )
 

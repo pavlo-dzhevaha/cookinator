@@ -41,6 +41,8 @@ kotlin {
         implementation(libs.kotlinx.datetime)
 
         implementation(projects.navigation)
+        implementation(projects.coreUi)
+        implementation(projects.localisation)
     }
 
     sourceSets {

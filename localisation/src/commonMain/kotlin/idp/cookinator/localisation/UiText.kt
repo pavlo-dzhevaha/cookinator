@@ -8,7 +8,7 @@ sealed interface UiText {
     data class Dynamic(val value: String) : UiText
     data class Resource(
         val resource: StringResource,
-        val args: List<Any>,
+        val args: List<Any> = emptyList(),
     ): UiText
 
     companion object {
@@ -21,8 +21,13 @@ sealed interface UiText {
 
         fun StringResource.asUiText(vararg args: Any) = Resource(this, args.toList())
 
-        fun String?.asUiText() = this?.let { Dynamic(this) }.orEmpty()
+        val StringResource.asUiText: UiText
+            get() = Resource(this)
 
-        fun UiText?.orEmpty() = this ?: Empty
+        val String?.asUiText: UiText
+            get () = this?.let { Dynamic(this) }.orEmpty
+
+        val UiText?.orEmpty : UiText
+            get() = this ?: Empty
     }
 }
