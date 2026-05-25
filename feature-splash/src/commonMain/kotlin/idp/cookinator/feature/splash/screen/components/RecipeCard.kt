@@ -27,7 +27,7 @@ internal fun RecipeCard(
                 shape = RoundedCornerShape(12.dp)
                 clip = true
             }
-            .background(color = theme.neutral.white)
+            .background(color = theme.system.white)
             // Use responsive padding based on the container size
             .padding(12.dp)
     ) {

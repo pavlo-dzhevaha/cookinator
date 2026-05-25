@@ -18,7 +18,7 @@ internal fun WelcomeScreen(
         viewModel = viewModel,
         onEvent = { event ->
             when (event) {
-                Event.Continue -> backStack.replace(NavigationHome.Home)
+                Event.Continue -> backStack.replace(NavigationHome.Host)
             }
         },
     ) { state ->

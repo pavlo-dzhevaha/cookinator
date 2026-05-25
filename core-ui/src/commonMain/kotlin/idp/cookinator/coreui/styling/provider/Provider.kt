@@ -11,5 +11,4 @@ internal val LocalThemeColor = staticCompositionLocalOf<ThemeColor> { error(ERRO
 
 internal val LocalThemeSize = staticCompositionLocalOf<ThemeSize> { error(ERROR_TEXT) }
 
-internal val LocalThemeTypography =
-    staticCompositionLocalOf<ThemeTypography> { error(ERROR_TEXT) }
+internal val LocalThemeTypography = staticCompositionLocalOf<ThemeTypography> { error(ERROR_TEXT) }

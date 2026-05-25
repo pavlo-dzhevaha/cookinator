@@ -29,7 +29,7 @@ internal class SplashScreenViewModel(
         sendEvent(
             Event.NavigateToStartDestination(
                 startDestination = when {
-                    onboardingCompleted -> NavigationHome.Home
+                    onboardingCompleted -> NavigationHome.Host
                     else -> NavigationOnboarding.Welcome
                 },
             ),

@@ -8,12 +8,13 @@ plugins {
 
 kotlin {
     dependencies {
-        implementation(projects.host)
-        implementation(projects.localisation)
-
         implementation(compose.desktop.currentOs)
         implementation(libs.kotlinx.coroutinesSwing)
         implementation(libs.compose.components.resources)
+
+        implementation(projects.host)
+        implementation(projects.localisation)
+        implementation(projects.coreUi)
     }
 }
 

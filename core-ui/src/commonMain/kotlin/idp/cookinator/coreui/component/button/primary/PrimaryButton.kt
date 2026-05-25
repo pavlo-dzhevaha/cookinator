@@ -63,7 +63,7 @@ fun PrimaryButton(
     val contentColor by animateColorAsState(
         targetValue = when {
             !enabled -> Theme.color.neutral.n50
-            else -> Theme.color.neutral.white
+            else -> Theme.color.system.white
         },
     )
 

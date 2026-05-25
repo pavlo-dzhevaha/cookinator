@@ -47,8 +47,7 @@ fun AppTheme(
         MaterialTheme(
             colorScheme = currentColorPalette.asMaterialColorScheme(),
             typography = typography.asMaterialTypography(),
-        ) {
-            content()
-        }
+            content = content,
+        )
     }
 }

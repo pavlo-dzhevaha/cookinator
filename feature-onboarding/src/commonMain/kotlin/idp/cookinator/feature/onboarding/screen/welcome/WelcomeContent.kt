@@ -77,7 +77,7 @@ internal fun WelcomeContent(
                     Icon(
                         imageVector = Icons.Star,
                         contentDescription = ContentDescription.ICON,
-                        tint = Theme.color.neutral.white,
+                        tint = Theme.color.system.white,
                         modifier = Modifier
                             .size(Theme.size.s16),
                     )
@@ -85,27 +85,27 @@ internal fun WelcomeContent(
                     Text(
                         text = stringResource(string.onboarding_hint_count),
                         style = Theme.typography.bold.p,
-                        color = Theme.color.neutral.white,
+                        color = Theme.color.system.white,
                     )
                     SpacerWidth(Theme.size.s4)
                     Text(
                         text = stringResource(string.onboarding_hint_title),
                         style = Theme.typography.regular.p,
-                        color = Theme.color.neutral.white,
+                        color = Theme.color.system.white,
                     )
                 }
                 SpacerWeight()
                 Text(
                     text = stringResource(string.onboarding_title),
                     style = Theme.typography.bold.heading,
-                    color = Theme.color.neutral.white,
+                    color = Theme.color.system.white,
                     textAlign = TextAlign.Center,
                 )
                 SpacerHeight(Theme.size.s24)
                 Text(
                     text = stringResource(string.onboarding_description),
                     style = Theme.typography.regular.p,
-                    color = Theme.color.neutral.white,
+                    color = Theme.color.system.white,
                 )
                 SpacerHeight(Theme.size.s40)
                 PrimaryButton(

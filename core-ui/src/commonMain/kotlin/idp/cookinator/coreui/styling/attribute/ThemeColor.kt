@@ -31,7 +31,6 @@ data class Neutral(
     val n30: Color,
     val n20: Color,
     val n10: Color,
-    val white: Color,
 )
 
 data class Primary(
@@ -82,7 +81,7 @@ data class System(
     val transparent: Color,
 )
 
-val attributeLightThemeColor = ThemeColor(
+internal val attributeLightThemeColor = ThemeColor(
     isLight = true,
     neutral = Neutral(
         n100 = Color(0xFF181818),
@@ -95,7 +94,6 @@ val attributeLightThemeColor = ThemeColor(
         n30 = Color(0xFFC1C1C1),
         n20 = Color(0xFFD9D9D9),
         n10 = Color(0xFFF1F1F1),
-        white = Color(0xFFFFFFFF),
     ),
     primary = Primary(
         p100 = Color(0xFF711F1F),
@@ -141,7 +139,7 @@ val attributeLightThemeColor = ThemeColor(
     )
 )
 
-val attributeDarkThemeColor = attributeLightThemeColor.copy(
+internal val attributeDarkThemeColor = attributeLightThemeColor.copy(
     isLight = false,
 )
 
@@ -151,10 +149,10 @@ fun ThemeColor.asMaterialColorScheme(): ColorScheme =
         isLight -> lightColorScheme(
             primary = primary.p100,
             primaryContainer = primary.p50,
-            background = neutral.white,
-            surface = neutral.white,
-            surfaceContainerHigh = neutral.white,
-            surfaceContainerLow = neutral.white,
+            background = system.white,
+            surface = system.white,
+            surfaceContainerHigh = system.white,
+            surfaceContainerLow = system.white,
             onSurface = neutral.n100,
             onSurfaceVariant = neutral.n90,
             error = error.e100,
@@ -163,10 +161,10 @@ fun ThemeColor.asMaterialColorScheme(): ColorScheme =
         else -> darkColorScheme(
             primary = primary.p100,
             primaryContainer = primary.p50,
-            background = neutral.white,
-            surface = neutral.white,
-            surfaceContainerHigh = neutral.white,
-            surfaceContainerLow = neutral.white,
+            background = system.white,
+            surface = system.white,
+            surfaceContainerHigh = system.white,
+            surfaceContainerLow = system.white,
             onSurface = neutral.n100,
             onSurfaceVariant = neutral.n90,
             error = error.e100,
