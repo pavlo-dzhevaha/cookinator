@@ -1,15 +1,24 @@
 package idp.cookinator.preferences
 
-import com.russhwolf.settings.Settings
+import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.coroutines.FlowSettings
 
+/**
+ * A wrapper around [FlowSettings] to provide a more convenient API for the app's specific needs.
+ */
+@OptIn(ExperimentalSettingsApi::class)
 class AppStorage(
-    private val storage: Settings,
+    private val storage: FlowSettings,
 ) {
     private val onboardingKey = "onboarding_completed"
+    private val themeStyleKey = "theme_style"
 
-    fun isOnboardingCompleted(): Boolean = storage.getBoolean(onboardingKey, false)
+    suspend fun isOnboardingCompleted(): Boolean = storage.getBoolean(onboardingKey, false)
 
-    fun setOnboardingCompleted(completed: Boolean) = storage.putBoolean(onboardingKey, completed)
+    suspend fun setOnboardingCompleted(completed: Boolean) =
+        storage.putBoolean(onboardingKey, completed)
 
-    fun clear() = storage.clear()
+    fun observeCurrentThemeStyle() = storage.getStringFlow(themeStyleKey, "")
+
+    suspend fun clear() = storage.clear()
 }

@@ -26,6 +26,7 @@ kotlin {
     dependencies {
         implementation(libs.kotlinx.datetime)
         implementation(libs.multiplatform.settings)
+        implementation(libs.multiplatform.settings.coroutines)
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)
     }
