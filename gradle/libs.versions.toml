@@ -35,13 +35,14 @@ compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-previ
 compose-uiTooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }
 kotlinx-coroutinesSwing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
-
 #DI
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-compose = { module = "io.insert-koin:koin-compose" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
 koin-core-navigation3 = { module = "io.insert-koin:koin-compose-navigation3" }
 koin-ktor = { module = "io.insert-koin:koin-ktor" }
+#Multiplatform Settings
+multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version = "1.3.0" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

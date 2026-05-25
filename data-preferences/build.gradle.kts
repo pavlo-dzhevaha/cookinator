@@ -4,14 +4,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
     androidLibrary {
-        namespace = libs.versions.namespace.get() + ".host"
+        namespace = libs.versions.namespace.get() + ".preferences"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
@@ -27,18 +24,17 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
-        implementation(libs.compose.runtime)
-        implementation(libs.compose.foundation)
-        implementation(libs.compose.ui)
-        implementation(libs.compose.material3)
-        implementation(libs.androidx.lifecycle.runtimeCompose)
-        implementation(libs.androidx.navigation3.ui)
+        implementation(libs.kotlinx.datetime)
+        implementation(libs.multiplatform.settings)
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)
+    }
 
-        implementation(projects.coreUi)
-        implementation(projects.navigation)
-        implementation(projects.featureOnboarding)
-        implementation(projects.dataPreferences)
+    sourceSets {
+        all {
+            languageSettings {
+                optIn("kotlin.time.ExperimentalTime")
+            }
+        }
     }
 }

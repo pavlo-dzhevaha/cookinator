@@ -15,8 +15,8 @@ fun NavigationOnboarding.graph(
     backStack: NavBackStack<NavKey>,
 ): NavEntry<NavKey> = when (this) {
     NavigationOnboarding.Welcome -> NavEntry(this) {
-        val viewModel: WelcomeScreenViewModel = koinInject<WelcomeScreenViewModel>()
-        val state by viewModel.collectState()
+        val viewModel = koinInject<WelcomeScreenViewModel>()
+        val state by viewModel.collectStateWithLifecycle()
         val scope = rememberCoroutineScope()
         WelcomeScreen(
             state = state,
