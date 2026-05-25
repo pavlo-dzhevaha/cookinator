@@ -5,6 +5,8 @@ import com.russhwolf.settings.coroutines.FlowSettings
 
 /**
  * A wrapper around [FlowSettings] to provide a more convenient API for the app's specific needs.
+ *
+ * TODO internal impl with public interface
  */
 @OptIn(ExperimentalSettingsApi::class)
 class AppStorage(

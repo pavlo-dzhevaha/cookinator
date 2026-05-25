@@ -35,16 +35,16 @@ import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.utils.ContentDescription
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.Star
-import idp.cookinator.feature.onboarding.screen.welcome.contract.WelcomeScreenIntent
-import idp.cookinator.feature.onboarding.screen.welcome.contract.WelcomeScreenState
+import idp.cookinator.feature.onboarding.screen.welcome.contract.Intent
+import idp.cookinator.feature.onboarding.screen.welcome.contract.State
 import idp.cookinator.localisation.UiText.Companion.asUiText
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun WelcomeContent(
-    state: WelcomeScreenState,
-    onIntent: (WelcomeScreenIntent) -> Unit,
+internal fun WelcomeContent(
+    state: State,
+    onIntent: (Intent) -> Unit,
 ) {
     Scaffold(
         contentWindowInsets = WindowInsets(),
@@ -112,7 +112,7 @@ fun WelcomeContent(
                     text = string.onboarding_button.asUiText,
                     hasIcon = true,
                     loading = state.isLoading,
-                ) { onIntent(WelcomeScreenIntent.OnContinue) }
+                ) { onIntent(Intent.OnContinue) }
             }
         }
     }
@@ -122,7 +122,7 @@ fun WelcomeContent(
 @Composable
 private fun Preview() = AppTheme {
     WelcomeContent(
-        state = WelcomeScreenState.initial,
+        state = State.initial,
         onIntent = {},
     )
 }

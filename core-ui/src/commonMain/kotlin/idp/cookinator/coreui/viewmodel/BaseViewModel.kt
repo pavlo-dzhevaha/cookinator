@@ -90,6 +90,10 @@ abstract class BaseViewModel<S, I, E>(
 
     //region Intent management
 
+    /**
+     * An abstract function to handle intents. This should be implemented by subclasses to define
+     * how the ViewModel responds to different intents from the UI.
+     */
     abstract fun onIntent(intent: I)
 
     //endregion
@@ -109,11 +113,9 @@ abstract class BaseViewModel<S, I, E>(
      * A helper function to launch a coroutine with the crash handler. This can be used to ensure
      * that all coroutines launched from the ViewModel are properly handled for exceptions.
      */
-    protected fun launch(block: suspend () -> Unit) {
-        viewModelScope.launch(
-            context = crashHandler,
-        ) { block() }
-    }
+    protected fun launch(block: suspend () -> Unit) = viewModelScope.launch(
+        context = crashHandler,
+    ) { block() }
 
     //endregion
 

@@ -17,6 +17,7 @@ data class ThemeColor(
     val rating: Rating,
     val error: Error,
     val success: Success,
+    val system: System,
 )
 
 data class Neutral(
@@ -75,6 +76,12 @@ data class Success(
     val s10: Color,
 )
 
+data class System(
+    val black: Color,
+    val white: Color,
+    val transparent: Color,
+)
+
 val attributeLightThemeColor = ThemeColor(
     isLight = true,
     neutral = Neutral(
@@ -127,6 +134,11 @@ val attributeLightThemeColor = ThemeColor(
         s100 = Color(0xFF31B057),
         s10 = Color(0xFFEAF7EE),
     ),
+    system = System(
+        black = Color(0xFF000000),
+        white = Color(0xFFFFFFFF),
+        transparent = Color(0x00FFFFFF),
+    )
 )
 
 val attributeDarkThemeColor = attributeLightThemeColor.copy(

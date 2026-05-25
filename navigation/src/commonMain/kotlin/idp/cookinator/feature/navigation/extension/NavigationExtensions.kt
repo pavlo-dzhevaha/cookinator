@@ -28,12 +28,24 @@ fun NavBackStack<NavKey>.replace(key: NavKey) {
     set(lastIndex, key)
 }
 
+/**
+ * Navigates to the specified [NavKey] by adding it to the end of the [NavBackStack].
+ * @param clearBackStack If true, clears the back stack before navigating.
+ * @param navigateUp If true, navigates up before navigating to the new key.
+ * @throws IllegalArgumentException if both [clearBackStack] and [navigateUp] are true,
+ * as they cannot be performed simultaneously.
+ */
 fun NavBackStack<NavKey>.navigate(
     key: NavKey,
     clearBackStack: Boolean = false,
+    navigateUp: Boolean = false,
 ) {
+    assert(!(clearBackStack && navigateUp)) { "Cannot navigate up and clear back stack at the same time." }
     if (clearBackStack) {
         clear()
+    }
+    if (navigateUp) {
+        navigateUp()
     }
     add(key)
 }

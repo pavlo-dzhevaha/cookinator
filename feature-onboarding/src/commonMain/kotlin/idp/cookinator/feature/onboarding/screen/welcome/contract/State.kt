@@ -1,10 +1,10 @@
 package idp.cookinator.feature.onboarding.screen.welcome.contract
 
-data class WelcomeScreenState(
+internal data class State(
     val isLoading: Boolean,
 ) {
     companion object {
-        val initial = WelcomeScreenState(
+        val initial = State(
             isLoading = false,
         )
     }

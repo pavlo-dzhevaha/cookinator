@@ -6,11 +6,11 @@ import androidx.navigation3.runtime.NavKey
 import idp.cookinator.coreui.viewmodel.base.MviWrapper
 import idp.cookinator.feature.navigation.extension.replace
 import idp.cookinator.feature.navigation.features.NavigationHome
-import idp.cookinator.feature.onboarding.screen.welcome.contract.WelcomeScreenEvent
+import idp.cookinator.feature.onboarding.screen.welcome.contract.Event
 import org.koin.compose.koinInject
 
 @Composable
-fun WelcomeScreen(
+internal fun WelcomeScreen(
     backStack: NavBackStack<NavKey>,
     viewModel: WelcomeScreenViewModel = koinInject(),
 ) {
@@ -18,7 +18,7 @@ fun WelcomeScreen(
         viewModel = viewModel,
         onEvent = { event ->
             when (event) {
-                WelcomeScreenEvent.Continue -> backStack.replace(NavigationHome.Home)
+                Event.Continue -> backStack.replace(NavigationHome.Home)
             }
         },
     ) { state ->
