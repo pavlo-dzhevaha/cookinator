@@ -8,14 +8,14 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
 @OptIn(InternalSerializationApi::class)
-val featureOnboardingSerializer = SerializersModule {
+val featureHomeSerializer = SerializersModule {
     polymorphic(NavKey::class) {
-        screen<NavigationOnboarding.Welcome>()
+        screen<NavigationHome.Home>()
     }
 }
 
 @Serializable
-sealed interface NavigationOnboarding : NavKey {
+sealed interface NavigationHome : NavKey {
     @Serializable
-    data object Welcome : NavigationOnboarding
+    data object Home : NavigationHome
 }

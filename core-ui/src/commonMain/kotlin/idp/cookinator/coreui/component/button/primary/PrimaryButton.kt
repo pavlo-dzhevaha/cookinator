@@ -1,6 +1,10 @@
 package idp.cookinator.coreui.component.button.primary
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -14,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import idp.cookinator.coreui.component.button.core.ButtonType
@@ -40,6 +46,7 @@ fun PrimaryButton(
     style: ButtonType = ButtonType.LARGE,
     hasIcon: Boolean = false,
     enabled: Boolean = true,
+    loading: Boolean = false,
     onClick: () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -82,6 +89,14 @@ fun PrimaryButton(
         ButtonType.SMALL -> Theme.typography.bold.label
     }
 
+    val loaderSize = when (style) {
+        ButtonType.LARGE -> Theme.size.s20
+        ButtonType.SMALL -> Theme.size.s16
+    }
+    val contentAlpha by animateFloatAsState(
+        targetValue = if (loading) 0f else 1f,
+    )
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
@@ -91,7 +106,7 @@ fun PrimaryButton(
             ).clickable(
                 interactionSource = interactionSource,
                 indication = null,
-                enabled = enabled,
+                enabled = enabled && !loading,
                 role = Role.Button,
                 onClick = onClick,
             ).padding(containerPadding),
@@ -99,6 +114,8 @@ fun PrimaryButton(
         Row(
             horizontalArrangement = Arrangement.spacedBy(contentPadding),
             verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .alpha(contentAlpha),
         ) {
             Text(
                 text = text.asString,
@@ -114,6 +131,17 @@ fun PrimaryButton(
                         .size(Theme.size.s20),
                 )
             }
+        }
+        AnimatedVisibility(
+            visible = loading,
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
+            CircularProgressIndicator(
+                color = contentColor,
+                modifier = Modifier
+                    .size(loaderSize),
+            )
         }
     }
 }
@@ -195,6 +223,26 @@ private fun Preview() = AppTheme {
                 hasIcon = true,
                 style = ButtonType.SMALL,
                 enabled = false,
+            )
+        }
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(Theme.size.s40),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            PrimaryButton(
+                text = "Placeholder".asUiText,
+                onClick = {},
+                style = ButtonType.LARGE,
+                loading = true,
+            )
+            PrimaryButton(
+                text = "Placeholder".asUiText,
+                onClick = {},
+                hasIcon = true,
+                style = ButtonType.SMALL,
+                loading = true,
             )
         }
     }

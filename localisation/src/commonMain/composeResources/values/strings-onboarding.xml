@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_hint_title">Premium recipes</string>
+    <string name="onboarding_hint_count">60k+</string>
+    <string name="onboarding_title">Let’s\nCooking</string>
+    <string name="onboarding_description">Find best recipes for cooking</string>
+    <string name="onboarding_button">Start cooking</string>
+</resources>

@@ -1,3 +1,4 @@
+
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -39,6 +40,9 @@ kotlin {
         implementation(libs.androidx.lifecycle.viewmodel.navigation3)
         implementation(libs.androidx.navigation3.ui)
         implementation(libs.kotlinx.datetime)
+        implementation(platform(libs.koin.bom))
+        implementation(libs.koin.compose)
+        implementation(libs.koin.compose.viewmodel)
 
         implementation(projects.navigation)
         implementation(projects.coreUi)

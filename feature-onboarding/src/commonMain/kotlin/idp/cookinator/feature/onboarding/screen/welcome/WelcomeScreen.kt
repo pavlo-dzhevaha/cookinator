@@ -20,6 +20,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import cookinator.core_ui.generated.resources.Res
 import cookinator.core_ui.generated.resources.img_welcome
+import cookinator.localisation.generated.resources.Res.string
+import cookinator.localisation.generated.resources.onboarding_description
+import cookinator.localisation.generated.resources.onboarding_hint_count
+import cookinator.localisation.generated.resources.onboarding_hint_title
+import cookinator.localisation.generated.resources.onboarding_title
 import idp.cookinator.coreui.component.button.primary.PrimaryButton
 import idp.cookinator.coreui.component.spacer.SpacerHeight
 import idp.cookinator.coreui.component.spacer.SpacerWeight
@@ -31,10 +36,12 @@ import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.Star
 import idp.cookinator.localisation.UiText.Companion.asUiText
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun WelcomeScreen(
-    onStartTutorial: () -> Unit,
+    state: WelcomeScreenState,
+    onContinue: () -> Unit,
 ) {
     Scaffold(
         contentWindowInsets = WindowInsets(),
@@ -73,35 +80,36 @@ fun WelcomeScreen(
                     )
                     SpacerWidth(Theme.size.s8)
                     Text(
-                        text = "60k+",
+                        text = stringResource(string.onboarding_hint_count),
                         style = Theme.typography.bold.p,
                         color = Theme.color.neutral.white,
                     )
                     SpacerWidth(Theme.size.s4)
                     Text(
-                        text = "Premium recipes",
+                        text = stringResource(string.onboarding_hint_title),
                         style = Theme.typography.regular.p,
                         color = Theme.color.neutral.white,
                     )
                 }
                 SpacerWeight()
                 Text(
-                    text = "Let’s\nCooking",
+                    text = stringResource(string.onboarding_title),
                     style = Theme.typography.bold.heading,
                     color = Theme.color.neutral.white,
                     textAlign = TextAlign.Center,
                 )
                 SpacerHeight(Theme.size.s24)
                 Text(
-                    text = "Find best recipes for cooking",
+                    text = stringResource(string.onboarding_description),
                     style = Theme.typography.regular.p,
                     color = Theme.color.neutral.white,
                 )
                 SpacerHeight(Theme.size.s40)
                 PrimaryButton(
-                    text = "Start cooking".asUiText,
+                    text = string.onboarding_hint_count.asUiText,
                     hasIcon = true,
-                    onClick = onStartTutorial,
+                    loading = state.isLoading,
+                    onClick = onContinue,
                 )
             }
         }
@@ -112,6 +120,7 @@ fun WelcomeScreen(
 @Composable
 private fun Preview() = AppTheme {
     WelcomeScreen(
-        onStartTutorial = {},
+        state = WelcomeScreenState.initial,
+        onContinue = {},
     )
 }
