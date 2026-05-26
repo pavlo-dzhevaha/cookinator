@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
+import idp.cookinator.coreui.component.apptopbar.AppTopBar
 import idp.cookinator.coreui.extension.RemoveFocusWhenKeyboardHiddenEffect
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.Theme
@@ -48,15 +49,8 @@ internal fun HomeContent(
             .realImePadding(bottomBarHeight),
     ) {
         item {
-            Text(
-                "Find best recipes for cooking",
-                style = Theme.typography.bold.h4,
-                color = Theme.color.neutral.n90,
-                modifier = Modifier
-                    .padding(
-                        vertical = Theme.size.s20,
-                        horizontal = Theme.size.s20,
-                    ),
+            AppTopBar(
+                title = "Find best recipes for cooking",
             )
         }
         stickyHeader {

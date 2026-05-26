@@ -1,4 +1,4 @@
-package idp.cookinator.feature.main.screen.profile
+package idp.cookinator.feature.main.screen.notification
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,13 +12,11 @@ import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.vector.Filter
 import idp.cookinator.coreui.vector.Icons
-import idp.cookinator.feature.main.screen.profile.contract.ProfileAction
 
 @Composable
-internal fun ProfileContent(
+internal fun NotificationsContent(
     modifier: Modifier = Modifier,
     bottomBarHeight: Dp = Dp.Hairline,
-    onAction: (ProfileAction) -> Unit = {},
 ) {
     LazyColumn(
         contentPadding = PaddingValues(
@@ -29,9 +27,9 @@ internal fun ProfileContent(
     ) {
         stickyHeader {
             AppTopBar(
-                title = "My profile",
+                title = "Notifications",
                 trailingIcon = Icons.Filter,
-                onTrailingAction = { onAction(ProfileAction.GoToSettings) },
+                onTrailingAction = { /* TODO Open notifications settings */ },
             )
         }
     }
@@ -40,5 +38,5 @@ internal fun ProfileContent(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() = AppTheme {
-    ProfileContent()
+    NotificationsContent()
 }

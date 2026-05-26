@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.Theme
+import idp.cookinator.coreui.styling.theme.ThemeStyle
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.Star
 import idp.cookinator.feature.splash.screen.components.RecipeCard
@@ -115,7 +116,7 @@ internal fun SplashContent(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .fillMaxSize()
-            .background(color = Theme.color.primary.p100),
+            .background(if (Theme.color.isLight) Theme.color.primary.p100 else Theme.color.primary.p0),
     ) {
         val mainSize = min(maxWidth, maxHeight)
         // --- RESPONSIVE CALCULATIONS ---
@@ -223,5 +224,13 @@ internal fun SplashContent(
 @Preview
 @Composable
 private fun Preview() = AppTheme {
+    SplashContent()
+}
+
+@Preview
+@Composable
+private fun PreviewDark() = AppTheme(
+    style = ThemeStyle.DARK,
+) {
     SplashContent()
 }

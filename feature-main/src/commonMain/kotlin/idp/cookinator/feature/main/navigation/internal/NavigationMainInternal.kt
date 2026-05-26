@@ -1,16 +1,13 @@
 package idp.cookinator.feature.main.navigation.internal
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.savedstate.serialization.SavedStateConfiguration
 import idp.cookinator.feature.main.screen.home.HomeScreen
+import idp.cookinator.feature.main.screen.notification.NotificationsScreen
 import idp.cookinator.feature.main.screen.profile.ProfileScreen
+import idp.cookinator.feature.main.screen.saved.SavedScreen
 import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.screen
 import kotlinx.serialization.Serializable
@@ -57,28 +54,23 @@ internal fun NavigationMainInternal.graph(
     }
 
     NavigationMainInternal.Saved -> NavEntry(this) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text("Saved")
-        }
+        SavedScreen(
+            navigator = navigator,
+            bottomBarHeight = bottomBarHeight,
+        )
     }
 
     NavigationMainInternal.Notifications -> NavEntry(this) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text("Notifications")
-        }
+        NotificationsScreen(
+            navigator = navigator,
+            bottomBarHeight = bottomBarHeight,
+        )
     }
 
     NavigationMainInternal.Profile -> NavEntry(this) {
         ProfileScreen(
             navigator = navigator,
+            bottomBarHeight = bottomBarHeight,
         )
     }
 }

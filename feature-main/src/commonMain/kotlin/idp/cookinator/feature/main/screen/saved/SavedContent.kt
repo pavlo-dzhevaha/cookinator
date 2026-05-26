@@ -1,4 +1,4 @@
-package idp.cookinator.feature.main.screen.profile
+package idp.cookinator.feature.main.screen.saved
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,15 +10,11 @@ import androidx.compose.ui.unit.Dp
 import idp.cookinator.coreui.component.apptopbar.AppTopBar
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.Theme
-import idp.cookinator.coreui.vector.Filter
-import idp.cookinator.coreui.vector.Icons
-import idp.cookinator.feature.main.screen.profile.contract.ProfileAction
 
 @Composable
-internal fun ProfileContent(
+internal fun SavedContent(
     modifier: Modifier = Modifier,
     bottomBarHeight: Dp = Dp.Hairline,
-    onAction: (ProfileAction) -> Unit = {},
 ) {
     LazyColumn(
         contentPadding = PaddingValues(
@@ -29,9 +25,7 @@ internal fun ProfileContent(
     ) {
         stickyHeader {
             AppTopBar(
-                title = "My profile",
-                trailingIcon = Icons.Filter,
-                onTrailingAction = { onAction(ProfileAction.GoToSettings) },
+                title = "Saved recipes",
             )
         }
     }
@@ -40,5 +34,5 @@ internal fun ProfileContent(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() = AppTheme {
-    ProfileContent()
+    SavedContent()
 }
