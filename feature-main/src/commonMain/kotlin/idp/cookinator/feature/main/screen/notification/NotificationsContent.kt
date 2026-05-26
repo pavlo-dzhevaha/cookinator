@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import idp.cookinator.coreui.component.apptopbar.AppTopBar
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.vector.Filter
 import idp.cookinator.coreui.vector.Icons
@@ -35,7 +35,7 @@ internal fun NotificationsContent(
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun Preview() = AppTheme {
     NotificationsContent()

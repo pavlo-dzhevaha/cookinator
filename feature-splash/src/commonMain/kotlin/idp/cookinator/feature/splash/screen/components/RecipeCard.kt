@@ -11,9 +11,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.tooling.preview.Preview
 import idp.cookinator.coreui.component.spacer.SpacerWeight
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
 
 @Composable
@@ -78,7 +78,7 @@ internal fun RecipeCard(
     }
 }
 
-@Preview
+@LightDarkPreview
 @Composable
 private fun Preview() = AppTheme {
     RecipeCard()

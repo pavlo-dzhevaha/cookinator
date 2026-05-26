@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import cookinator.core_ui.generated.resources.img_welcome_dark
 import cookinator.core_ui.generated.resources.img_welcome_light
 import cookinator.localisation.generated.resources.onboarding_button
@@ -28,8 +27,8 @@ import idp.cookinator.coreui.component.spacer.SpacerHeight
 import idp.cookinator.coreui.component.spacer.SpacerWeight
 import idp.cookinator.coreui.component.spacer.SpacerWidth
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
-import idp.cookinator.coreui.styling.theme.ThemeStyle
 import idp.cookinator.coreui.utils.ContentDescription
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.Star
@@ -116,18 +115,9 @@ internal fun WelcomeContent(
     }
 }
 
-@Preview
+@LightDarkPreview
 @Composable
 private fun Preview() = AppTheme {
-    WelcomeContent(
-        state = State.initialState,
-        onIntent = {},
-    )
-}
-
-@Preview
-@Composable
-private fun PreviewDark() = AppTheme(ThemeStyle.DARK) {
     WelcomeContent(
         state = State.initialState,
         onIntent = {},

@@ -8,10 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import idp.cookinator.coreui.component.apptopbar.components.AppTopBarIcon
 import idp.cookinator.coreui.component.spacer.SpacerHeight
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.vector.ArrowLeft
 import idp.cookinator.coreui.vector.Icons
@@ -76,7 +76,7 @@ fun AppTopBar(
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun Preview() = AppTheme {
     AppTopBar(
@@ -84,7 +84,7 @@ private fun Preview() = AppTheme {
     )
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PreviewTitleLeading() = AppTheme {
     AppTopBar(
@@ -93,7 +93,7 @@ private fun PreviewTitleLeading() = AppTheme {
     )
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PreviewTitleTrailing() = AppTheme {
     AppTopBar(
@@ -102,9 +102,19 @@ private fun PreviewTitleTrailing() = AppTheme {
     )
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun PreviewTitleLeadingTrailing() = AppTheme {
+    AppTopBar(
+        title = "Title",
+        leadingIcon = Icons.ArrowLeft,
+        trailingIcon = Icons.More,
+    )
+}
+
+@LightDarkPreview
+@Composable
+private fun PreviewDark() = AppTheme {
     AppTopBar(
         title = "Title",
         leadingIcon = Icons.ArrowLeft,

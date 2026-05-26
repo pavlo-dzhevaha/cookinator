@@ -14,10 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import idp.cookinator.coreui.component.radio.components.RadioViewItem
 import idp.cookinator.coreui.component.radio.model.RadioViewElement
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
 
 @Composable
@@ -67,7 +67,7 @@ fun <T : RadioViewElement> RadioView(
 }
 
 
-@Preview
+@LightDarkPreview
 @Composable
 internal fun Preview() = AppTheme {
     val items = listOf(

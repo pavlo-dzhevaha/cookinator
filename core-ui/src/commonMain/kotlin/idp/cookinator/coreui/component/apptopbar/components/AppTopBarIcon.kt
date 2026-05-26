@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.tooling.preview.Preview
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.utils.ContentDescription
 import idp.cookinator.coreui.vector.ArrowLeft
@@ -39,7 +39,7 @@ internal fun AppTopBarIcon(
     )
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun Preview() = AppTheme {
     AppTopBarIcon(

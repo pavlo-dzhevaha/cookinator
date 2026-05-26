@@ -30,12 +30,11 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
-import idp.cookinator.coreui.styling.theme.ThemeStyle
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.Star
 import idp.cookinator.feature.splash.screen.components.RecipeCard
@@ -221,16 +220,8 @@ internal fun SplashContent(
     }
 }
 
-@Preview
+@LightDarkPreview
 @Composable
 private fun Preview() = AppTheme {
-    SplashContent()
-}
-
-@Preview
-@Composable
-private fun PreviewDark() = AppTheme(
-    style = ThemeStyle.DARK,
-) {
     SplashContent()
 }

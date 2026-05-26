@@ -12,8 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.tooling.preview.Preview
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
 
 @Composable
@@ -51,7 +51,7 @@ internal fun RadioViewItem(
     }
 }
 
-@Preview
+@LightDarkPreview
 @Composable
 private fun Preview() = AppTheme {
     RadioViewItem(
@@ -61,7 +61,7 @@ private fun Preview() = AppTheme {
     )
 }
 
-@Preview
+@LightDarkPreview
 @Composable
 private fun PreviewUnselected() = AppTheme {
     RadioViewItem(

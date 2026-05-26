@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.sp
 import cookinator.core_ui.generated.resources.Poppins_Regular
 import cookinator.core_ui.generated.resources.Poppins_SemiBold
 import cookinator.core_ui.generated.resources.Res
-import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.Theme
 import org.jetbrains.compose.resources.Font
 
 data class ThemeTypography(
@@ -119,6 +119,23 @@ fun attributeTypography(): ThemeTypography {
     }
 }
 
+//region material3 typography
+fun ThemeTypography.asMaterialTypography() = Typography(
+    displayLarge = bold.heading,
+    displayMedium = bold.h1,
+    displaySmall = bold.h2,
+    headlineLarge = bold.h3,
+    headlineMedium = bold.h4,
+    headlineSmall = bold.h5,
+    bodyLarge = regular.p,
+    bodyMedium = regular.label,
+    bodySmall = regular.small,
+    labelLarge = regular.label,
+    labelMedium = regular.small,
+    labelSmall = regular.tiny,
+)
+//endregion
+
 @Preview(
     showBackground = true,
     heightDp = 1000,
@@ -161,20 +178,3 @@ private fun Preview() = AppTheme {
         }
     }
 }
-
-//region material3 typography
-fun ThemeTypography.asMaterialTypography() = Typography(
-    displayLarge = bold.heading,
-    displayMedium = bold.h1,
-    displaySmall = bold.h2,
-    headlineLarge = bold.h3,
-    headlineMedium = bold.h4,
-    headlineSmall = bold.h5,
-    bodyLarge = regular.p,
-    bodyMedium = regular.label,
-    bodySmall = regular.small,
-    labelLarge = regular.label,
-    labelMedium = regular.small,
-    labelSmall = regular.tiny,
-)
-//endregion

@@ -7,10 +7,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import idp.cookinator.coreui.component.apptopbar.AppTopBar
 import idp.cookinator.coreui.component.radio.RadioView
 import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.ThemeStyle
 import idp.cookinator.coreui.vector.ArrowLeft
 import idp.cookinator.coreui.vector.Icons
@@ -52,7 +52,7 @@ internal fun SettingsContent(
     }
 }
 
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 internal fun Preview() = AppTheme {
     SettingsContent(

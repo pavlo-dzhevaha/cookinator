@@ -5,6 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.tooling.preview.AndroidUiModes
+import androidx.compose.ui.tooling.preview.Preview
 import idp.cookinator.coreui.styling.attribute.asMaterialColorScheme
 import idp.cookinator.coreui.styling.attribute.asMaterialTypography
 import idp.cookinator.coreui.styling.attribute.attributeDarkThemeColor
@@ -54,3 +56,26 @@ fun AppTheme(
         )
     }
 }
+
+/**
+ * An annotation that provides previews for both light and dark modes. This allows developers to
+ * see how their composables will look in different themes without having to switch the theme
+ * manually.
+ *
+ * The [LightDarkPreview] annotation can be applied to any composable function, and it will generate
+ * two previews: one for light mode and one for dark mode. Each preview will have a background color
+ * that matches the respective theme, making it easier to visualize the design in both modes.
+ */
+@Preview(
+    name = "Light Mode",
+    uiMode = AndroidUiModes.UI_MODE_NIGHT_NO,
+    showBackground = true,
+    backgroundColor = 0xFFF1F1F1,
+)
+@Preview(
+    name = "Dark Mode",
+    uiMode = AndroidUiModes.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    backgroundColor = 0xFF181818,
+)
+annotation class LightDarkPreview
