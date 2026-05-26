@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,8 +14,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import idp.cookinator.coreui.component.appbottombar.AppBottomBar
 import idp.cookinator.coreui.component.appbottombar.model.BottomBarElement
@@ -28,13 +31,15 @@ import idp.cookinator.feature.main.navigation.internal.internalConfiguration
 import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.navigate
 import idp.cookinator.feature.navigation.extension.navigationTransitionSpec
-import idp.cookinator.feature.navigation.extension.replace
+import idp.cookinator.feature.navigation.extension.pushToTop
+import idp.cookinator.feature.navigation.extension.rememberSoloSceneStrategy
 import idp.cookinator.feature.navigation.features.NavigationOnboarding
 import idp.cookinator.localisation.UiText.Companion.asUiText
 import idp.cookinator.preferences.AppStorage
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 internal fun MainScreen(
     navigator: Navigator,
@@ -51,12 +56,12 @@ internal fun MainScreen(
         bottomBar = {
             AppBottomBar(
                 selected = currentTab,
-                onItemSelected = { element ->
+                onItemSelected = { item ->
                     val current = BottomBarElement.entries.indexOf(currentTab)
-                    val target = BottomBarElement.entries.indexOf(element)
+                    val target = BottomBarElement.entries.indexOf(item)
                     isForward = target > current
-                    currentTab = element
-                    internalNavigator.replace(element.navigationKey)
+                    currentTab = item
+                    internalNavigator.pushToTop(item.navigationKey)
                 },
                 onAddClick = { /* TODO */ },
             )
@@ -65,8 +70,14 @@ internal fun MainScreen(
         Box {
             NavDisplay(
                 backStack = internalNavigator,
-                transitionSpec = isForward.navigationTransitionSpec(),
-                popTransitionSpec = (!isForward).navigationTransitionSpec(),
+                entryDecorators = listOf(
+                    rememberSaveableStateHolderNavEntryDecorator(),
+                    rememberViewModelStoreNavEntryDecorator()
+                ),
+                sceneStrategies = listOf(
+                    rememberSoloSceneStrategy(),
+                ),
+                transitionSpec = navigationTransitionSpec(isForward),
                 modifier = Modifier
                     .padding(top = paddingValues.calculateTopPadding())
             ) { key ->
@@ -94,6 +105,7 @@ internal fun MainScreen(
             ) {
                 scope.launch {
                     appStorage.clear()
+                }.invokeOnCompletion {
                     navigator.navigate(
                         key = NavigationOnboarding.Welcome,
                         clearBackStack = true,

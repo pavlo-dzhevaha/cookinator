@@ -29,6 +29,7 @@ kotlin {
         implementation(libs.compose.ui)
         implementation(libs.compose.material3)
         implementation(libs.androidx.lifecycle.runtimeCompose)
+        implementation(libs.androidx.lifecycle.viewmodel.navigation3)
         implementation(libs.androidx.navigation3.ui)
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)

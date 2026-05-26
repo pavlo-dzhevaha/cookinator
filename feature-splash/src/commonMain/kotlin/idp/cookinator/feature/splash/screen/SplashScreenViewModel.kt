@@ -20,8 +20,7 @@ internal class SplashScreenViewModel(
     override fun onIntent(intent: Intent) = Unit
 
     private fun startDestinationLogic() = launch {
-//        val minimumDelay = launch { delay(2.seconds) }
-        val minimumDelay = launch { delay(0.seconds) }
+        val minimumDelay = launch { delay(2.seconds) }
         val onboardingCompleted = appStorage.isOnboardingCompleted()
         minimumDelay.join()
 

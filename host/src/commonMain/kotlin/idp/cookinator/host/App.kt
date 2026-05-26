@@ -1,19 +1,18 @@
 package idp.cookinator.host
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import idp.cookinator.coreui.styling.theme.AppTheme
-import idp.cookinator.coreui.utils.defaultTween
 import idp.cookinator.feature.main.navigation.graph
 import idp.cookinator.feature.navigation.extension.configuration
+import idp.cookinator.feature.navigation.extension.navigationPredictionTransitionSpec
+import idp.cookinator.feature.navigation.extension.navigationTransitionSpec
 import idp.cookinator.feature.navigation.features.NavigationMain
 import idp.cookinator.feature.navigation.features.NavigationOnboarding
 import idp.cookinator.feature.navigation.features.NavigationSettings
@@ -40,39 +39,13 @@ fun App() {
     ) {
         NavDisplay(
             backStack = backStack,
-            transitionSpec = {
-                slideIntoContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Start,
-                    animationSpec = defaultTween()
-                ) togetherWith slideOutOfContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Start,
-                    animationSpec = defaultTween()
-                )
-            },
-            popTransitionSpec = {
-                slideIntoContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.End,
-                    animationSpec = defaultTween()
-                ) togetherWith slideOutOfContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.End,
-                    animationSpec = defaultTween()
-                )
-            },
-            predictivePopTransitionSpec = { _ ->
-                scaleIn(
-                    initialScale = 0.9f,
-                    animationSpec = defaultTween()
-                ) + slideIntoContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.End,
-                    animationSpec = defaultTween()
-                ) togetherWith scaleOut(
-                    targetScale = 0.9f,
-                    animationSpec = defaultTween()
-                ) + slideOutOfContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.End,
-                    animationSpec = defaultTween()
-                )
-            }
+            entryDecorators = listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator(),
+            ),
+            transitionSpec = navigationTransitionSpec(true),
+            popTransitionSpec = navigationTransitionSpec(false),
+            predictivePopTransitionSpec = navigationPredictionTransitionSpec(),
         ) { key ->
             when (key) {
                 is NavigationSplash -> key.graph(backStack)

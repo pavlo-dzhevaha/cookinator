@@ -5,14 +5,15 @@ import idp.cookinator.coreui.viewmodel.base.MviWrapper
 import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.replace
 import idp.cookinator.feature.splash.screen.contract.Event
-import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun SplashScreen(
     navigator: Navigator,
+    viewModel: SplashScreenViewModel = koinViewModel(),
 ) {
     MviWrapper(
-        viewModel = koinInject<SplashScreenViewModel>(),
+        viewModel = viewModel,
         onEvent = { event ->
             when (event) {
                 is Event.NavigateToStartDestination -> {

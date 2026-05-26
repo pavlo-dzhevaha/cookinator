@@ -1,5 +1,6 @@
 package idp.cookinator.feature.settings.screen
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -37,7 +38,8 @@ internal fun SettingsContent(
     ) { paddingValues ->
         LazyColumn(
             modifier = modifier
-                .padding(paddingValues),
+                .padding(paddingValues)
+                .fillMaxSize(),
         ) {
             item {
                 RadioView(

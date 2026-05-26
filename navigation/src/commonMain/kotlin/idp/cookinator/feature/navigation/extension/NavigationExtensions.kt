@@ -2,10 +2,13 @@ package idp.cookinator.feature.navigation.extension
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.scene.Scene
+import androidx.navigationevent.NavigationEvent
 import androidx.savedstate.serialization.SavedStateConfiguration
 import idp.cookinator.coreui.utils.defaultTween
 import idp.cookinator.feature.navigation.features.featureMainSerializer
@@ -81,14 +84,27 @@ fun Navigator.navigate(
 }
 
 /**
+ * Adds the specified [NavKey] to the end of the [Navigator] if it is not already present.
+ * If the key is already present, it is moved to the end of the stack. This function ensures
+ * that there are no duplicate entries in the back stack and that the most recently navigated
+ * key is always at the end of the stack.
+ */
+fun Navigator.pushToTop(key: NavKey) {
+    if (contains(key)) {
+        remove(key)
+    }
+    add(key)
+}
+
+/**
  * Returns a [ContentTransform] for navigation transitions based on the direction of navigation.
  * If the boolean value is true, the transition will slide towards the start; if false, it will
  * slide towards the end. This function is used to create consistent animations for navigating
  * between screens in the app.
  */
-fun <T : Any> Boolean.navigationTransitionSpec(): AnimatedContentTransitionScope<Scene<T>>.() -> ContentTransform {
+fun <T : Any> navigationTransitionSpec(forward: Boolean): AnimatedContentTransitionScope<Scene<T>>.() -> ContentTransform {
     val towards = when {
-        this -> AnimatedContentTransitionScope.SlideDirection.Start
+        forward -> AnimatedContentTransitionScope.SlideDirection.Start
         else -> AnimatedContentTransitionScope.SlideDirection.End
     }
     return {
@@ -98,6 +114,28 @@ fun <T : Any> Boolean.navigationTransitionSpec(): AnimatedContentTransitionScope
         ) togetherWith slideOutOfContainer(
             towards = towards,
             animationSpec = defaultTween()
+        )
+    }
+}
+
+fun <T : Any> navigationPredictionTransitionSpec(): AnimatedContentTransitionScope<Scene<T>>.(@NavigationEvent.SwipeEdge Int) -> ContentTransform {
+    return { edge ->
+        val towards = when (edge) {
+            NavigationEvent.EDGE_RIGHT -> AnimatedContentTransitionScope.SlideDirection.End
+            else -> AnimatedContentTransitionScope.SlideDirection.Start
+        }
+        scaleIn(
+            initialScale = 0.9f,
+            animationSpec = defaultTween(),
+        ) + slideIntoContainer(
+            towards = towards,
+            animationSpec = defaultTween(),
+        ) togetherWith scaleOut(
+            targetScale = 0.9f,
+            animationSpec = defaultTween(),
+        ) + slideOutOfContainer(
+            towards = towards,
+            animationSpec = defaultTween(),
         )
     }
 }
