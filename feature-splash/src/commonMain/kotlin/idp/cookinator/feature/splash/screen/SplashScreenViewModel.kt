@@ -1,7 +1,7 @@
 package idp.cookinator.feature.splash.screen
 
 import idp.cookinator.coreui.viewmodel.BaseViewModel
-import idp.cookinator.feature.navigation.features.NavigationHome
+import idp.cookinator.feature.navigation.features.NavigationHost
 import idp.cookinator.feature.navigation.features.NavigationOnboarding
 import idp.cookinator.feature.splash.screen.contract.Event
 import idp.cookinator.feature.splash.screen.contract.Intent
@@ -29,7 +29,7 @@ internal class SplashScreenViewModel(
         sendEvent(
             Event.NavigateToStartDestination(
                 startDestination = when {
-                    onboardingCompleted -> NavigationHome.Host
+                    onboardingCompleted -> NavigationHost.Host
                     else -> NavigationOnboarding.Welcome
                 },
             ),

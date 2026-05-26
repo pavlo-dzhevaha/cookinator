@@ -9,13 +9,17 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = libs.versions.namespace.get() + ".localisation"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
+        }
+
+        androidResources {
+            enable = true
         }
     }
 

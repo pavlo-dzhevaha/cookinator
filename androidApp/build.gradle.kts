@@ -14,10 +14,12 @@ kotlin {
     }
 
     dependencies {
-        implementation(projects.host)
-        implementation(projects.localisation)
         implementation(libs.androidx.activity.compose)
         implementation(libs.compose.uiToolingPreview)
+        implementation(platform(libs.koin.bom))
+        implementation(libs.koin.compose)
+
+        implementation(projects.host)
     }
 }
 

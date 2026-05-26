@@ -10,12 +10,12 @@ import kotlinx.serialization.modules.polymorphic
 @OptIn(InternalSerializationApi::class)
 val featureHomeSerializer = SerializersModule {
     polymorphic(NavKey::class) {
-        screen<NavigationHome.Host>()
+        screen<NavigationHost.Host>()
     }
 }
 
 @Serializable
-sealed interface NavigationHome : NavKey {
+sealed interface NavigationHost : NavKey {
     @Serializable
-    data object Host : NavigationHome
+    data object Host : NavigationHost
 }

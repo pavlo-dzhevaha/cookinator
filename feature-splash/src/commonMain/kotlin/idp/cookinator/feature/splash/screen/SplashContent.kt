@@ -41,7 +41,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun SplashContent() {
+internal fun SplashContent(
+    modifier: Modifier = Modifier,
+) {
     val colors = Theme.color
 
     // 1. Entrance Animation States
@@ -110,7 +112,7 @@ internal fun SplashContent() {
     // Use BoxWithConstraints to calculate responsive sizes based on screen bounds
     BoxWithConstraints(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = colors.primary.p100),
     ) {

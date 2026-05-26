@@ -15,12 +15,12 @@ import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.getStartWithColor
 import idp.cookinator.host.App
-import idp.cookinator.host.di.AppKoin
+import idp.cookinator.host.di.initKoin
 import org.jetbrains.compose.resources.stringResource
 import java.awt.Dimension
 
 fun main() {
-    AppKoin.initKoin()
+    initKoin()
 
     application {
         AppTheme {

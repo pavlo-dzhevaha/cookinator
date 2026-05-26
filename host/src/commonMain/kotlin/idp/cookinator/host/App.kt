@@ -18,7 +18,7 @@ import androidx.savedstate.serialization.SavedStateConfiguration
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.ThemeStyle
 import idp.cookinator.feature.home.navigation.graph
-import idp.cookinator.feature.navigation.features.NavigationHome
+import idp.cookinator.feature.navigation.features.NavigationHost
 import idp.cookinator.feature.navigation.features.NavigationOnboarding
 import idp.cookinator.feature.navigation.features.NavigationSplash
 import idp.cookinator.feature.navigation.features.featureHomeSerializer
@@ -91,7 +91,7 @@ fun App() {
             when (key) {
                 is NavigationSplash -> key.graph(backStack)
                 is NavigationOnboarding -> key.graph(backStack)
-                is NavigationHome -> key.graph(backStack)
+                is NavigationHost -> key.graph(backStack)
                 else -> NavEntry(key) { Text("Unknown destination: $key") }
             }
         }

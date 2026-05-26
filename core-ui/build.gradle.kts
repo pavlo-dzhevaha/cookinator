@@ -9,7 +9,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = libs.versions.namespace.get() + ".coreui"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -21,7 +21,7 @@ kotlin {
             enable = true
         }
     }
-    
+
     jvm()
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)

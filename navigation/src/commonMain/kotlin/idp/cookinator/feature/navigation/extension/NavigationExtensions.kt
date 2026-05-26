@@ -8,7 +8,7 @@ import kotlinx.serialization.serializer
 /**
  * Adds a [KSerializer] for the specified [NavKey] type to the [PolymorphicModuleBuilder].
  */
-internal inline fun <reified T : NavKey> PolymorphicModuleBuilder<NavKey>.screen() {
+inline fun <reified T : NavKey> PolymorphicModuleBuilder<NavKey>.screen() {
     subclass(T::class, serializer())
 }
 
@@ -41,11 +41,9 @@ fun NavBackStack<NavKey>.navigate(
     navigateUp: Boolean = false,
 ) {
     assert(!(clearBackStack && navigateUp)) { "Cannot navigate up and clear back stack at the same time." }
-    if (clearBackStack) {
-        clear()
-    }
-    if (navigateUp) {
-        navigateUp()
+    when {
+        clearBackStack -> clear()
+        navigateUp -> navigateUp()
     }
     add(key)
 }

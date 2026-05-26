@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
  */
 data class ThemeSize(
     val zero: Dp = 0.dp,
+    val s1: Dp = 1.dp,
     val s4: Dp = 4.dp,
     val s8: Dp = 8.dp,
     val s10: Dp = 10.dp,

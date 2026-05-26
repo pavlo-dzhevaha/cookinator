@@ -18,9 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import cookinator.core_ui.generated.resources.Res
 import cookinator.core_ui.generated.resources.img_welcome
-import cookinator.localisation.generated.resources.Res.string
 import cookinator.localisation.generated.resources.onboarding_button
 import cookinator.localisation.generated.resources.onboarding_description
 import cookinator.localisation.generated.resources.onboarding_hint_count
@@ -40,6 +38,8 @@ import idp.cookinator.feature.onboarding.screen.welcome.contract.State
 import idp.cookinator.localisation.UiText.Companion.asUiText
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import cookinator.core_ui.generated.resources.Res.drawable as DrawableRes
+import cookinator.localisation.generated.resources.Res.string as StringRes
 
 @Composable
 internal fun WelcomeContent(
@@ -55,7 +55,7 @@ internal fun WelcomeContent(
             contentAlignment = Alignment.Center,
         ) {
             Image(
-                painter = painterResource(Res.drawable.img_welcome),
+                painter = painterResource(DrawableRes.img_welcome),
                 contentDescription = ContentDescription.IMAGE,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -83,33 +83,33 @@ internal fun WelcomeContent(
                     )
                     SpacerWidth(Theme.size.s8)
                     Text(
-                        text = stringResource(string.onboarding_hint_count),
+                        text = stringResource(StringRes.onboarding_hint_count),
                         style = Theme.typography.bold.p,
                         color = Theme.color.system.white,
                     )
                     SpacerWidth(Theme.size.s4)
                     Text(
-                        text = stringResource(string.onboarding_hint_title),
+                        text = stringResource(StringRes.onboarding_hint_title),
                         style = Theme.typography.regular.p,
                         color = Theme.color.system.white,
                     )
                 }
                 SpacerWeight()
                 Text(
-                    text = stringResource(string.onboarding_title),
+                    text = stringResource(StringRes.onboarding_title),
                     style = Theme.typography.bold.heading,
                     color = Theme.color.system.white,
                     textAlign = TextAlign.Center,
                 )
                 SpacerHeight(Theme.size.s24)
                 Text(
-                    text = stringResource(string.onboarding_description),
+                    text = stringResource(StringRes.onboarding_description),
                     style = Theme.typography.regular.p,
                     color = Theme.color.system.white,
                 )
                 SpacerHeight(Theme.size.s40)
                 PrimaryButton(
-                    text = string.onboarding_button.asUiText,
+                    text = StringRes.onboarding_button.asUiText,
                     hasIcon = true,
                     loading = state.isLoading,
                 ) { onIntent(Intent.OnContinue) }

@@ -11,7 +11,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = libs.versions.namespace.get() + ".feature.splash"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -46,7 +46,6 @@ kotlin {
 
         implementation(projects.navigation)
         implementation(projects.coreUi)
-        implementation(projects.localisation)
         implementation(projects.dataPreferences)
     }
 
