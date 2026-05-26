@@ -4,13 +4,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,77 +41,73 @@ import cookinator.localisation.generated.resources.Res.string as StringRes
 
 @Composable
 internal fun WelcomeContent(
+    modifier: Modifier = Modifier,
     state: State,
     onIntent: (Intent) -> Unit,
 ) {
-    Scaffold(
-        contentWindowInsets = WindowInsets(),
-    ) { paddingValues ->
-        Box(
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
+    ) {
+        Image(
+            painter = painterResource(DrawableRes.img_welcome),
+            contentDescription = ContentDescription.IMAGE,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .padding(paddingValues),
-            contentAlignment = Alignment.Center,
+                .fillMaxSize(),
+        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .safeContentPadding()
+                .padding(
+                    top = Theme.size.s12,
+                    bottom = Theme.size.s48,
+                ),
         ) {
-            Image(
-                painter = painterResource(DrawableRes.img_welcome),
-                contentDescription = ContentDescription.IMAGE,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxSize(),
-            )
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .safeContentPadding()
-                    .padding(
-                        top = Theme.size.s12,
-                        bottom = Theme.size.s48,
-                    ),
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        imageVector = Icons.Star,
-                        contentDescription = ContentDescription.ICON,
-                        tint = Theme.color.system.white,
-                        modifier = Modifier
-                            .size(Theme.size.s16),
-                    )
-                    SpacerWidth(Theme.size.s8)
-                    Text(
-                        text = stringResource(StringRes.onboarding_hint_count),
-                        style = Theme.typography.bold.p,
-                        color = Theme.color.system.white,
-                    )
-                    SpacerWidth(Theme.size.s4)
-                    Text(
-                        text = stringResource(StringRes.onboarding_hint_title),
-                        style = Theme.typography.regular.p,
-                        color = Theme.color.system.white,
-                    )
-                }
-                SpacerWeight()
-                Text(
-                    text = stringResource(StringRes.onboarding_title),
-                    style = Theme.typography.bold.heading,
-                    color = Theme.color.system.white,
-                    textAlign = TextAlign.Center,
+                Icon(
+                    imageVector = Icons.Star,
+                    contentDescription = ContentDescription.ICON,
+                    tint = Theme.color.neutral.n0,
+                    modifier = Modifier
+                        .size(Theme.size.s16),
                 )
-                SpacerHeight(Theme.size.s24)
+                SpacerWidth(Theme.size.s8)
                 Text(
-                    text = stringResource(StringRes.onboarding_description),
+                    text = stringResource(StringRes.onboarding_hint_count),
+                    style = Theme.typography.bold.p,
+                    color = Theme.color.neutral.n0,
+                )
+                SpacerWidth(Theme.size.s4)
+                Text(
+                    text = stringResource(StringRes.onboarding_hint_title),
                     style = Theme.typography.regular.p,
-                    color = Theme.color.system.white,
+                    color = Theme.color.neutral.n0,
                 )
-                SpacerHeight(Theme.size.s40)
-                PrimaryButton(
-                    text = StringRes.onboarding_button.asUiText,
-                    hasIcon = true,
-                    loading = state.isLoading,
-                ) { onIntent(Intent.OnContinue) }
             }
+            SpacerWeight()
+            Text(
+                text = stringResource(StringRes.onboarding_title),
+                style = Theme.typography.bold.heading,
+                color = Theme.color.neutral.n0,
+                textAlign = TextAlign.Center,
+            )
+            SpacerHeight(Theme.size.s24)
+            Text(
+                text = stringResource(StringRes.onboarding_description),
+                style = Theme.typography.regular.p,
+                color = Theme.color.neutral.n0,
+            )
+            SpacerHeight(Theme.size.s40)
+            PrimaryButton(
+                text = StringRes.onboarding_button.asUiText,
+                hasIcon = true,
+                loading = state.isLoading,
+            ) { onIntent(Intent.OnContinue) }
         }
     }
 }
@@ -122,7 +116,7 @@ internal fun WelcomeContent(
 @Composable
 private fun Preview() = AppTheme {
     WelcomeContent(
-        state = State.initial,
+        state = State.initialState,
         onIntent = {},
     )
 }

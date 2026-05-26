@@ -10,7 +10,7 @@ import kotlin.time.Duration.Companion.seconds
 
 internal class WelcomeScreenViewModel(
     private val storage: AppStorage
-) : BaseViewModel<State, Intent, Event>(State.initial) {
+) : BaseViewModel<State, Intent, Event>(State.initialState) {
     override fun onIntent(intent: Intent) {
         launch {
             when (intent) {

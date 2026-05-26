@@ -4,7 +4,7 @@ internal data class State(
     val isLoading: Boolean,
 ) {
     companion object {
-        val initial = State(
+        val initialState = State(
             isLoading = false,
         )
     }

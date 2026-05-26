@@ -31,6 +31,7 @@ data class Neutral(
     val n30: Color,
     val n20: Color,
     val n10: Color,
+    val n0: Color,
 )
 
 data class Primary(
@@ -76,8 +77,6 @@ data class Success(
 )
 
 data class System(
-    val black: Color,
-    val white: Color,
     val transparent: Color,
 )
 
@@ -94,6 +93,7 @@ internal val attributeLightThemeColor = ThemeColor(
         n30 = Color(0xFFC1C1C1),
         n20 = Color(0xFFD9D9D9),
         n10 = Color(0xFFF1F1F1),
+        n0 = Color(0xFFFFFFFF),
     ),
     primary = Primary(
         p100 = Color(0xFF711F1F),
@@ -133,14 +133,66 @@ internal val attributeLightThemeColor = ThemeColor(
         s10 = Color(0xFFEAF7EE),
     ),
     system = System(
-        black = Color(0xFF000000),
-        white = Color(0xFFFFFFFF),
         transparent = Color(0x00FFFFFF),
     )
 )
 
-internal val attributeDarkThemeColor = attributeLightThemeColor.copy(
+internal val attributeDarkThemeColor = ThemeColor(
     isLight = false,
+    neutral = Neutral(
+        n100 = Color(0xFFF1F1F1),
+        n90 = Color(0xFFD9D9D9),
+        n80 = Color(0xFFC1C1C1),
+        n70 = Color(0xFFA9A9A9),
+        n60 = Color(0xFF919191),
+        n50 = Color(0xFF797979),
+        n40 = Color(0xFF606060),
+        n30 = Color(0xFF484848),
+        n20 = Color(0xFF303030),
+        n10 = Color(0xFF181818),
+        n0 = Color(0xFF000000),
+    ),
+    primary = Primary(
+        p100 = Color(0xFFFCECEC),
+        p90 = Color(0xFFF9D8D8),
+        p80 = Color(0xFFF3B2B2),
+        p70 = Color(0xFFEE8B8B),
+        p60 = Color(0xFFE86565),
+        p50 = Color(0xFFE23E3E),
+        p40 = Color(0xFFCB3838),
+        p30 = Color(0xFFB53232),
+        p20 = Color(0xFF9E2B2B),
+        p10 = Color(0xFF882525),
+        p0 = Color(0xFF711F1F),
+    ),
+    secondary = Secondary(
+        // Inverted secondary scale
+        s100 = Color(0xFFFFF5E6),
+        s90 = Color(0xFFFFE1B3),
+        s80 = Color(0xFFFFCE80),
+        s70 = Color(0xFFFFBA4D),
+        s60 = Color(0xFFFFA61A),
+        s50 = Color(0xFFFF9C00),
+        s40 = Color(0xFFE68C00),
+        s30 = Color(0xFFCC7D00),
+        s20 = Color(0xFFB36D00),
+        s10 = Color(0xFF995E00),
+        s0 = Color(0xFF804E00),
+    ),
+    rating = Rating(
+        r100 = Color(0xFFFFB661),
+    ),
+    error = Error(
+        e100 = Color(0xFFFFB4AB),
+        e10 = Color(0xFF93000A),
+    ),
+    success = Success(
+        s100 = Color(0xFF81C995),
+        s10 = Color(0xFF137333),
+    ),
+    system = System(
+        transparent = Color(0x00000000),
+    )
 )
 
 //region Material color scheme
@@ -148,26 +200,28 @@ fun ThemeColor.asMaterialColorScheme(): ColorScheme =
     when {
         isLight -> lightColorScheme(
             primary = primary.p100,
-            primaryContainer = primary.p50,
-            background = system.white,
-            surface = system.white,
-            surfaceContainerHigh = system.white,
-            surfaceContainerLow = system.white,
+            primaryContainer = primary.p10,
+            background = neutral.n10,
+            surface = neutral.n10,
+            surfaceContainerHigh = neutral.n10,
+            surfaceContainerLow = neutral.n0,
             onSurface = neutral.n100,
-            onSurfaceVariant = neutral.n90,
+            onSurfaceVariant = neutral.n80,
             error = error.e100,
+            errorContainer = error.e10,
         )
 
         else -> darkColorScheme(
-            primary = primary.p100,
-            primaryContainer = primary.p50,
-            background = system.white,
-            surface = system.white,
-            surfaceContainerHigh = system.white,
-            surfaceContainerLow = system.white,
+            primary = primary.p50,
+            primaryContainer = primary.p0,
+            background = neutral.n10,
+            surface = neutral.n10,
+            surfaceContainerHigh = neutral.n20,
+            surfaceContainerLow = neutral.n10,
             onSurface = neutral.n100,
-            onSurfaceVariant = neutral.n90,
+            onSurfaceVariant = neutral.n80,
             error = error.e100,
+            errorContainer = error.e10,
         )
     }
 //endregion Material color scheme

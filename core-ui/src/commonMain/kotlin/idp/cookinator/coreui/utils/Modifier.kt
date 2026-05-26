@@ -1,5 +1,10 @@
 package idp.cookinator.coreui.utils
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
@@ -9,6 +14,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 
 /**
  * A pure Compose Multiplatform shadow modifier that perfectly follows custom Paths.
@@ -41,4 +47,20 @@ fun Modifier.fauxCurveTopShadow(
             }
         }
     }
+}
+
+/**
+ * This is a custom implementation of [Modifier.imePadding] that takes into account the height
+ * of the bottom bar. It calculates the real IME padding by subtracting the bottom bar height from
+ * the IME padding and ensuring that it doesn't go below a hairline.
+ */
+@Composable
+fun Modifier.realImePadding(
+    bottomBarHeight: Dp,
+): Modifier {
+    val bottomPadding = max(
+        WindowInsets.ime.asPaddingValues().calculateBottomPadding() - bottomBarHeight,
+        Dp.Hairline,
+    )
+    return padding(bottom = bottomPadding)
 }

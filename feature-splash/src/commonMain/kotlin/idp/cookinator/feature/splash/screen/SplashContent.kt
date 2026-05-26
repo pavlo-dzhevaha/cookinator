@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
@@ -114,7 +115,7 @@ internal fun SplashContent(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .fillMaxSize()
-            .background(color = colors.primary.p100),
+            .background(color = Theme.color.primary.p100),
     ) {
         val mainSize = min(maxWidth, maxHeight)
         // --- RESPONSIVE CALCULATIONS ---
@@ -148,7 +149,7 @@ internal fun SplashContent(
                 useCenter = false,
                 style = Stroke(
                     width = strokeWidth,
-                    pathEffect = androidx.compose.ui.graphics.PathEffect.dashPathEffect(
+                    pathEffect = PathEffect.dashPathEffect(
                         floatArrayOf(30f, 30f)
                     )
                 ),
@@ -159,7 +160,6 @@ internal fun SplashContent(
 
         // --- CENTER BOX: Extracted Custom Recipe Card ---
         RecipeCard(
-            theme = colors,
             modifier = Modifier
                 .width(cardWidth)
                 .height(cardHeight)
@@ -175,7 +175,7 @@ internal fun SplashContent(
         Icon(
             imageVector = Icons.Star,
             contentDescription = null,
-            tint = colors.rating.r100,
+            tint = Theme.color.rating.r100,
             modifier = Modifier
                 .size(smallStarSize)
                 .offset(x = -(cardWidth * 0.7f), y = -(cardHeight * 0.5f))
@@ -191,7 +191,7 @@ internal fun SplashContent(
         Icon(
             imageVector = Icons.Star,
             contentDescription = null,
-            tint = colors.rating.r100,
+            tint = Theme.color.rating.r100,
             modifier = Modifier
                 .size(largeStarSize)
                 .offset(x = 0.dp, y = -(cardHeight * 0.8f))
@@ -206,7 +206,7 @@ internal fun SplashContent(
         Icon(
             imageVector = Icons.Star,
             contentDescription = null,
-            tint = colors.rating.r100,
+            tint = Theme.color.rating.r100,
             modifier = Modifier
                 .size(smallStarSize)
                 .offset(x = (cardWidth * 0.7f), y = -(cardHeight * 0.5f))
@@ -220,7 +220,7 @@ internal fun SplashContent(
     }
 }
 
-@Preview(showBackground = false)
+@Preview
 @Composable
 private fun Preview() = AppTheme {
     SplashContent()

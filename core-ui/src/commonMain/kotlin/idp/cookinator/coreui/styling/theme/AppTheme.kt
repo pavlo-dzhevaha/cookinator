@@ -1,5 +1,6 @@
 package idp.cookinator.coreui.styling.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -27,13 +28,15 @@ import idp.cookinator.coreui.styling.provider.LocalThemeTypography
  */
 @Composable
 fun AppTheme(
-    style: ThemeStyle = ThemeStyle.LIGHT,
+    style: ThemeStyle = ThemeStyle.default,
     content: @Composable () -> Unit,
 ) {
+    val systemDark = isSystemInDarkTheme()
     val currentColorPalette = remember(style) {
         when (style) {
             ThemeStyle.LIGHT -> attributeLightThemeColor
             ThemeStyle.DARK -> attributeDarkThemeColor
+            ThemeStyle.AUTO -> if (systemDark) attributeDarkThemeColor else attributeLightThemeColor
         }
     }
 

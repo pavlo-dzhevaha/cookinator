@@ -1,4 +1,3 @@
-import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -19,11 +18,8 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
-        androidResources {
-            enable = true
-        }
     }
-    
+
     jvm()
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -31,5 +27,7 @@ kotlin {
         implementation(libs.compose.material3.adaptive.navigation3)
         implementation(libs.androidx.lifecycle.viewmodel.navigation3)
         implementation(libs.androidx.navigation3.ui)
+
+        api(projects.coreUi)
     }
 }

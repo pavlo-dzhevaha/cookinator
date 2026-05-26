@@ -3,7 +3,6 @@ package idp.cookinator.feature.splash.screen.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,24 +11,29 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.unit.dp
-import idp.cookinator.coreui.styling.attribute.ThemeColor
+import androidx.compose.ui.tooling.preview.Preview
+import idp.cookinator.coreui.component.spacer.SpacerWeight
+import idp.cookinator.coreui.styling.theme.AppTheme
+import idp.cookinator.coreui.styling.theme.Theme
 
 @Composable
 internal fun RecipeCard(
-    theme: ThemeColor,
     modifier: Modifier = Modifier
 ) {
+    val colors = Theme.color
+
+    val elevation = Theme.size.s16
+    val shadowShape = RoundedCornerShape(Theme.size.s12)
     Box(
         modifier = modifier
             .graphicsLayer {
-                shadowElevation = 16.dp.toPx()
-                shape = RoundedCornerShape(12.dp)
+                shadowElevation = elevation.toPx()
+                shape = shadowShape
                 clip = true
             }
-            .background(color = theme.system.white)
+            .background(color = Theme.color.neutral.n10)
             // Use responsive padding based on the container size
-            .padding(12.dp)
+            .padding(Theme.size.s16)
     ) {
         // By using 'weight', the internal UI elements automatically resize
         // to fit whatever proportions the parent assigns to the RecipeCard.
@@ -40,12 +44,12 @@ internal fun RecipeCard(
                     .fillMaxWidth()
                     .weight(6f)
                     .background(
-                        color = theme.neutral.n20,
-                        shape = RoundedCornerShape(6.dp)
+                        color = Theme.color.neutral.n20,
+                        shape = RoundedCornerShape(Theme.size.s6)
                     )
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            SpacerWeight()
 
             // Recipe Title Line
             Box(
@@ -53,12 +57,12 @@ internal fun RecipeCard(
                     .fillMaxWidth(0.8f)
                     .weight(0.8f)
                     .background(
-                        color = theme.neutral.n40,
+                        color = Theme.color.neutral.n40,
                         shape = CircleShape
                     )
             )
 
-            Spacer(modifier = Modifier.weight(0.6f))
+            SpacerWeight(0.6f)
 
             // Recipe Subtitle/Time-Line
             Box(
@@ -66,10 +70,16 @@ internal fun RecipeCard(
                     .fillMaxWidth(0.5f)
                     .weight(0.8f)
                     .background(
-                        color = theme.neutral.n40,
+                        color = colors.neutral.n40,
                         shape = CircleShape
                     )
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun Preview() = AppTheme {
+    RecipeCard()
 }

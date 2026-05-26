@@ -1,24 +1,23 @@
 package idp.cookinator.feature.onboarding.screen.welcome
 
 import androidx.compose.runtime.Composable
-import androidx.navigation3.runtime.NavBackStack
-import androidx.navigation3.runtime.NavKey
 import idp.cookinator.coreui.viewmodel.base.MviWrapper
+import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.replace
-import idp.cookinator.feature.navigation.features.NavigationHost
+import idp.cookinator.feature.navigation.features.NavigationMain
 import idp.cookinator.feature.onboarding.screen.welcome.contract.Event
-import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun WelcomeScreen(
-    backStack: NavBackStack<NavKey>,
-    viewModel: WelcomeScreenViewModel = koinInject(),
+    navigator: Navigator,
+    viewModel: WelcomeScreenViewModel = koinViewModel(),
 ) {
     MviWrapper(
         viewModel = viewModel,
         onEvent = { event ->
             when (event) {
-                Event.Continue -> backStack.replace(NavigationHost.Host)
+                Event.Continue -> navigator.replace(NavigationMain.Main)
             }
         },
     ) { state ->

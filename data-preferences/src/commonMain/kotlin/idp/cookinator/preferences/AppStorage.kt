@@ -22,5 +22,8 @@ class AppStorage(
 
     fun observeCurrentThemeStyle() = storage.getStringFlow(themeStyleKey, "")
 
+    suspend fun setCurrentThemeStyle(themeStyle: String) =
+        storage.putString(themeStyleKey, themeStyle)
+
     suspend fun clear() = storage.clear()
 }

@@ -18,9 +18,6 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
-        androidResources {
-            enable = true
-        }
     }
     
     jvm()
@@ -41,6 +38,7 @@ kotlin {
         implementation(projects.dataPreferences)
         implementation(projects.featureSplash)
         implementation(projects.featureOnboarding)
-        implementation(projects.featureHome)
+        implementation(projects.featureMain)
+        implementation(projects.featureSettings)
     }
 }
