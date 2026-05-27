@@ -1,5 +1,7 @@
 package idp.cookinator.host.di
 
+import idp.cookinator.database.di.dataDatabaseModule
+import idp.cookinator.domain.di.domainModule
 import idp.cookinator.feature.main.di.featureMainModule
 import idp.cookinator.feature.onboarding.di.featureOnboardingModule
 import idp.cookinator.feature.settings.di.featureSettingsModule
@@ -18,6 +20,8 @@ internal val hostModule = module {
 val appModules = listOf(
     dataPreferencesModule,
     dataNetworkModule,
+    dataDatabaseModule,
+    domainModule,
     featureSplashModule,
     hostModule,
     featureOnboardingModule,

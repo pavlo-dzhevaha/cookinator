@@ -25,25 +25,22 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
-        implementation(libs.kotlinx.datetime)
         // Koin
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)
         // Supabase
         implementation(platform(libs.supabase.bom))
         implementation(libs.supabase.postgrest)
+        // Core Ktor Client
+        implementation(libs.ktor.client.core)
+        // JSON Serialization
+        implementation(libs.ktor.client.content.negotiation)
+        implementation(libs.ktor.serialization.kotlinx.json)
+
+        implementation(projects.dataModel)
     }
 
     sourceSets {
-        commonMain.dependencies {
-            // Core Ktor Client
-            implementation(libs.ktor.client.core)
-
-            // JSON Serialization
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.serialization.kotlinx.json)
-        }
-
         androidMain.dependencies {
             // Android Engine
             implementation(libs.ktor.client.okhttp)

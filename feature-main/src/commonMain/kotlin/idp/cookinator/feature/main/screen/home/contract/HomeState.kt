@@ -1,20 +1,19 @@
 package idp.cookinator.feature.main.screen.home.contract
 
+import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.base.BaseState
-import idp.cookinator.network.model.RandomRecipesResponse
+import idp.cookinator.model.Recipe
 
 internal data class HomeState(
-    val isLoading: Boolean,
+    val uiState: UiState,
     val query: String,
-    val result: Result<RandomRecipesResponse>?,
-    val cachedResult: Result<RandomRecipesResponse>?,
+    val items: List<Recipe>,
 ) : BaseState {
     companion object {
         val initialState = HomeState(
-            isLoading = false,
+            uiState = UiState.LOADING,
             query = "",
-            result = null,
-            cachedResult = null,
+            items = emptyList(),
         )
     }
 }

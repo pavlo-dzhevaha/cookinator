@@ -44,8 +44,9 @@ kotlin {
         implementation(projects.navigation)
         implementation(projects.coreUi)
         implementation(projects.localisation)
+        implementation(projects.domain)
+        implementation(projects.dataModel)
         implementation(projects.dataPreferences)
-        implementation(projects.dataNetwork)
     }
 
     sourceSets {

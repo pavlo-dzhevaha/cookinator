@@ -1,5 +1,7 @@
 package idp.cookinator.network.model
 
+import idp.cookinator.model.Recipe
+import idp.cookinator.network.extension.compactMap
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -48,3 +50,37 @@ data class InstructionStep(
     val number: Int,
     val step: String
 )
+
+fun RandomRecipesResponse.toDomainModels(): List<Recipe> = recipes.map { recipe ->
+    Recipe(
+        id = recipe.id,
+        title = recipe.title,
+        image = recipe.image,
+        readyInMinutes = recipe.readyInMinutes,
+        servings = recipe.servings,
+        summary = recipe.summary,
+        vegetarian = recipe.vegetarian ?: false,
+        vegan = recipe.vegan ?: false,
+        glutenFree = recipe.glutenFree ?: false,
+        dairyFree = recipe.dairyFree ?: false,
+        extendedIngredients = recipe.extendedIngredients.compactMap { ingredient ->
+            idp.cookinator.model.Ingredient(
+                id = ingredient.id,
+                name = ingredient.name,
+                original = ingredient.original,
+                image = ingredient.image
+            )
+        },
+        analyzedInstructions = recipe.analyzedInstructions.compactMap { instruction ->
+            idp.cookinator.model.Instruction(
+                name = instruction.name,
+                steps = instruction.steps.compactMap { step ->
+                    idp.cookinator.model.InstructionStep(
+                        number = step.number,
+                        step = step.step
+                    )
+                },
+            )
+        }
+    )
+}

@@ -15,6 +15,9 @@ settings = "1.3.0"
 ktor = "3.5.0"
 buildkonfig = "0.21.2"
 supabase = "3.6.0"
+room = "2.8.4"
+ksp = "2.3.4"
+sqlite = "2.6.2"
 #Project specific versions
 android-compileSdk = "37"
 android-minSdk = "24"
@@ -49,17 +52,21 @@ koin-ktor = { module = "io.insert-koin:koin-ktor" }
 #Multiplatform Settings
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version = "1.3.0" }
 multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "settings" }
-#Network
+#Network ktor
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-#Network Platform Engines
+#Network ktor Platform Engines
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
-#Network Plugins for JSON Serialization
+#Network ktor Plugins for JSON Serialization
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-#Database
+#Network Supabase
 supabase-bom = { module = "io.github.jan-tennert.supabase:bom", version.ref = "supabase" }
 supabase-postgrest = { module = "io.github.jan-tennert.supabase:postgrest-kt" }
+#Database Room
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -70,3 +77,5 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "room" }

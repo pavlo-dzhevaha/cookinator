@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -29,7 +30,6 @@ import cookinator.localisation.generated.resources.Res
 import cookinator.localisation.generated.resources.home_search_hint
 import cookinator.localisation.generated.resources.home_title
 import idp.cookinator.coreui.component.apptopbar.AppTopBar
-import idp.cookinator.coreui.component.button.primary.PrimaryButton
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
@@ -40,7 +40,6 @@ import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.Search
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
 import idp.cookinator.feature.main.screen.home.contract.HomeState
-import idp.cookinator.localisation.UiText.Companion.asUiText
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -135,33 +134,14 @@ internal fun HomeContent(
         }
         item {
             Column {
+                if (state.uiState.isLoading) {
+                    CircularProgressIndicator()
+                }
                 Text(
-                    text = "Result: ${state.result?.getOrNull()?.recipes?.size ?: "No recipe fetched yet."}",
+                    text = state.uiState.toString(),
                 )
-                PrimaryButton(
-                    text = "Fetch Recipe".asUiText,
-                    loading = state.isLoading,
-                    enabled = state.result == null || state.result.exceptionOrNull() != null,
-                    onClick = { onIntent(HomeIntent.OnFetchRecipe) },
-                    modifier = Modifier
-                        .padding(horizontal = Theme.size.s20)
-                        .fillMaxWidth(),
-                )
-            }
-        }
-        item {
-            Column {
                 Text(
-                    text = "Result: ${state.cachedResult?.getOrNull()?.recipes?.size ?: state.cachedResult?.exceptionOrNull() ?: "No recipe fetched yet."}",
-                )
-                PrimaryButton(
-                    text = "Fetch Recipe".asUiText,
-                    loading = state.isLoading,
-                    enabled = state.cachedResult == null || state.cachedResult.exceptionOrNull() != null,
-                    onClick = { onIntent(HomeIntent.OnLoadRecipe) },
-                    modifier = Modifier
-                        .padding(horizontal = Theme.size.s20)
-                        .fillMaxWidth(),
+                    text = "Items: ${state.items.size}",
                 )
             }
         }

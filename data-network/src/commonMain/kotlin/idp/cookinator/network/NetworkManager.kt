@@ -1,5 +1,6 @@
 package idp.cookinator.network
 
+import idp.cookinator.model.Recipe
 import idp.cookinator.network.model.RandomRecipesResponse
 import idp.cookinator.network.model.RecipeResponse
 import io.github.jan.supabase.SupabaseClient
@@ -12,8 +13,6 @@ import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 /**
  * NetworkManager is responsible for handling all network operations related to the Spoonacular API.
@@ -52,41 +51,30 @@ class NetworkManager(
             parameter("language", "ukrainian")
         }
     }.onSuccess { response ->
-        cacheRecipeLocally(response.recipes)
+        saveRecipeOnServer(response.recipes)
     }
 
     /**
      * Fetches cached recipes from the local Supabase database.
      *
-     * @return A [Result] containing a list of [RecipeResponse] on success, or an [Exception] on failure.
+     * @return A [Result] containing a list of [Recipe] on success, or an [Exception] on failure.
      */
-    suspend fun getCachedRecipes(): Result<RandomRecipesResponse> = try {
+    suspend fun getServerRecipes(): Result<RandomRecipesResponse> = runCatching {
         val recipes = supabase.postgrest["recipes"]
             .select()
             .decodeList<RecipeResponse>()
-        Result.success(RandomRecipesResponse(recipes))
-    } catch (e: Exception) {
-        Result.failure(e)
+        RandomRecipesResponse(recipes)
     }
 
     /**
      * Caches the given list of recipes locally in the Supabase database.
      *
-     * @param recipes The list of [RecipeResponse] to be cached.
+     * @param recipes The list of [Recipe] to be cached.
      */
-    private suspend fun cacheRecipeLocally(
+    private suspend fun saveRecipeOnServer(
         recipes: List<RecipeResponse>,
-    ) {
-        withContext(Dispatchers.IO) {
-            try {
-                // Upsert will insert the recipe, or update it if the ID already exists
-                val result = supabase.postgrest["recipes"].upsert(recipes)
-                println("Cached recipes locally: ${result.data}")
-            } catch (e: Exception) {
-                // TODO log
-                println("Failed to cache recipes locally: ${e.message}")
-            }
-        }
+    ) = runCatching {
+        supabase.postgrest["recipes"].upsert(recipes)
     }
 
     /**
@@ -94,16 +82,12 @@ class NetworkManager(
      */
     private suspend inline fun <reified T> request(
         crossinline block: suspend HttpClient.() -> HttpResponse,
-    ): Result<T> = withContext(Dispatchers.IO) {
-        return@withContext try {
-            val response = httpClient.block()
-            if (response.status.isSuccess()) {
-                Result.success(response.body<T>())
-            } else {
-                Result.failure(Exception("API Error: ${response.status.description}"))
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
+    ): Result<T> = runCatching {
+        val response = httpClient.block()
+        if (response.status.isSuccess()) {
+            response.body<T>()
+        } else {
+            error("API Error: ${response.status.description}")
         }
     }
 
