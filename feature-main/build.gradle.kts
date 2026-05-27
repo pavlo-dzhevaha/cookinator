@@ -56,6 +56,12 @@ kotlin {
     }
 }
 
+compose {
+    resources {
+        generateResClass = never
+    }
+}
+
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
 }

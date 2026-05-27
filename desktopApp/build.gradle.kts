@@ -18,14 +18,19 @@ kotlin {
     }
 }
 
-compose.desktop {
-    application {
-        mainClass = libs.versions.namespace.get() + ".MainKt"
+compose {
+    resources {
+        generateResClass = never
+    }
+    desktop {
+        application {
+            mainClass = libs.versions.namespace.get() + ".MainKt"
 
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = libs.versions.namespace.get()
-            packageVersion = libs.versions.version.get()
+            nativeDistributions {
+                targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+                packageName = libs.versions.namespace.get()
+                packageVersion = libs.versions.version.get()
+            }
         }
     }
 }

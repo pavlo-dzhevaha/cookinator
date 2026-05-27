@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 rootProject.name = "Cookinator"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 

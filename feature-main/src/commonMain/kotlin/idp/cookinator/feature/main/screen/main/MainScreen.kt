@@ -59,6 +59,7 @@ internal fun MainScreen(
                 onItemSelected = { item ->
                     val current = BottomBarElement.entries.indexOf(currentTab)
                     val target = BottomBarElement.entries.indexOf(item)
+                    @Suppress("AssignedValueIsNeverRead")
                     isForward = target > current
                     currentTab = item
                     internalNavigator.pushToTop(item.navigationKey)
