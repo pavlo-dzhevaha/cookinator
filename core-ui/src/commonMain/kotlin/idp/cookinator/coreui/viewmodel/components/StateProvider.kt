@@ -1,9 +1,10 @@
-package idp.cookinator.coreui.viewmodel.base
+package idp.cookinator.coreui.viewmodel.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import idp.cookinator.coreui.viewmodel.StateViewModel
+import idp.cookinator.coreui.viewmodel.base.BaseState
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -19,7 +20,7 @@ import kotlinx.coroutines.CoroutineScope
  * parameters, allowing you to build your UI based on the state.
  */
 @Composable
-fun <S> StateProvider(
+fun <S : BaseState> StateProvider(
     viewModel: StateViewModel<S>,
     content: @Composable CoroutineScope.(state: S) -> Unit,
 ) {

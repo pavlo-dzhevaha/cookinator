@@ -1,5 +1,7 @@
 package idp.cookinator.feature.splash.screen.contract
 
-internal data object State {
+import idp.cookinator.coreui.viewmodel.base.BaseState
+
+internal data object State : BaseState {
     val initialState = State
 }

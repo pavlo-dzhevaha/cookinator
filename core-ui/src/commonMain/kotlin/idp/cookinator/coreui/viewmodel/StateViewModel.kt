@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import idp.cookinator.coreui.viewmodel.base.BaseState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
  * @param S The type of the state that this ViewModel manages.
  * @param initialState The initial state value that the ViewModel will start with.
  */
-abstract class StateViewModel<S>(
+abstract class StateViewModel<S : BaseState>(
     initialState: S,
 ) : ViewModel() {
     //region State management

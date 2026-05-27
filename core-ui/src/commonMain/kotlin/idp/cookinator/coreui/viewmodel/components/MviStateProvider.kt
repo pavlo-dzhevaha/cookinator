@@ -1,10 +1,13 @@
-package idp.cookinator.coreui.viewmodel.base
+package idp.cookinator.coreui.viewmodel.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import idp.cookinator.coreui.viewmodel.MviViewModel
+import idp.cookinator.coreui.viewmodel.base.BaseEvent
+import idp.cookinator.coreui.viewmodel.base.BaseIntent
+import idp.cookinator.coreui.viewmodel.base.BaseState
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -26,7 +29,7 @@ import kotlinx.coroutines.CoroutineScope
  * parameters, allowing you to build your UI based on the state.
  */
 @Composable
-fun <S, I, E> MviStateProvider(
+fun <S : BaseState, I : BaseIntent, E : BaseEvent> MviStateProvider(
     viewModel: MviViewModel<S, I, E>,
     onEvent: (E) -> Unit,
     content: @Composable CoroutineScope.(state: S) -> Unit,

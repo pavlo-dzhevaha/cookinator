@@ -1,5 +1,7 @@
 package idp.cookinator.feature.onboarding.screen.welcome.contract
 
-internal sealed interface Event {
+import idp.cookinator.coreui.viewmodel.base.BaseEvent
+
+internal sealed interface Event : BaseEvent {
     object Continue : Event
 }

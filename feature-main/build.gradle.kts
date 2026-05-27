@@ -45,6 +45,7 @@ kotlin {
         implementation(projects.coreUi)
         implementation(projects.localisation)
         implementation(projects.dataPreferences)
+        implementation(projects.dataNetwork)
     }
 
     sourceSets {

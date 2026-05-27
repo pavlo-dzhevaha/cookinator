@@ -1,3 +1,5 @@
 package idp.cookinator.feature.settings.screen.contract
 
-internal sealed interface Event
+import idp.cookinator.coreui.viewmodel.base.BaseEvent
+
+internal sealed interface Event : BaseEvent

@@ -1,3 +1,5 @@
 package idp.cookinator.feature.splash.screen.contract
 
-internal sealed interface Intent
+import idp.cookinator.coreui.viewmodel.base.BaseIntent
+
+internal sealed interface Intent : BaseIntent

@@ -38,6 +38,7 @@ kotlin {
         implementation(projects.coreUi)
         implementation(projects.navigation)
         implementation(projects.dataPreferences)
+        implementation(projects.dataNetwork)
         implementation(projects.featureSplash)
         implementation(projects.featureOnboarding)
         implementation(projects.featureMain)

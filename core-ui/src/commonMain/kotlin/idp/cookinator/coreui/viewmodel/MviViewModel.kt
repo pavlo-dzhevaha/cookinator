@@ -1,5 +1,8 @@
 package idp.cookinator.coreui.viewmodel
 
+import idp.cookinator.coreui.viewmodel.base.BaseEvent
+import idp.cookinator.coreui.viewmodel.base.BaseIntent
+import idp.cookinator.coreui.viewmodel.base.BaseState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -16,7 +19,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
  * @param E The type of the events that the ViewModel emits.
  * @param initialState The initial state of the ViewModel.
  */
-abstract class MviViewModel<S, I, E>(
+abstract class MviViewModel<S : BaseState, I : BaseIntent, E : BaseEvent>(
     initialState: S,
 ) : StateViewModel<S>(initialState) {
     //region Event management

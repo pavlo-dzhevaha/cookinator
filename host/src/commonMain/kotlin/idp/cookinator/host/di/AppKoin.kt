@@ -5,6 +5,7 @@ import idp.cookinator.feature.onboarding.di.featureOnboardingModule
 import idp.cookinator.feature.settings.di.featureSettingsModule
 import idp.cookinator.feature.splash.di.featureSplashModule
 import idp.cookinator.host.AppViewModel
+import idp.cookinator.network.di.dataNetworkModule
 import idp.cookinator.preferences.di.dataPreferencesModule
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModelOf
@@ -16,6 +17,7 @@ internal val hostModule = module {
 
 val appModules = listOf(
     dataPreferencesModule,
+    dataNetworkModule,
     featureSplashModule,
     hostModule,
     featureOnboardingModule,

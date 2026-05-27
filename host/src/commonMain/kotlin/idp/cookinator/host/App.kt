@@ -8,7 +8,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import idp.cookinator.coreui.styling.theme.AppTheme
-import idp.cookinator.coreui.viewmodel.base.StateProvider
+import idp.cookinator.coreui.viewmodel.components.StateProvider
 import idp.cookinator.feature.main.navigation.graph
 import idp.cookinator.feature.navigation.extension.appConfiguration
 import idp.cookinator.feature.navigation.extension.navigationPredictionTransitionSpec

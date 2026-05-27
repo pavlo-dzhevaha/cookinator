@@ -1,6 +1,8 @@
 package idp.cookinator.feature.onboarding.screen.welcome.contract
 
-internal sealed interface Intent {
+import idp.cookinator.coreui.viewmodel.base.BaseIntent
+
+internal sealed interface Intent : BaseIntent {
     object OnContinue : Intent
     object OnChangeLocale : Intent
 }

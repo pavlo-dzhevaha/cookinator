@@ -1,7 +1,7 @@
 package idp.cookinator.feature.onboarding.screen.welcome
 
 import androidx.compose.runtime.Composable
-import idp.cookinator.coreui.viewmodel.base.MviStateProvider
+import idp.cookinator.coreui.viewmodel.components.MviStateProvider
 import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.replace
 import idp.cookinator.feature.navigation.features.NavigationMain
