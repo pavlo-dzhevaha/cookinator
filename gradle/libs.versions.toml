@@ -14,6 +14,7 @@ koin-bom = "4.2.1"
 settings = "1.3.0"
 ktor = "3.5.0"
 buildkonfig = "0.21.2"
+supabase = "3.6.0"
 #Project specific versions
 android-compileSdk = "37"
 android-minSdk = "24"
@@ -48,14 +49,17 @@ koin-ktor = { module = "io.insert-koin:koin-ktor" }
 #Multiplatform Settings
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version = "1.3.0" }
 multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "settings" }
-#Ktor
+#Network
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-#Ktor Platform Engines
+#Network Platform Engines
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
-#Ktor Plugins for JSON Serialization
+#Network Plugins for JSON Serialization
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+#Database
+supabase-bom = { module = "io.github.jan-tennert.supabase:bom", version.ref = "supabase" }
+supabase-postgrest = { module = "io.github.jan-tennert.supabase:postgrest-kt" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -136,13 +136,29 @@ internal fun HomeContent(
         item {
             Column {
                 Text(
-                    text = "Result: ${state.result ?: "No recipe fetched yet."}",
+                    text = "Result: ${state.result?.getOrNull()?.recipes?.size ?: "No recipe fetched yet."}",
                 )
                 PrimaryButton(
                     text = "Fetch Recipe".asUiText,
                     loading = state.isLoading,
-                    enabled = state.result == null,
+                    enabled = state.result == null || state.result.exceptionOrNull() != null,
                     onClick = { onIntent(HomeIntent.OnFetchRecipe) },
+                    modifier = Modifier
+                        .padding(horizontal = Theme.size.s20)
+                        .fillMaxWidth(),
+                )
+            }
+        }
+        item {
+            Column {
+                Text(
+                    text = "Result: ${state.cachedResult?.getOrNull()?.recipes?.size ?: state.cachedResult?.exceptionOrNull() ?: "No recipe fetched yet."}",
+                )
+                PrimaryButton(
+                    text = "Fetch Recipe".asUiText,
+                    loading = state.isLoading,
+                    enabled = state.cachedResult == null || state.cachedResult.exceptionOrNull() != null,
+                    onClick = { onIntent(HomeIntent.OnLoadRecipe) },
                     modifier = Modifier
                         .padding(horizontal = Theme.size.s20)
                         .fillMaxWidth(),

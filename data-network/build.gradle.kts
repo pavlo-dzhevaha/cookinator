@@ -26,8 +26,12 @@ kotlin {
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
         implementation(libs.kotlinx.datetime)
+        // Koin
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)
+        // Supabase
+        implementation(platform(libs.supabase.bom))
+        implementation(libs.supabase.postgrest)
     }
 
     sourceSets {
@@ -62,15 +66,28 @@ buildkonfig {
     packageName = libs.versions.namespace.get() + ".network"
 
     // 1. Read the local.properties file
-    val localProperties = Properties()
-    val localPropertiesFile = rootProject.file("config/secrets.properties")
-    if (localPropertiesFile.exists()) {
-        localPropertiesFile.inputStream().use { localProperties.load(it) }
+    val secrets = Properties()
+    val secretsFile = rootProject.file("config/secrets.properties")
+    if (secretsFile.exists()) {
+        secretsFile.inputStream().use { secrets.load(it) }
     }
 
     // 2. Map the property to a Kotlin constant
     defaultConfigs {
-        val apiKey = localProperties.getProperty("SPOONACULAR_API_KEY") ?: ""
-        buildConfigField(FieldSpec.Type.STRING, "API_KEY", apiKey)
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "API_KEY",
+            secrets.getProperty("SPOONACULAR_API_KEY") ?: "",
+        )
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "SUPABASE_URL",
+            secrets.getProperty("SUPABASE_URL") ?: "",
+        )
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "SUPABASE_ANON_KEY",
+            secrets.getProperty("SUPABASE_ANON_KEY") ?: "",
+        )
     }
 }

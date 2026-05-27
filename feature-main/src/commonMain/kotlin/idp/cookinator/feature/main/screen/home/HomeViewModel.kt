@@ -12,6 +12,7 @@ internal class HomeViewModel(
     override fun onIntent(intent: HomeIntent) {
         when (intent) {
             HomeIntent.OnFetchRecipe -> fetchRandomRecipes()
+            HomeIntent.OnLoadRecipe -> loadCachedRecipes()
             is HomeIntent.OnSearchQueryChange -> changeSearchQuery(intent.query)
         }
     }
@@ -20,6 +21,12 @@ internal class HomeViewModel(
         updateState { it.copy(isLoading = true) }
         val result = network.getRandomRecipes()
         updateState { it.copy(isLoading = false, result = result) }
+    }
+
+    private fun loadCachedRecipes() = launch {
+        updateState { it.copy(isLoading = true) }
+        val result = network.getCachedRecipes()
+        updateState { it.copy(isLoading = false, cachedResult = result) }
     }
 
     private fun changeSearchQuery(query: String) {
