@@ -5,17 +5,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
- * A base ViewModel that provides a simple way to manage UI state using StateFlow.
+ * A base ViewModel class that manages a state of type [S] using a [MutableStateFlow]. This class
+ * provides a simple way to manage UI state and expose it as a read-only [StateFlow] to the UI. It
+ * also includes a helper function to update the state and a coroutine exception handler to catch
+ * and log crashes. Subclasses can extend this ViewModel to manage their specific state and provide
+ * additional functionality as needed.
+ *
+ * @param S The type of the state that this ViewModel manages.
+ * @param initialState The initial state value that the ViewModel will start with.
  */
-abstract class BaseViewModel<S, I, E>(
+abstract class StateViewModel<S>(
     initialState: S,
 ) : ViewModel() {
     //region State management
@@ -39,62 +44,13 @@ abstract class BaseViewModel<S, I, E>(
     /**
      * Updates the state using the provided update function. Only emits a new state if it has changed.
      */
-    protected fun updateState(update: (S) -> S) {
-        val oldState = state
-        val newState = update(oldState)
-        if (newState != oldState) {
-            mutableStateFlow.value = newState
-        }
-    }
+    protected fun updateState(update: (S) -> S) = mutableStateFlow.update(update)
 
     /**
      * Collects the state as a Compose State, automatically handling lifecycle awareness.
      */
     @Composable
     fun collectStateWithLifecycle() = stateFlow.collectAsStateWithLifecycle()
-
-    //endregion
-
-    //region Event management
-
-    /**
-     * Event channel for one-time events. This is useful for actions that should only be handled
-     * once, such as navigation or showing a toast. The events are sent through the channel and can
-     * be collected as a flow in the UI.
-     */
-    private val eventChannel = Channel<E>()
-
-    /**
-     * Sends an event to the event channel. This can be called from the ViewModel to trigger
-     * one-time events in the UI.
-     */
-    val events = eventChannel.receiveAsFlow()
-
-    /**
-     * A helper function to send an event. This can be used in the ViewModel to trigger events
-     * without directly accessing the channel.
-     */
-    protected fun sendEvent(event: E) = launch { eventChannel.send(event) }
-
-    /**
-     * A helper function to try sending an event without suspending. This can be used for events
-     * that are not critical and can be dropped if the channel is full.
-     */
-    protected fun trySendEvent(event: E) {
-        eventChannel.trySend(event).onFailure { e ->
-            // TODO log dropped event
-        }
-    }
-
-    //endregion
-
-    //region Intent management
-
-    /**
-     * An abstract function to handle intents. This should be implemented by subclasses to define
-     * how the ViewModel responds to different intents from the UI.
-     */
-    abstract fun onIntent(intent: I)
 
     //endregion
 
@@ -118,9 +74,4 @@ abstract class BaseViewModel<S, I, E>(
     ) { block() }
 
     //endregion
-
-    override fun onCleared() {
-        eventChannel.close()
-        super.onCleared()
-    }
 }

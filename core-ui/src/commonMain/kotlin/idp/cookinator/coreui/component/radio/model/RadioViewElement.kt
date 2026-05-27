@@ -1,12 +1,15 @@
 package idp.cookinator.coreui.component.radio.model
 
+import idp.cookinator.localisation.UiText
+import idp.cookinator.localisation.UiText.Companion.asUiText
+
 /**
  * Interface representing an element in a radio button group.
  *
- * @property name The display name of the radio button element.
+ * @property title The display name of the radio button element.
  */
 interface RadioViewElement {
-    val name: String
+    val title: UiText
 
     companion object {
         /**
@@ -15,10 +18,10 @@ interface RadioViewElement {
          * @param name The display name of the radio button element.
          * @return A [RadioViewElement] instance with the specified name.
          */
-        fun create(name: String): RadioViewElement = DefaultRadioViewElement(name)
+        fun create(name: String): RadioViewElement = DefaultRadioViewElement(name.asUiText)
     }
 }
 
 private data class DefaultRadioViewElement(
-    override val name: String,
+    override val title: UiText,
 ) : RadioViewElement

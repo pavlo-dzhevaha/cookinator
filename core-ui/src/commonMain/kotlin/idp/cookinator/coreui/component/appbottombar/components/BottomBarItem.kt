@@ -4,6 +4,8 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -27,24 +29,33 @@ internal fun BottomBarItem(
     onClick: () -> Unit
 ) {
     Box(
-        modifier = modifier
-            .clip(CircleShape)
-            .clickable(
-                enabled = !selected,
-                onClick = onClick,
-            ),
+        modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
         Crossfade(
             targetState = if (selected) item.iconActive else item.iconInactive,
             animationSpec = defaultTween(),
+            modifier = Modifier
+                .aspectRatio(1f)
+                .clip(CircleShape)
+                .clickable(
+                    enabled = !selected,
+                    onClick = onClick,
+                ),
         ) { icon ->
-            Image(
-                imageVector = icon,
-                contentDescription = ContentDescription.ICON,
+            Box(
                 modifier = Modifier
-                    .size(height)
-            )
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Image(
+                    imageVector = icon,
+                    contentDescription = ContentDescription.ICON,
+                    modifier = Modifier
+                        .size(height)
+                        .align(Alignment.Center),
+                )
+            }
         }
     }
 }

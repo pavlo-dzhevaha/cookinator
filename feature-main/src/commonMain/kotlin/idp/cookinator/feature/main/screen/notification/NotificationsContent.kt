@@ -6,12 +6,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import cookinator.localisation.generated.resources.Res
+import cookinator.localisation.generated.resources.notifications_title
 import idp.cookinator.coreui.component.apptopbar.AppTopBar
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.vector.Filter
 import idp.cookinator.coreui.vector.Icons
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun NotificationsContent(
@@ -27,7 +30,7 @@ internal fun NotificationsContent(
     ) {
         stickyHeader {
             AppTopBar(
-                title = "Notifications",
+                title = stringResource(Res.string.notifications_title),
                 trailingIcon = Icons.Filter,
                 onTrailingAction = { /* TODO Open notifications settings */ },
             )

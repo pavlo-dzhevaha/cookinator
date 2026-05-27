@@ -30,6 +30,7 @@ import idp.cookinator.coreui.styling.provider.LocalThemeTypography
  */
 @Composable
 fun AppTheme(
+    locale: ThemeLocale = ThemeLocale.default,
     style: ThemeStyle = ThemeStyle.default,
     content: @Composable () -> Unit,
 ) {
@@ -49,11 +50,13 @@ fun AppTheme(
         LocalThemeSize provides attributeThemeSize,
         LocalThemeTypography provides typography,
     ) {
-        MaterialTheme(
-            colorScheme = currentColorPalette.asMaterialColorScheme(),
-            typography = typography.asMaterialTypography(),
-            content = content,
-        )
+        AppLocale(locale) {
+            MaterialTheme(
+                colorScheme = currentColorPalette.asMaterialColorScheme(),
+                typography = typography.asMaterialTypography(),
+                content = content,
+            )
+        }
     }
 }
 

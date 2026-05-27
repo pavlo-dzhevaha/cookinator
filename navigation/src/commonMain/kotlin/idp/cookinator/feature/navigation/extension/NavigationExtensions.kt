@@ -31,7 +31,7 @@ typealias Navigator = NavBackStack<NavKey>
  * types used in the app. This configuration is passed to the [rememberNavBackStack] function to
  * enable saving and restoring the navigation state across process death.
  */
-val configuration = SavedStateConfiguration {
+val appConfiguration = SavedStateConfiguration {
     serializersModule = SerializersModule {
         include(featureSplashSerializer)
         include(featureOnboardingSerializer)

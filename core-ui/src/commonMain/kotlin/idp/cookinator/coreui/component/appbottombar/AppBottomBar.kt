@@ -22,7 +22,7 @@ import idp.cookinator.coreui.component.appbottombar.components.BottomBarCurveSha
 import idp.cookinator.coreui.component.appbottombar.components.BottomBarItem
 import idp.cookinator.coreui.component.appbottombar.model.BottomBarElement
 import idp.cookinator.coreui.component.spacer.SpacerWeight
-import idp.cookinator.coreui.extension.longestSide
+import idp.cookinator.coreui.utils.longestSide
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme

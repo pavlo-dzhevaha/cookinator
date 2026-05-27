@@ -1,4 +1,4 @@
-package idp.cookinator.coreui.extension
+package idp.cookinator.coreui.utils
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.ime
@@ -41,4 +41,14 @@ fun RemoveFocusWhenKeyboardHiddenEffect() {
             focusManager.clearFocus()
         }
     }
+}
+
+/**
+ * Checks if the device is in portrait mode by comparing the screen height and width. If the height
+ * is greater than the width, it means that the device is in portrait mode.
+ */
+@Composable
+fun isPortrait(): Boolean {
+    val (screenWidth, screenHeight) = LocalWindowInfo.current.containerDpSize
+    return screenHeight > screenWidth
 }

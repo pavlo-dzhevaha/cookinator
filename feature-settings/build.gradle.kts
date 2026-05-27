@@ -43,6 +43,7 @@ kotlin {
 
         implementation(projects.navigation)
         implementation(projects.coreUi)
+        implementation(projects.localisation)
         implementation(projects.dataPreferences)
     }
 

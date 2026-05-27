@@ -1,13 +1,16 @@
 package idp.cookinator.feature.settings.screen.contract
 
+import idp.cookinator.coreui.styling.theme.ThemeLocale
 import idp.cookinator.coreui.styling.theme.ThemeStyle
 
 internal data class State(
-    val theme: ThemeStyle,
+    val style: ThemeStyle,
+    val locale: ThemeLocale,
 ) {
     companion object {
         val initialState = State(
-            theme = ThemeStyle.default,
+            style = ThemeStyle.default,
+            locale = ThemeLocale.default,
         )
     }
 }

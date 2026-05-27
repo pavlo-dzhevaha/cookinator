@@ -6,10 +6,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import cookinator.localisation.generated.resources.Res
+import cookinator.localisation.generated.resources.saved_title
 import idp.cookinator.coreui.component.apptopbar.AppTopBar
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun SavedContent(
@@ -25,7 +28,7 @@ internal fun SavedContent(
     ) {
         stickyHeader {
             AppTopBar(
-                title = "Saved recipes",
+                title = stringResource(Res.string.saved_title),
             )
         }
     }

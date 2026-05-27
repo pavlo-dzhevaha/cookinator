@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Налаштування</string>
+    <string name="settings_style_title">Кольорова гама</string>
+    <string name="settings_style_light">Світла</string>
+    <string name="settings_style_dark">Темна</string>
+    <string name="settings_style_auto">Системна</string>
+    <string name="settings_locale_title">Мова</string>
+    <string name="settings_locale_english">English</string>
+    <string name="settings_locale_ukrainian">Українська</string>
+</resources>

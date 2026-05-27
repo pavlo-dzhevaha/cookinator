@@ -1,6 +1,7 @@
 package idp.cookinator.feature.onboarding.screen.welcome
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import cookinator.core_ui.generated.resources.img_welcome_dark
 import cookinator.core_ui.generated.resources.img_welcome_light
@@ -34,6 +36,7 @@ import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.Star
 import idp.cookinator.feature.onboarding.screen.welcome.contract.Intent
 import idp.cookinator.feature.onboarding.screen.welcome.contract.State
+import idp.cookinator.localisation.UiText.Companion.asString
 import idp.cookinator.localisation.UiText.Companion.asUiText
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -46,14 +49,12 @@ internal fun WelcomeContent(
     state: State,
     onIntent: (Intent) -> Unit,
 ) {
-    val isLightTheme = Theme.color.isLight
-
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
         Image(
-            painter = painterResource(if (isLightTheme) DrawableRes.img_welcome_dark else DrawableRes.img_welcome_light),
+            painter = painterResource(if (Theme.color.isLight) DrawableRes.img_welcome_dark else DrawableRes.img_welcome_light),
             contentDescription = ContentDescription.IMAGE,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -104,6 +105,7 @@ internal fun WelcomeContent(
                 text = stringResource(StringRes.onboarding_description),
                 style = Theme.typography.regular.p,
                 color = Theme.color.neutral.n0,
+                textAlign = TextAlign.Center,
             )
             SpacerHeight(Theme.size.s40)
             PrimaryButton(
@@ -111,6 +113,17 @@ internal fun WelcomeContent(
                 hasIcon = true,
                 loading = state.isLoading,
             ) { onIntent(Intent.OnContinue) }
+            SpacerHeight(Theme.size.s12)
+            Text(
+                text = state.locale.title.asString,
+                style = Theme.typography.regular.p,
+                color = Theme.color.neutral.n0,
+                modifier = Modifier
+                    .clickable(
+                        role = Role.Button,
+                    ) { onIntent(Intent.OnChangeLocale) }
+                    .padding(Theme.size.s8),
+            )
         }
     }
 }

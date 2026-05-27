@@ -24,15 +24,19 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
+import cookinator.localisation.generated.resources.Res
+import cookinator.localisation.generated.resources.home_search_hint
+import cookinator.localisation.generated.resources.home_title
 import idp.cookinator.coreui.component.apptopbar.AppTopBar
-import idp.cookinator.coreui.extension.RemoveFocusWhenKeyboardHiddenEffect
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.utils.ContentDescription
+import idp.cookinator.coreui.utils.RemoveFocusWhenKeyboardHiddenEffect
 import idp.cookinator.coreui.utils.realImePadding
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.Search
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun HomeContent(
@@ -50,7 +54,7 @@ internal fun HomeContent(
     ) {
         item {
             AppTopBar(
-                title = "Find best recipes for cooking",
+                title = stringResource(Res.string.home_title),
             )
         }
         stickyHeader {
@@ -104,7 +108,7 @@ internal fun HomeContent(
                     },
                     placeholder = {
                         Text(
-                            "Search recipes",
+                            stringResource(Res.string.home_search_hint),
                             style = Theme.typography.regular.label,
                             color = Theme.color.neutral.n30,
                         )

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Settings</string>
+    <string name="settings_style_title">Theme</string>
+    <string name="settings_style_light">Light</string>
+    <string name="settings_style_dark">Dark</string>
+    <string name="settings_style_auto">System</string>
+    <string name="settings_locale_title">Language</string>
+    <string name="settings_locale_english">English</string>
+    <string name="settings_locale_ukrainian">Українська</string>
+</resources>

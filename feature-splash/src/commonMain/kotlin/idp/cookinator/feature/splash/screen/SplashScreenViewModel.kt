@@ -1,6 +1,6 @@
 package idp.cookinator.feature.splash.screen
 
-import idp.cookinator.coreui.viewmodel.BaseViewModel
+import idp.cookinator.coreui.viewmodel.MviViewModel
 import idp.cookinator.feature.navigation.features.NavigationMain
 import idp.cookinator.feature.navigation.features.NavigationOnboarding
 import idp.cookinator.feature.splash.screen.contract.Event
@@ -12,7 +12,7 @@ import kotlin.time.Duration.Companion.seconds
 
 internal class SplashScreenViewModel(
     private val appStorage: AppStorage,
-) : BaseViewModel<State, Intent, Event>(State.initialState) {
+) : MviViewModel<State, Intent, Event>(State.initialState) {
     init {
         startDestinationLogic()
     }

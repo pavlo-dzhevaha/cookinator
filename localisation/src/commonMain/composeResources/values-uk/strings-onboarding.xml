@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_hint_title">Преміум рецептів</string>
+    <string name="onboarding_hint_count">60т+</string>
+    <string name="onboarding_title">Давай\nГотувати</string>
+    <string name="onboarding_description">Знайди найкращі рецепти для приготування</string>
+    <string name="onboarding_button">Почати готувати</string>
+</resources>

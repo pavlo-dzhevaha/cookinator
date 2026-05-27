@@ -5,8 +5,6 @@ import com.russhwolf.settings.coroutines.FlowSettings
 
 /**
  * A wrapper around [FlowSettings] to provide a more convenient API for the app's specific needs.
- *
- * TODO internal impl with public interface
  */
 @OptIn(ExperimentalSettingsApi::class)
 class AppStorage(
@@ -14,6 +12,7 @@ class AppStorage(
 ) {
     private val onboardingKey = "onboarding_completed"
     private val themeStyleKey = "theme_style"
+    private val languageKey = "app_language"
 
     suspend fun isOnboardingCompleted(): Boolean = storage.getBoolean(onboardingKey, false)
 
@@ -22,8 +21,11 @@ class AppStorage(
 
     fun observeCurrentThemeStyle() = storage.getStringFlow(themeStyleKey, "")
 
-    suspend fun setCurrentThemeStyle(themeStyle: String) =
-        storage.putString(themeStyleKey, themeStyle)
+    suspend fun setThemeStyle(themeStyle: String) = storage.putString(themeStyleKey, themeStyle)
+
+    fun observeLanguageTag() = storage.getStringFlow(languageKey, "")
+
+    suspend fun setLanguage(languageTag: String) = storage.putString(languageKey, languageTag)
 
     suspend fun clear() = storage.clear()
 }

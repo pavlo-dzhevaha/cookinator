@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_title">Знайдіть найкращі рецепти для приготування їжі</string>
+    <string name="home_search_hint">Пошук рецептів</string>
+</resources>

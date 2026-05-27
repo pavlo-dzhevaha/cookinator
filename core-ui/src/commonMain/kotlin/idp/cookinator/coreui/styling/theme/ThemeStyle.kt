@@ -1,7 +1,13 @@
 package idp.cookinator.coreui.styling.theme
 
+import cookinator.localisation.generated.resources.Res
+import cookinator.localisation.generated.resources.settings_style_auto
+import cookinator.localisation.generated.resources.settings_style_dark
+import cookinator.localisation.generated.resources.settings_style_light
 import idp.cookinator.coreui.component.radio.model.RadioViewElement
 import idp.cookinator.coreui.styling.theme.ThemeStyle.Companion.default
+import idp.cookinator.localisation.UiText
+import idp.cookinator.localisation.UiText.Companion.asUiText
 
 /**
  * Represents the available theme styles for the application.
@@ -16,6 +22,13 @@ enum class ThemeStyle : RadioViewElement {
     DARK,
     AUTO;
 
+    override val title: UiText
+        get() = when (this) {
+            LIGHT -> Res.string.settings_style_light.asUiText
+            DARK -> Res.string.settings_style_dark.asUiText
+            AUTO -> Res.string.settings_style_auto.asUiText
+        }
+
     companion object {
         /**
          * The default [ThemeStyle] to use when no specific style is set or when an unrecognized
@@ -27,11 +40,6 @@ enum class ThemeStyle : RadioViewElement {
          * Returns the [ThemeStyle] corresponding to the given [value], or the [default] if the
          * value is not recognized.
          */
-        fun fromStringOrDefault(value: String): ThemeStyle = when (value) {
-            LIGHT.name -> LIGHT
-            DARK.name -> DARK
-            AUTO.name -> AUTO
-            else -> default
-        }
+        fun parse(value: String): ThemeStyle = entries.find { it.name == value } ?: default
     }
 }

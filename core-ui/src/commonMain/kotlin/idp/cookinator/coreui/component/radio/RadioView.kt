@@ -3,6 +3,7 @@ package idp.cookinator.coreui.component.radio
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,6 +20,8 @@ import idp.cookinator.coreui.component.radio.model.RadioViewElement
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
+import idp.cookinator.coreui.utils.isPortrait
+import idp.cookinator.localisation.UiText.Companion.asString
 
 @Composable
 fun <T : RadioViewElement> RadioView(
@@ -28,7 +31,26 @@ fun <T : RadioViewElement> RadioView(
     items: List<T>,
     onSelect: (T) -> Unit,
 ) {
-    val shape = remember { RoundedCornerShape(percent = 50) }
+    val isPortrait = isPortrait()
+
+    val corner = Theme.size.s24
+    val shape = remember(isPortrait) {
+        if (isPortrait) {
+            RoundedCornerShape(corner)
+        } else {
+            RoundedCornerShape(percent = 50)
+        }
+    }
+
+    val modifier = modifier
+        .selectableGroup()
+        .padding(horizontal = Theme.size.s16)
+        .background(
+            color = Theme.color.neutral.n0,
+            shape = shape,
+        )
+        .clip(shape)
+
     Column {
         title?.also {
             Text(
@@ -42,30 +64,40 @@ fun <T : RadioViewElement> RadioView(
                     ),
             )
         }
-        Row(
-            modifier = modifier
-                .selectableGroup()
-                .padding(horizontal = Theme.size.s16)
-                .background(
-                    color = Theme.color.neutral.n0,
-                    shape = shape,
-                )
-                .clip(shape),
-        ) {
-            items.forEach { item ->
-                val isSelected = item == selected
-                RadioViewItem(
-                    text = item.name,
-                    selected = isSelected,
-                    onClick = { onSelect(item) },
-                    modifier = Modifier
-                        .weight(1f),
-                )
+        if (isPortrait) {
+            Column(
+                modifier = modifier
+            ) {
+                items.forEach { item ->
+                    val isSelected = item == selected
+                    RadioViewItem(
+                        text = item.title.asString,
+                        selected = isSelected,
+                        onClick = { onSelect(item) },
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                    )
+                }
+            }
+        } else {
+            // Landscape orientation: Place items in a Row
+            Row(
+                modifier = modifier
+            ) {
+                items.forEach { item ->
+                    val isSelected = item == selected
+                    RadioViewItem(
+                        text = item.title.asString,
+                        selected = isSelected,
+                        onClick = { onSelect(item) },
+                        modifier = Modifier
+                            .weight(1f),
+                    )
+                }
             }
         }
     }
 }
-
 
 @LightDarkPreview
 @Composable
