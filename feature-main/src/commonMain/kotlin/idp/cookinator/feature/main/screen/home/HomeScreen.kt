@@ -33,13 +33,13 @@ internal fun HomeScreen(
             empty = {
                 InfoContainer(
                     title = stringResource(Res.string.home_empty_info),
-                    onRetry = { viewModel.onIntent(HomeIntent.OnFetchRecipe) },
+                    onAction = { viewModel.onIntent(HomeIntent.OnFetchRecipe) },
                 )
             },
             error = {
                 InfoContainer(
                     title = stringResource(Res.string.home_error_info),
-                    onRetry = { viewModel.onIntent(HomeIntent.OnFetchRecipe) },
+                    onAction = { viewModel.onIntent(HomeIntent.OnFetchRecipe) },
                 )
             },
             success = {

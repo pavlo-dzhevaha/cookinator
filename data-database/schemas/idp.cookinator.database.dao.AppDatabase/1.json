@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e3be3285c6719555549452057b79e59a",
+    "identityHash": "38b773b0cb25c697c3bdcc17eede52ae",
     "entities": [
       {
         "tableName": "recipes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `image` TEXT, `readyInMinutes` INTEGER, `servings` INTEGER, `summary` TEXT, `vegetarian` INTEGER, `glutenFree` INTEGER, `ingredientsJson` TEXT NOT NULL, `instructionsJson` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `image` TEXT, `readyInMinutes` INTEGER, `servings` INTEGER, `summary` TEXT, `vegetarian` INTEGER NOT NULL, `vegan` INTEGER NOT NULL, `glutenFree` INTEGER NOT NULL, `dairyFree` INTEGER NOT NULL, `ingredientsJson` TEXT NOT NULL, `instructionsJson` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -43,12 +43,26 @@
           {
             "fieldPath": "vegetarian",
             "columnName": "vegetarian",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vegan",
+            "columnName": "vegan",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "glutenFree",
             "columnName": "glutenFree",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dairyFree",
+            "columnName": "dairyFree",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "ingredientsJson",
@@ -69,11 +83,29 @@
             "id"
           ]
         }
+      },
+      {
+        "tableName": "liked_recipes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recipeId` INTEGER NOT NULL, PRIMARY KEY(`recipeId`))",
+        "fields": [
+          {
+            "fieldPath": "recipeId",
+            "columnName": "recipeId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "recipeId"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e3be3285c6719555549452057b79e59a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '38b773b0cb25c697c3bdcc17eede52ae')"
     ]
   }
 }

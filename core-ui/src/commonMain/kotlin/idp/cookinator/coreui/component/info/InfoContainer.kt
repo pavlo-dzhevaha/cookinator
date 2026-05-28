@@ -13,13 +13,15 @@ import idp.cookinator.coreui.component.button.primary.PrimaryButton
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
+import idp.cookinator.localisation.UiText
 import idp.cookinator.localisation.UiText.Companion.asUiText
 
 @Composable
 fun InfoContainer(
     modifier: Modifier = Modifier,
     title: String,
-    onRetry: () -> Unit,
+    actionText: UiText = Res.string.common_try_again.asUiText,
+    onAction: () -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -33,8 +35,8 @@ fun InfoContainer(
             color = Theme.color.neutral.n90,
         )
         PrimaryButton(
-            text = Res.string.common_try_again.asUiText,
-            onClick = onRetry,
+            text = actionText,
+            onClick = onAction,
         )
     }
 }
@@ -44,6 +46,6 @@ fun InfoContainer(
 private fun Preview() = AppTheme {
     InfoContainer(
         title = "This is an info container",
-        onRetry = {},
+        onAction = {},
     )
 }

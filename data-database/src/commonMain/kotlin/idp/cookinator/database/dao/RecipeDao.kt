@@ -8,7 +8,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
+import idp.cookinator.database.model.LikedRecipeEntity
 import idp.cookinator.database.model.RecipeEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
@@ -17,11 +19,23 @@ interface RecipeDao {
 
     @Query("SELECT * FROM recipes")
     suspend fun getAllRecipes(): List<RecipeEntity>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun likeRecipe(likedRecipe: LikedRecipeEntity)
+
+    @Query("DELETE FROM liked_recipes WHERE recipeId = :id")
+    suspend fun unlikeRecipe(id: Int)
+
+    @Query("SELECT recipeId FROM liked_recipes")
+    fun observeLikedRecipeIds(): Flow<List<Int>>
 }
 
 @Database(
-    entities = [RecipeEntity::class],
-    version = 2,
+    entities = [
+        RecipeEntity::class,
+        LikedRecipeEntity::class,
+    ],
+    version = 1,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {

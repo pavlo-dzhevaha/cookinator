@@ -7,6 +7,8 @@ import idp.cookinator.network.model.RandomRecipesResponse
 import idp.cookinator.network.model.toDomainModels
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.withContext
 
 /**
@@ -73,6 +75,26 @@ class DomainManager(
             }.onFailure {
                 log { "Failed to fetch random recipes from the network. Error: ${it.message}" }
             }.map { it.shuffled() }
+    }
+
+    /**
+     * A reactive stream of liked recipe IDs.
+     * The UI can collect this Flow to instantly update the "Heart" icon on recipes.
+     */
+    val likedRecipeIds: Flow<List<Int>> = database
+        .observeLikedRecipeIds()
+        .getOrDefault(flowOf(emptyList()))
+
+    /**
+     * Toggles whether a specific recipe is liked by the user.
+     */
+    suspend fun setRecipeLiked(recipeId: Int, isLiked: Boolean): Result<Unit> = hardWork {
+        database.toggleRecipeLike(recipeId, isLiked)
+            .onSuccess {
+                log { "Successfully updated like state for recipe $recipeId to $isLiked" }
+            }.onFailure { e ->
+                log { "Failed to update like state for recipe $recipeId. Error: ${e.message}" }
+            }
     }
 
     /**

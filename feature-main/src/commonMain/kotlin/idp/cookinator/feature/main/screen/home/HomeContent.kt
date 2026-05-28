@@ -17,7 +17,7 @@ import idp.cookinator.feature.main.screen.home.components.HomeSearch
 import idp.cookinator.feature.main.screen.home.components.HomeTrending
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
 import idp.cookinator.feature.main.screen.home.contract.HomeState
-import idp.cookinator.model.Recipe
+import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -50,6 +50,7 @@ internal fun HomeContent(
         item {
             HomeTrending(
                 items = state.trending,
+                onIntent = onIntent,
             )
         }
     }
@@ -61,7 +62,7 @@ private fun Preview() = AppTheme {
     HomeContent(
         bottomBarHeight = Dp.Hairline,
         state = HomeState.initialState.copy(
-            trending = Recipe.stubs,
+            trending = RecipeUiModel.stubs,
         ),
         onIntent = {},
     )

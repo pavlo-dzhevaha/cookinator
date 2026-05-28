@@ -46,30 +46,31 @@ import idp.cookinator.coreui.vector.BookmarkInactive
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.More
 import idp.cookinator.coreui.vector.Star
-import idp.cookinator.model.Recipe
+import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
 import org.jetbrains.compose.resources.stringResource
 
 private const val ITEM_IMAGE_HEIGHT_RATIO = 280 / 180f
 
 @Composable
 internal fun HomeTrendingItem(
-    item: Recipe,
+    modifier: Modifier = Modifier,
+    item: RecipeUiModel,
     imageHeight: Dp,
-    selected: Boolean = false,
+    onLike: () -> Unit,
 ) {
     val density = LocalDensity.current
     val shape = RoundedCornerShape(Theme.size.s10)
     var itemWidth by remember { mutableStateOf(Dp.Hairline) }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .clip(shape)
             .clickable { /*TODO go to detail*/ }
     ) {
         Column {
             Box {
                 AsyncImage(
-                    model = item.image,
+                    model = item.recipe.image,
                     contentDescription = ContentDescription.IMAGE,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -85,7 +86,7 @@ internal fun HomeTrendingItem(
                 Text(
                     text = stringResource(
                         Res.string.home_trending_item_time,
-                        item.readyInMinutes.toString(),
+                        item.recipe.readyInMinutes.toString(),
                     ),
                     style = Theme.typography.regular.small,
                     color = Theme.color.neutral.n0,
@@ -109,7 +110,7 @@ internal fun HomeTrendingItem(
                     .width(itemWidth),
             ) {
                 Text(
-                    text = item.title,
+                    text = item.recipe.title,
                     style = Theme.typography.bold.p,
                     color = Theme.color.neutral.n90,
                     maxLines = 1,
@@ -152,13 +153,13 @@ internal fun HomeTrendingItem(
                     .size(Theme.size.s16)
             )
             Text(
-                text = item.servings.toString(),
+                text = item.recipe.servings.toString(),
                 style = Theme.typography.bold.label,
                 color = Theme.color.neutral.n0,
             )
         }
         Crossfade(
-            targetState = if (selected) Icons.BookmarkActive else Icons.BookmarkInactive,
+            targetState = if (item.isSaved) Icons.BookmarkActive else Icons.BookmarkInactive,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(Theme.size.s8)
@@ -168,12 +169,12 @@ internal fun HomeTrendingItem(
                     color = Theme.color.neutral.n0,
                     shape = CircleShape,
                 )
-                .clickable { /*TODO toggle saved*/ }
+                .clickable(onClick = onLike)
                 .padding(Theme.size.s6)
         ) { icon ->
             Image(
                 imageVector = icon,
-                colorFilter = if (selected) null else ColorFilter.tint(Theme.color.neutral.n90),
+                colorFilter = if (item.isSaved) null else ColorFilter.tint(Theme.color.neutral.n90),
                 contentDescription = ContentDescription.ICON,
                 modifier = Modifier
                     .fillMaxSize(),
@@ -186,7 +187,8 @@ internal fun HomeTrendingItem(
 @Composable
 private fun Preview() = AppTheme {
     HomeTrendingItem(
-        item = Recipe.stub,
+        item = RecipeUiModel.stub,
         imageHeight = 120.dp,
+        onLike = {},
     )
 }

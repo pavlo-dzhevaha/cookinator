@@ -44,6 +44,7 @@ internal sealed interface NavigationMainInternal : NavKey {
 
 internal fun NavigationMainInternal.graph(
     navigator: Navigator,
+    internalNavigator: Navigator,
     bottomBarHeight: Dp,
 ): NavEntry<NavKey> = when (this) {
     NavigationMainInternal.Home -> NavEntry(this) {
@@ -55,7 +56,7 @@ internal fun NavigationMainInternal.graph(
 
     NavigationMainInternal.Saved -> NavEntry(this) {
         SavedScreen(
-            navigator = navigator,
+            internalNavigator = internalNavigator,
             bottomBarHeight = bottomBarHeight,
         )
     }

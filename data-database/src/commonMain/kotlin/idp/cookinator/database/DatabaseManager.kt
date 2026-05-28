@@ -1,10 +1,12 @@
 package idp.cookinator.database
 
 import idp.cookinator.database.dao.RecipeDao
+import idp.cookinator.database.model.LikedRecipeEntity
 import idp.cookinator.database.model.RecipeEntity
 import idp.cookinator.database.model.toDomainModel
 import idp.cookinator.database.model.toEntity
 import idp.cookinator.model.Recipe
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Manages database operations related to recipes. This class provides methods to save recipes to the
@@ -14,7 +16,7 @@ import idp.cookinator.model.Recipe
  * @property recipeDao The Data Access Object (DAO) for performing database operations on recipes.
  */
 class DatabaseManager(
-    private val recipeDao: RecipeDao
+    private val recipeDao: RecipeDao,
 ) {
     /**
      * Saves a list of [Recipe] objects to the local database. Each [Recipe] is converted to a
@@ -36,5 +38,22 @@ class DatabaseManager(
         recipeDao
             .getAllRecipes()
             .map(RecipeEntity::toDomainModel)
+    }
+
+    /**
+     * Returns a reactive Flow of liked recipe IDs as Strings.
+     */
+    fun observeLikedRecipeIds(): Result<Flow<List<Int>>> =
+        runCatching { recipeDao.observeLikedRecipeIds() }
+
+    /**
+     * Toggles the liked state of a recipe in the local database.
+     */
+    suspend fun toggleRecipeLike(recipeId: Int, isLiked: Boolean) = runCatching {
+        if (isLiked) {
+            recipeDao.likeRecipe(LikedRecipeEntity(recipeId))
+        } else {
+            recipeDao.unlikeRecipe(recipeId)
+        }
     }
 }

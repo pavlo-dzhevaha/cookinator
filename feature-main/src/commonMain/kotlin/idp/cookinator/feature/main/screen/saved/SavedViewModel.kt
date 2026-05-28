@@ -1,20 +1,20 @@
-package idp.cookinator.feature.main.screen.home
+package idp.cookinator.feature.main.screen.saved
 
 import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.MviViewModel
 import idp.cookinator.domain.DomainManager
-import idp.cookinator.feature.main.screen.home.contract.HomeEvent
-import idp.cookinator.feature.main.screen.home.contract.HomeIntent
-import idp.cookinator.feature.main.screen.home.contract.HomeState
 import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
+import idp.cookinator.feature.main.screen.saved.contract.SavedEvent
+import idp.cookinator.feature.main.screen.saved.contract.SavedIntent
+import idp.cookinator.feature.main.screen.saved.contract.SavedState
 import idp.cookinator.model.Recipe
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 
-internal class HomeViewModel(
+internal class SavedViewModel(
     private val domain: DomainManager,
-) : MviViewModel<HomeState, HomeIntent, HomeEvent>(HomeState.initialState) {
+) : MviViewModel<SavedState, SavedIntent, SavedEvent>(SavedState.initialState) {
 
     private val rawRecipes = MutableStateFlow<List<Recipe>>(emptyList())
 
@@ -23,16 +23,11 @@ internal class HomeViewModel(
         fetchData()
     }
 
-    override fun onIntent(intent: HomeIntent) {
+    override fun onIntent(intent: SavedIntent) {
         when (intent) {
-            HomeIntent.OnFetchRecipe -> fetchData()
-            is HomeIntent.OnSearchQueryChange -> onChangeSearchQuery(intent.query)
-            is HomeIntent.OnToggleSaved -> onToggleSaved(intent.model)
+            is SavedIntent.OnToggleSaved -> onToggleSaved(intent.model)
+            SavedIntent.OnRetry -> fetchData()
         }
-    }
-
-    private fun onChangeSearchQuery(query: String) {
-        updateState { it.copy(query = query) }
     }
 
     private fun onToggleSaved(model: RecipeUiModel) = launch {
@@ -63,18 +58,21 @@ internal class HomeViewModel(
             domain.likedRecipeIds
         ) { recipes, savedIds ->
             // Map the raw recipes into UI models
-            recipes.map { recipe ->
-                RecipeUiModel(
-                    recipe = recipe,
-                    isSaved = savedIds.contains(recipe.id)
-                )
-            }
+            recipes
+                .map { recipe ->
+                    RecipeUiModel(
+                        recipe = recipe,
+                        isSaved = savedIds.contains(recipe.id)
+                    )
+                }.filter(RecipeUiModel::isSaved)
         }.collectLatest { combinedUiList ->
-            if (combinedUiList.isNotEmpty()) {
+            if (combinedUiList.isEmpty()) {
+                updateState { it.copy(uiState = UiState.EMPTY) }
+            } else {
                 updateState {
                     it.copy(
                         uiState = UiState.SUCCESS,
-                        trending = combinedUiList.take(10)
+                        items = combinedUiList,
                     )
                 }
             }

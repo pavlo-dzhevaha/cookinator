@@ -16,7 +16,9 @@ val dataDatabaseModule: Module = module {
 
     single<AppDatabase> {
         val builder = get<RoomDatabase.Builder<AppDatabase>>()
-        builder.setDriver(BundledSQLiteDriver())
+        builder
+            .setDriver(BundledSQLiteDriver())
+            .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
     }
 

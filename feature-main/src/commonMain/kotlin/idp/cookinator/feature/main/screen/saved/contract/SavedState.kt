@@ -1,19 +1,17 @@
-package idp.cookinator.feature.main.screen.home.contract
+package idp.cookinator.feature.main.screen.saved.contract
 
 import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.base.BaseState
 import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
 
-internal data class HomeState(
+internal data class SavedState(
     val uiState: UiState,
-    val query: String,
-    val trending: List<RecipeUiModel>,
+    val items: List<RecipeUiModel>,
 ) : BaseState {
     companion object {
-        val initialState = HomeState(
+        val initialState = SavedState(
             uiState = UiState.LOADING,
-            query = "",
-            trending = emptyList(),
+            items = emptyList(),
         )
     }
 }

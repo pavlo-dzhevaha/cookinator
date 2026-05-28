@@ -25,18 +25,20 @@ import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.utils.ContentDescription
 import idp.cookinator.coreui.vector.ArrowRight
 import idp.cookinator.coreui.vector.Icons
-import idp.cookinator.model.Recipe
+import idp.cookinator.feature.main.screen.home.contract.HomeIntent
+import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
 import org.jetbrains.compose.resources.stringResource
 
-private const val ITEM_IMAGE_HEIGHT_RATIO = 180f / 812f
+const val IMAGE_HEIGHT_RATIO = 180f / 812f
 
 @Composable
 internal fun HomeTrending(
-    items: List<Recipe>,
+    items: List<RecipeUiModel>,
+    onIntent: (HomeIntent) -> Unit,
 ) {
     val screenSize = LocalWindowInfo.current.containerDpSize
     val imageHeight = remember(screenSize) {
-        screenSize.height * ITEM_IMAGE_HEIGHT_RATIO
+        screenSize.height * IMAGE_HEIGHT_RATIO
     }
 
     Column(
@@ -82,6 +84,7 @@ internal fun HomeTrending(
                 HomeTrendingItem(
                     item = item,
                     imageHeight = imageHeight,
+                    onLike = { onIntent(HomeIntent.OnToggleSaved(item)) },
                 )
             }
         }
@@ -92,6 +95,7 @@ internal fun HomeTrending(
 @Composable
 private fun Preview() = AppTheme {
     HomeTrending(
-        items = Recipe.stubs,
+        items = RecipeUiModel.stubs,
+        onIntent = {},
     )
 }

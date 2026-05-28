@@ -5,6 +5,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,16 +41,22 @@ internal fun MainScreen(
     var currentTab by rememberSaveable { mutableStateOf(initialTab) }
     var isForward by remember { mutableStateOf(true) }
 
+    LaunchedEffect(internalNavigator.lastOrNull()) {
+        val entry = internalNavigator.lastOrNull()
+        val targetTab = BottomBarElement.entries.find { it.navigationKey == entry }
+        if (targetTab != null && targetTab != currentTab) {
+            val current = BottomBarElement.entries.indexOf(currentTab)
+            val target = BottomBarElement.entries.indexOf(targetTab)
+            isForward = target > current
+            currentTab = targetTab
+        }
+    }
+
     Scaffold(
         bottomBar = {
             AppBottomBar(
                 selected = currentTab,
                 onItemSelected = { item ->
-                    val current = BottomBarElement.entries.indexOf(currentTab)
-                    val target = BottomBarElement.entries.indexOf(item)
-                    @Suppress("AssignedValueIsNeverRead")
-                    isForward = target > current
-                    currentTab = item
                     internalNavigator.pushToTop(item.navigationKey)
                 },
                 onAddClick = { /* TODO */ },
@@ -72,6 +79,7 @@ internal fun MainScreen(
             when (key) {
                 is NavigationMainInternal -> key.graph(
                     navigator = navigator,
+                    internalNavigator = internalNavigator,
                     bottomBarHeight = paddingValues.calculateBottomPadding()
                 )
 
