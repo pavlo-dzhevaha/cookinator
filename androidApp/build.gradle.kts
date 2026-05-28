@@ -18,6 +18,7 @@ kotlin {
         implementation(libs.compose.uiToolingPreview)
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)
+        implementation(libs.kmp.notifier)
 
         implementation(projects.host)
     }

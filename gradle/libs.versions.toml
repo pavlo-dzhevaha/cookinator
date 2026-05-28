@@ -19,6 +19,8 @@ room = "2.8.4"
 ksp = "2.3.4"
 sqlite = "2.6.2"
 coil = "3.4.0"
+kmp-notifier = "1.6.1"
+workmanager = "2.11.2"
 #Project specific versions
 android-compileSdk = "37"
 android-minSdk = "24"
@@ -71,6 +73,9 @@ sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sql
 #Coil
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+#Notification
+kmp-notifier = { module = "io.github.mirzemehdi:kmpnotifier", version.ref = "kmp-notifier" }
+androidx-workmanager = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

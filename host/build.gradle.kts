@@ -34,6 +34,7 @@ kotlin {
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)
         implementation(libs.koin.compose.viewmodel)
+        implementation(libs.kmp.notifier)
 
         implementation(projects.coreUi)
         implementation(projects.navigation)
@@ -41,6 +42,7 @@ kotlin {
         implementation(projects.dataNetwork)
         implementation(projects.dataDatabase)
         implementation(projects.domain)
+        implementation(projects.notification)
         implementation(projects.featureSplash)
         implementation(projects.featureOnboarding)
         implementation(projects.featureMain)

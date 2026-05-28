@@ -1,3 +1,4 @@
+
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -45,6 +46,7 @@ kotlin {
         implementation(projects.coreUi)
         implementation(projects.localisation)
         implementation(projects.domain)
+        implementation(projects.notification)
         implementation(projects.dataModel)
         implementation(projects.dataPreferences)
     }
