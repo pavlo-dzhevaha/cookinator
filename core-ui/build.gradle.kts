@@ -35,8 +35,13 @@ kotlin {
         implementation(libs.androidx.lifecycle.viewmodelCompose)
         implementation(libs.androidx.lifecycle.runtimeCompose)
         implementation(libs.kotlinx.datetime)
+        implementation(platform(libs.koin.bom))
+        implementation(libs.koin.compose)
+        implementation(libs.coil.compose)
+        implementation(libs.coil.network.ktor)
 
         implementation(projects.localisation)
+        implementation(projects.dataModel)
     }
 
     sourceSets {

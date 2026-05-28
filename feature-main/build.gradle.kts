@@ -1,4 +1,3 @@
-
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -40,6 +39,7 @@ kotlin {
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)
         implementation(libs.koin.compose.viewmodel)
+        implementation(libs.coil.compose)
 
         implementation(projects.navigation)
         implementation(projects.coreUi)

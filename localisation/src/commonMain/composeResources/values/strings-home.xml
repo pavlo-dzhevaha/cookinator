@@ -2,4 +2,9 @@
 <resources>
     <string name="home_title">Find best recipes for cooking</string>
     <string name="home_search_hint">Search recipes</string>
+    <string name="home_empty_info">No recipes found</string>
+    <string name="home_error_info">An error occurred while loading recipes</string>
+    <string name="home_trending_title">Trending now 🔥</string>
+    <string name="home_trending_action">See all</string>
+    <string name="home_trending_item_time">%1$sm</string>
 </resources>

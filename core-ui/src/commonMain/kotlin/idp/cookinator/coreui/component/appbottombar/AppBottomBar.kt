@@ -18,16 +18,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import idp.cookinator.coreui.component.appbottombar.components.BottomBarCurveShape
 import idp.cookinator.coreui.component.appbottombar.components.BottomBarItem
 import idp.cookinator.coreui.component.appbottombar.model.BottomBarElement
 import idp.cookinator.coreui.component.spacer.SpacerWeight
-import idp.cookinator.coreui.utils.longestSide
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.utils.ContentDescription
 import idp.cookinator.coreui.utils.fauxCurveTopShadow
+import idp.cookinator.coreui.utils.longestSide
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.Plus
 
@@ -46,8 +47,9 @@ fun AppBottomBar(
     onAddClick: () -> Unit = {},
 ) {
     val density = LocalDensity.current
+    val screenHeight = LocalWindowInfo.current.containerDpSize.height
 
-    val height = longestSide() * heightRatio
+    val height = (longestSide() * heightRatio).coerceAtMost(screenHeight * 0.2f)
     val itemHeight = remember(height) { height * itemSizeRatio }
     val shadowHeight = remember(height) { height * topPaddingRatio }
 

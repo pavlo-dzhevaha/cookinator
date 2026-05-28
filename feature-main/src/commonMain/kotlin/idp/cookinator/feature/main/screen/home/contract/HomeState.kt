@@ -7,13 +7,13 @@ import idp.cookinator.model.Recipe
 internal data class HomeState(
     val uiState: UiState,
     val query: String,
-    val items: List<Recipe>,
+    val trending: List<Recipe>,
 ) : BaseState {
     companion object {
         val initialState = HomeState(
             uiState = UiState.LOADING,
             query = "",
-            items = emptyList(),
+            trending = emptyList(),
         )
     }
 }

@@ -2,4 +2,9 @@
 <resources>
     <string name="home_title">Знайдіть найкращі рецепти для приготування їжі</string>
     <string name="home_search_hint">Пошук рецептів</string>
+    <string name="home_empty_info">Рецепти не знайдені</string>
+    <string name="home_error_info">Під час завантаження рецептів виникла помилка</string>
+    <string name="home_trending_title">Зараз у тренді 🔥</string>
+    <string name="home_trending_action">Переглянути всі</string>
+    <string name="home_trending_item_time">%1$sхв</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.AndroidUiModes
 import androidx.compose.ui.tooling.preview.Preview
+import coil3.compose.setSingletonImageLoaderFactory
 import idp.cookinator.coreui.styling.attribute.asMaterialColorScheme
 import idp.cookinator.coreui.styling.attribute.asMaterialTypography
 import idp.cookinator.coreui.styling.attribute.attributeDarkThemeColor
@@ -16,6 +17,7 @@ import idp.cookinator.coreui.styling.attribute.attributeTypography
 import idp.cookinator.coreui.styling.provider.LocalThemeColor
 import idp.cookinator.coreui.styling.provider.LocalThemeSize
 import idp.cookinator.coreui.styling.provider.LocalThemeTypography
+import idp.cookinator.coreui.utils.getAsyncImageLoader
 
 /**
  * A composable function that provides a custom theme for the app, based on the selected theme.
@@ -45,6 +47,10 @@ fun AppTheme(
 
     val typography = attributeTypography()
 
+    setSingletonImageLoaderFactory { platformContext ->
+        getAsyncImageLoader(platformContext)
+    }
+
     CompositionLocalProvider(
         LocalThemeColor provides currentColorPalette,
         LocalThemeSize provides attributeThemeSize,
@@ -70,13 +76,13 @@ fun AppTheme(
  * that matches the respective theme, making it easier to visualize the design in both modes.
  */
 @Preview(
-    name = "Light Mode",
+    name = "0Light Mode",
     uiMode = AndroidUiModes.UI_MODE_NIGHT_NO,
     showBackground = true,
     backgroundColor = 0xFFF1F1F1,
 )
 @Preview(
-    name = "Dark Mode",
+    name = "1Dark Mode",
     uiMode = AndroidUiModes.UI_MODE_NIGHT_YES,
     showBackground = true,
     backgroundColor = 0xFF181818,

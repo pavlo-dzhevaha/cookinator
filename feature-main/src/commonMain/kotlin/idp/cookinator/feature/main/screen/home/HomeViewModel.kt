@@ -6,6 +6,7 @@ import idp.cookinator.domain.DomainManager
 import idp.cookinator.feature.main.screen.home.contract.HomeEvent
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
 import idp.cookinator.feature.main.screen.home.contract.HomeState
+import idp.cookinator.model.Recipe
 
 internal class HomeViewModel(
     private val domain: DomainManager,
@@ -13,6 +14,8 @@ internal class HomeViewModel(
     init {
         fetchData()
     }
+
+    private val items = mutableListOf<Recipe>()
 
     override fun onIntent(intent: HomeIntent) {
         when (intent) {
@@ -42,10 +45,11 @@ internal class HomeViewModel(
                     }
                     return@launch
                 }
+                items.addAll(list)
                 updateState {
                     it.copy(
                         uiState = UiState.SUCCESS,
-                        items = list,
+                        trending = list.take(10),
                     )
                 }
             }.onFailure {

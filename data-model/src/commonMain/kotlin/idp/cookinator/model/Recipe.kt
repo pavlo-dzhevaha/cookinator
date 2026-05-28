@@ -20,7 +20,32 @@ data class Recipe(
     // Detailed lists for the Recipe Detail Screen
     val extendedIngredients: List<Ingredient>,
     val analyzedInstructions: List<Instruction>,
-)
+) {
+    companion object {
+        val stub = Recipe(
+            id = 3107,
+            title = "expetenda",
+            image = "https://img.spoonacular.com/recipes/633080-556x370.jpg",
+            readyInMinutes = 1382,
+            servings = 8237,
+            summary = "ei",
+            vegetarian = false,
+            vegan = false,
+            glutenFree = false,
+            dairyFree = false,
+            extendedIngredients = listOf(),
+            analyzedInstructions = listOf(),
+        )
+
+        val stubs = listOf(
+            stub,
+            stub.copy(id = 3108, title = "expetenda 2"),
+            stub.copy(id = 3109, title = "expetenda 3"),
+            stub.copy(id = 3110, title = "expetenda 4"),
+            stub.copy(id = 3111, title = "expetenda 5"),
+        )
+    }
+}
 
 @Serializable
 data class Ingredient(
