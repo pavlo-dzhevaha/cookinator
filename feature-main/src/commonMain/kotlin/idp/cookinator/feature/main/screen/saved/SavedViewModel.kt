@@ -25,8 +25,13 @@ internal class SavedViewModel(
     override fun onIntent(intent: SavedIntent) {
         when (intent) {
             is SavedIntent.OnToggleSaved -> onToggleSaved(intent.model)
+            is SavedIntent.OnRecipeClick -> onRecipeClick(intent.model)
             SavedIntent.OnRetry -> observeLikedRecipes()
         }
+    }
+
+    private fun onRecipeClick(model: RecipeUiModel) {
+        sendEvent(SavedEvent.NavigateToRecipe(model.recipe.id))
     }
 
     private fun onToggleSaved(model: RecipeUiModel) = launch {

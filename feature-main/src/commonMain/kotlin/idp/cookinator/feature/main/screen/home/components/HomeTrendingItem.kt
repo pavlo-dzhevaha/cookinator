@@ -56,6 +56,7 @@ internal fun HomeTrendingItem(
     modifier: Modifier = Modifier,
     item: RecipeUiModel,
     imageHeight: Dp,
+    onClick: () -> Unit,
     onLike: () -> Unit,
 ) {
     val density = LocalDensity.current
@@ -65,7 +66,7 @@ internal fun HomeTrendingItem(
     Box(
         modifier = modifier
             .clip(shape)
-            .clickable { /*TODO go to detail*/ }
+            .clickable(onClick = onClick)
     ) {
         Column {
             Box {
@@ -189,6 +190,7 @@ private fun Preview() = AppTheme {
     HomeTrendingItem(
         item = RecipeUiModel.stub,
         imageHeight = 120.dp,
+        onClick = {},
         onLike = {},
     )
 }

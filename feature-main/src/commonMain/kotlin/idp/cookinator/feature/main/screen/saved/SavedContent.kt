@@ -63,6 +63,7 @@ internal fun SavedContent(
                 HomeTrendingItem(
                     item = item,
                     imageHeight = Dp.Unspecified,
+                    onClick = { onIntent(SavedIntent.OnRecipeClick(item)) },
                     onLike = { onIntent(SavedIntent.OnToggleSaved(item)) },
                     modifier = Modifier
                         .animateItem(),

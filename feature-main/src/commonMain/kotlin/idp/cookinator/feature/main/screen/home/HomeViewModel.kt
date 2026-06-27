@@ -28,7 +28,12 @@ internal class HomeViewModel(
             HomeIntent.OnFetchRecipe -> fetchData()
             is HomeIntent.OnSearchQueryChange -> onChangeSearchQuery(intent.query)
             is HomeIntent.OnToggleSaved -> onToggleSaved(intent.model)
+            is HomeIntent.OnRecipeClick -> onRecipeClick(intent.model)
         }
+    }
+
+    private fun onRecipeClick(model: RecipeUiModel) {
+        sendEvent(HomeEvent.NavigateToRecipe(model.recipe.id))
     }
 
     private fun onChangeSearchQuery(query: String) {

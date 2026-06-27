@@ -8,5 +8,7 @@ internal sealed interface HomeIntent : BaseIntent {
 
     data class OnToggleSaved(val model: RecipeUiModel) : HomeIntent
 
+    data class OnRecipeClick(val model: RecipeUiModel) : HomeIntent
+
     data class OnSearchQueryChange(val query: String) : HomeIntent
 }

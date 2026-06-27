@@ -56,6 +56,7 @@ internal fun NavigationMainInternal.graph(
 
     NavigationMainInternal.Saved -> NavEntry(this) {
         SavedScreen(
+            navigator = navigator,
             internalNavigator = internalNavigator,
             bottomBarHeight = bottomBarHeight,
         )

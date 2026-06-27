@@ -84,6 +84,7 @@ internal fun HomeTrending(
                 HomeTrendingItem(
                     item = item,
                     imageHeight = imageHeight,
+                    onClick = { onIntent(HomeIntent.OnRecipeClick(item)) },
                     onLike = { onIntent(HomeIntent.OnToggleSaved(item)) },
                 )
             }

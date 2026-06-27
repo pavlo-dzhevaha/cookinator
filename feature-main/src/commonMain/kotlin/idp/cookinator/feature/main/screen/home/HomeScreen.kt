@@ -11,8 +11,11 @@ import cookinator.localisation.generated.resources.home_empty_info
 import cookinator.localisation.generated.resources.home_error_info
 import idp.cookinator.coreui.component.info.InfoContainer
 import idp.cookinator.coreui.viewmodel.components.MviStateProvider
+import idp.cookinator.feature.main.screen.home.contract.HomeEvent
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
 import idp.cookinator.feature.navigation.extension.Navigator
+import idp.cookinator.feature.navigation.extension.navigate
+import idp.cookinator.feature.navigation.features.NavigationRecipe
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -24,7 +27,13 @@ internal fun HomeScreen(
 ) {
     MviStateProvider(
         viewModel = viewModel,
-        onEvent = { _ -> },
+        onEvent = { event ->
+            when (event) {
+                is HomeEvent.NavigateToRecipe -> {
+                    navigator.navigate(NavigationRecipe.Detail(event.recipeId))
+                }
+            }
+        },
     ) { state ->
         state.uiState.Render(
             loading = {

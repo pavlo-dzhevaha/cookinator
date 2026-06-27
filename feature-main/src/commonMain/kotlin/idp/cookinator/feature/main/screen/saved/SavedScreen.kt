@@ -9,21 +9,31 @@ import androidx.compose.ui.unit.Dp
 import idp.cookinator.coreui.component.info.InfoContainer
 import idp.cookinator.coreui.viewmodel.components.MviStateProvider
 import idp.cookinator.feature.main.navigation.internal.NavigationMainInternal
+import idp.cookinator.feature.main.screen.saved.contract.SavedEvent
 import idp.cookinator.feature.main.screen.saved.contract.SavedIntent
 import idp.cookinator.feature.navigation.extension.Navigator
+import idp.cookinator.feature.navigation.extension.navigate
 import idp.cookinator.feature.navigation.extension.pushToTop
+import idp.cookinator.feature.navigation.features.NavigationRecipe
 import idp.cookinator.localisation.UiText.Companion.asUiText
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun SavedScreen(
+    navigator: Navigator,
     internalNavigator: Navigator,
     viewModel: SavedViewModel = koinViewModel(),
     bottomBarHeight: Dp,
 ) {
     MviStateProvider(
         viewModel = viewModel,
-        onEvent = { _ -> }
+        onEvent = { event ->
+            when (event) {
+                is SavedEvent.NavigateToRecipe -> {
+                    navigator.navigate(NavigationRecipe.Detail(event.recipeId))
+                }
+            }
+        },
     ) { state ->
         state.uiState.Render(
             loading = {
