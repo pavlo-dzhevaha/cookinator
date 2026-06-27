@@ -2,7 +2,9 @@ package idp.cookinator.feature.main.screen.home
 
 import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.MviViewModel
-import idp.cookinator.domain.DomainManager
+import idp.cookinator.domain.recipe.GetRandomRecipesUseCase
+import idp.cookinator.domain.recipe.ObserveLikedRecipeIdsUseCase
+import idp.cookinator.domain.recipe.SetRecipeLikedUseCase
 import idp.cookinator.feature.main.screen.home.contract.HomeEvent
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
 import idp.cookinator.feature.main.screen.home.contract.HomeState
@@ -13,7 +15,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 
 internal class HomeViewModel(
-    private val domain: DomainManager,
+    private val getRandomRecipes: GetRandomRecipesUseCase,
+    private val observeLikedRecipeIds: ObserveLikedRecipeIdsUseCase,
+    private val setRecipeLiked: SetRecipeLikedUseCase,
 ) : MviViewModel<HomeState, HomeIntent, HomeEvent>(HomeState.initialState) {
 
     private val rawRecipes = MutableStateFlow<List<Recipe>>(emptyList())
@@ -41,7 +45,7 @@ internal class HomeViewModel(
     }
 
     private fun onToggleSaved(model: RecipeUiModel) = launch {
-        domain.setRecipeLiked(
+        setRecipeLiked(
             recipeId = model.recipe.id,
             isLiked = !model.isSaved,
         )
@@ -49,8 +53,7 @@ internal class HomeViewModel(
 
     private fun fetchData() = launch {
         updateState { it.copy(uiState = UiState.LOADING) }
-        domain
-            .getRandomRecipes()
+        getRandomRecipes()
             .onSuccess { list ->
                 if (list.isEmpty()) {
                     updateState { it.copy(uiState = UiState.EMPTY) }
@@ -65,13 +68,12 @@ internal class HomeViewModel(
     private fun observeAndCombineData() = launch {
         combine(
             rawRecipes,
-            domain.likedRecipeIds
+            observeLikedRecipeIds(),
         ) { recipes, savedIds ->
-            // Map the raw recipes into UI models
             recipes.map { recipe ->
                 RecipeUiModel(
                     recipe = recipe,
-                    isSaved = savedIds.contains(recipe.id)
+                    isSaved = savedIds.contains(recipe.id),
                 )
             }
         }.collectLatest { combinedUiList ->
@@ -79,7 +81,7 @@ internal class HomeViewModel(
                 updateState {
                     it.copy(
                         uiState = UiState.SUCCESS,
-                        trending = combinedUiList.take(10)
+                        trending = combinedUiList.take(10),
                     )
                 }
             }

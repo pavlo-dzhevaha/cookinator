@@ -2,7 +2,10 @@ package idp.cookinator.feature.main.screen.notification
 
 import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.MviViewModel
-import idp.cookinator.domain.DomainManager
+import idp.cookinator.domain.notification.ClearNotificationsUseCase
+import idp.cookinator.domain.notification.MarkNotificationReadUseCase
+import idp.cookinator.domain.notification.ObserveNotificationsUseCase
+import idp.cookinator.domain.notification.SendRecipeReminderUseCase
 import idp.cookinator.feature.main.screen.notification.contract.NotificationsEvent
 import idp.cookinator.feature.main.screen.notification.contract.NotificationsIntent
 import idp.cookinator.feature.main.screen.notification.contract.NotificationsState
@@ -15,14 +18,17 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 
 internal class NotificationsViewModel(
-    private val domain: DomainManager,
+    private val observeNotifications: ObserveNotificationsUseCase,
+    private val markNotificationRead: MarkNotificationReadUseCase,
+    private val clearNotifications: ClearNotificationsUseCase,
+    private val sendRecipeReminder: SendRecipeReminderUseCase,
 ) : MviViewModel<NotificationsState, NotificationsIntent, NotificationsEvent>(
     NotificationsState.initialState,
 ) {
     private var observeJob: Job? = null
 
     init {
-        observeNotifications()
+        observeNotificationsList()
     }
 
     override fun onIntent(intent: NotificationsIntent) {
@@ -33,7 +39,7 @@ internal class NotificationsViewModel(
             NotificationsIntent.OnDismissOptions -> updateState { it.copy(isOptionsMenuExpanded = false) }
             NotificationsIntent.OnClearAll -> onClearAll()
             NotificationsIntent.OnSendNow -> onSendNow()
-            NotificationsIntent.OnRetry -> observeNotifications()
+            NotificationsIntent.OnRetry -> observeNotificationsList()
         }
     }
 
@@ -48,25 +54,25 @@ internal class NotificationsViewModel(
 
     private fun onNotificationClick(item: NotificationUiModel) = launch {
         if (!item.isRead) {
-            domain.markNotificationRead(item.id)
+            markNotificationRead(item.id)
         }
         sendEvent(NotificationsEvent.NavigateToRecipe(item.recipeId))
     }
 
     private fun onClearAll() = launch {
         updateState { it.copy(isOptionsMenuExpanded = false) }
-        domain.clearNotifications()
+        clearNotifications()
     }
 
     private fun onSendNow() = launch {
         updateState { it.copy(isOptionsMenuExpanded = false) }
-        domain.sendRecipeReminderNow()
+        sendRecipeReminder()
     }
 
-    private fun observeNotifications() {
+    private fun observeNotificationsList() {
         observeJob?.cancel()
         observeJob = launch {
-            domain.notifications
+            observeNotifications()
                 .onStart { updateState { it.copy(uiState = UiState.LOADING) } }
                 .catch { updateState { it.copy(uiState = UiState.ERROR) } }
                 .collectLatest { list ->

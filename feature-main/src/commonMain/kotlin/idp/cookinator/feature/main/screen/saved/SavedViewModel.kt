@@ -2,7 +2,8 @@ package idp.cookinator.feature.main.screen.saved
 
 import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.MviViewModel
-import idp.cookinator.domain.DomainManager
+import idp.cookinator.domain.recipe.ObserveLikedRecipesUseCase
+import idp.cookinator.domain.recipe.SetRecipeLikedUseCase
 import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
 import idp.cookinator.feature.main.screen.saved.contract.SavedEvent
 import idp.cookinator.feature.main.screen.saved.contract.SavedIntent
@@ -13,20 +14,21 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 
 internal class SavedViewModel(
-    private val domain: DomainManager,
+    private val observeLikedRecipes: ObserveLikedRecipesUseCase,
+    private val setRecipeLiked: SetRecipeLikedUseCase,
 ) : MviViewModel<SavedState, SavedIntent, SavedEvent>(SavedState.initialState) {
 
     private var observeJob: Job? = null
 
     init {
-        observeLikedRecipes()
+        observeLikedRecipesList()
     }
 
     override fun onIntent(intent: SavedIntent) {
         when (intent) {
             is SavedIntent.OnToggleSaved -> onToggleSaved(intent.model)
             is SavedIntent.OnRecipeClick -> onRecipeClick(intent.model)
-            SavedIntent.OnRetry -> observeLikedRecipes()
+            SavedIntent.OnRetry -> observeLikedRecipesList()
         }
     }
 
@@ -35,16 +37,16 @@ internal class SavedViewModel(
     }
 
     private fun onToggleSaved(model: RecipeUiModel) = launch {
-        domain.setRecipeLiked(
+        setRecipeLiked(
             recipeId = model.recipe.id,
             isLiked = !model.isSaved,
         )
     }
 
-    private fun observeLikedRecipes() {
+    private fun observeLikedRecipesList() {
         observeJob?.cancel()
         observeJob = launch {
-            domain.likedRecipes
+            observeLikedRecipes()
                 .onStart { updateState { it.copy(uiState = UiState.LOADING) } }
                 .catch { updateState { it.copy(uiState = UiState.ERROR) } }
                 .collectLatest { recipes ->
