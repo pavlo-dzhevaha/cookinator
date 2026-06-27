@@ -24,15 +24,19 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
-        //Koin
         implementation(platform(libs.koin.bom))
-        implementation(libs.koin.compose)
-        //Room
+        implementation(libs.koin.core)
         implementation(libs.room.runtime)
         implementation(libs.sqlite.bundled)
         implementation(libs.ktor.serialization.kotlinx.json)
 
         implementation(projects.dataModel)
+    }
+
+    sourceSets {
+        androidMain.dependencies {
+            implementation(libs.koin.android)
+        }
     }
 }
 

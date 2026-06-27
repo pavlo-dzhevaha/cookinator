@@ -24,9 +24,8 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
-        implementation(libs.compose.material3.adaptive.navigation3)
-        implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-        implementation(libs.androidx.navigation3.ui)
+        api(libs.androidx.lifecycle.viewmodel.navigation3)
+        api(libs.androidx.navigation3.ui)
 
         api(projects.coreUi)
     }

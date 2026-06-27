@@ -21,9 +21,9 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
-        //Koin
+        implementation(libs.kotlinx.coroutines.core)
         implementation(platform(libs.koin.bom))
-        implementation(libs.koin.compose)
+        implementation(libs.koin.core)
 
         implementation(projects.dataModel)
         implementation(projects.dataNetwork)

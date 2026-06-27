@@ -16,23 +16,21 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     jvm()
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
-        implementation(libs.kotlinx.datetime)
+        implementation(libs.kotlinx.coroutines.core)
         implementation(libs.multiplatform.settings)
         implementation(libs.multiplatform.settings.coroutines)
         implementation(platform(libs.koin.bom))
-        implementation(libs.koin.compose)
+        implementation(libs.koin.core)
     }
 
     sourceSets {
-        all {
-            languageSettings {
-                optIn("kotlin.time.ExperimentalTime")
-            }
+        androidMain.dependencies {
+            implementation(libs.koin.android)
         }
     }
 }

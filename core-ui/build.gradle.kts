@@ -34,7 +34,6 @@ kotlin {
         implementation(libs.compose.uiToolingPreview)
         implementation(libs.androidx.lifecycle.viewmodelCompose)
         implementation(libs.androidx.lifecycle.runtimeCompose)
-        implementation(libs.kotlinx.datetime)
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)
         implementation(libs.coil.compose)
@@ -42,14 +41,6 @@ kotlin {
 
         implementation(projects.localisation)
         implementation(projects.dataModel)
-    }
-
-    sourceSets {
-        all {
-            languageSettings {
-                optIn("kotlin.time.ExperimentalTime")
-            }
-        }
     }
 }
 

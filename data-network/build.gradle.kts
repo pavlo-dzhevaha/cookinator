@@ -25,15 +25,11 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
-        // Koin
         implementation(platform(libs.koin.bom))
-        implementation(libs.koin.compose)
-        // Supabase
+        implementation(libs.koin.core)
         implementation(platform(libs.supabase.bom))
         implementation(libs.supabase.postgrest)
-        // Core Ktor Client
         implementation(libs.ktor.client.core)
-        // JSON Serialization
         implementation(libs.ktor.client.content.negotiation)
         implementation(libs.ktor.serialization.kotlinx.json)
 
@@ -42,19 +38,11 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            // Android Engine
             implementation(libs.ktor.client.okhttp)
         }
 
         jvmMain.dependencies {
-            // Desktop Engine
             implementation(libs.ktor.client.cio)
-        }
-
-        all {
-            languageSettings {
-                optIn("kotlin.time.ExperimentalTime")
-            }
         }
     }
 }
@@ -62,14 +50,12 @@ kotlin {
 buildkonfig {
     packageName = libs.versions.namespace.get() + ".network"
 
-    // 1. Read the local.properties file
     val secrets = Properties()
     val secretsFile = rootProject.file("config/secrets.properties")
     if (secretsFile.exists()) {
         secretsFile.inputStream().use { secrets.load(it) }
     }
 
-    // 2. Map the property to a Kotlin constant
     defaultConfigs {
         buildConfigField(
             FieldSpec.Type.STRING,
