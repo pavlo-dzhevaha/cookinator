@@ -86,6 +86,14 @@ class DomainManager(
         .getOrDefault(flowOf(emptyList()))
 
     /**
+     * A reactive stream of liked recipes.
+     * The UI can collect this Flow to display the saved recipes list.
+     */
+    val likedRecipes: Flow<List<Recipe>> = database
+        .observeLikedRecipes()
+        .getOrDefault(flowOf(emptyList()))
+
+    /**
      * Toggles whether a specific recipe is liked by the user.
      */
     suspend fun setRecipeLiked(recipeId: Int, isLiked: Boolean): Result<Unit> = hardWork {

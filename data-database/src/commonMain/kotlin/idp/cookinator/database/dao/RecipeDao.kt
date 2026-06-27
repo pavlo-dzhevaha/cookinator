@@ -36,6 +36,14 @@ interface RecipeDao {
         """,
     )
     suspend fun getLikedRecipes(): List<RecipeEntity>
+
+    @Query(
+        """
+        SELECT recipes.* FROM recipes
+        INNER JOIN liked_recipes ON recipes.id = liked_recipes.recipeId
+        """,
+    )
+    fun observeLikedRecipes(): Flow<List<RecipeEntity>>
 }
 
 @Database(

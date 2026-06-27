@@ -7,6 +7,7 @@ import idp.cookinator.database.model.toDomainModel
 import idp.cookinator.database.model.toEntity
 import idp.cookinator.model.Recipe
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 /**
  * Manages database operations related to recipes. This class provides methods to save recipes to the
@@ -50,10 +51,19 @@ class DatabaseManager(
     }
 
     /**
-     * Returns a reactive Flow of liked recipe IDs as Strings.
+     * Returns a reactive Flow of liked recipe IDs.
      */
     fun observeLikedRecipeIds(): Result<Flow<List<Int>>> =
         runCatching { recipeDao.observeLikedRecipeIds() }
+
+    /**
+     * Returns a reactive Flow of liked recipes from the local database.
+     */
+    fun observeLikedRecipes(): Result<Flow<List<Recipe>>> = runCatching {
+        recipeDao
+            .observeLikedRecipes()
+            .map { entities -> entities.map(RecipeEntity::toDomainModel) }
+    }
 
     /**
      * Toggles the liked state of a recipe in the local database.

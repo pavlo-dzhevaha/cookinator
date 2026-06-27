@@ -7,26 +7,25 @@ import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
 import idp.cookinator.feature.main.screen.saved.contract.SavedEvent
 import idp.cookinator.feature.main.screen.saved.contract.SavedIntent
 import idp.cookinator.feature.main.screen.saved.contract.SavedState
-import idp.cookinator.model.Recipe
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onStart
 
 internal class SavedViewModel(
     private val domain: DomainManager,
 ) : MviViewModel<SavedState, SavedIntent, SavedEvent>(SavedState.initialState) {
 
-    private val rawRecipes = MutableStateFlow<List<Recipe>>(emptyList())
+    private var observeJob: Job? = null
 
     init {
-        observeAndCombineData()
-        fetchData()
+        observeLikedRecipes()
     }
 
     override fun onIntent(intent: SavedIntent) {
         when (intent) {
             is SavedIntent.OnToggleSaved -> onToggleSaved(intent.model)
-            SavedIntent.OnRetry -> fetchData()
+            SavedIntent.OnRetry -> observeLikedRecipes()
         }
     }
 
@@ -37,45 +36,23 @@ internal class SavedViewModel(
         )
     }
 
-    private fun fetchData() = launch {
-        updateState { it.copy(uiState = UiState.LOADING) }
-        domain
-            .getRandomRecipes()
-            .onSuccess { list ->
-                if (list.isEmpty()) {
-                    updateState { it.copy(uiState = UiState.EMPTY) }
-                    return@launch
+    private fun observeLikedRecipes() {
+        observeJob?.cancel()
+        observeJob = launch {
+            domain.likedRecipes
+                .onStart { updateState { it.copy(uiState = UiState.LOADING) } }
+                .catch { updateState { it.copy(uiState = UiState.ERROR) } }
+                .collectLatest { recipes ->
+                    val items = recipes.map { recipe ->
+                        RecipeUiModel(recipe = recipe, isSaved = true)
+                    }
+                    updateState {
+                        it.copy(
+                            uiState = if (items.isEmpty()) UiState.EMPTY else UiState.SUCCESS,
+                            items = items,
+                        )
+                    }
                 }
-                rawRecipes.value = list
-            }.onFailure {
-                updateState { it.copy(uiState = UiState.ERROR) }
-            }
-    }
-
-    private fun observeAndCombineData() = launch {
-        combine(
-            rawRecipes,
-            domain.likedRecipeIds
-        ) { recipes, savedIds ->
-            // Map the raw recipes into UI models
-            recipes
-                .map { recipe ->
-                    RecipeUiModel(
-                        recipe = recipe,
-                        isSaved = savedIds.contains(recipe.id)
-                    )
-                }.filter(RecipeUiModel::isSaved)
-        }.collectLatest { combinedUiList ->
-            if (combinedUiList.isEmpty()) {
-                updateState { it.copy(uiState = UiState.EMPTY) }
-            } else {
-                updateState {
-                    it.copy(
-                        uiState = UiState.SUCCESS,
-                        items = combinedUiList,
-                    )
-                }
-            }
         }
     }
 }
