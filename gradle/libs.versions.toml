@@ -21,6 +21,7 @@ sqlite = "2.6.2"
 coil = "3.5.0"
 kmp-notifier = "2.0.0"
 workmanager = "2.11.2"
+kermit = "2.1.0"
 #Project specific versions
 android-compileSdk = "37"
 android-minSdk = "24"
@@ -76,6 +77,8 @@ sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sql
 #Coil
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+#Logging
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 #Notification
 kmp-notifier-local = { module = "io.github.mirzemehdi:kmpnotifier-local", version.ref = "kmp-notifier" }
 androidx-workmanager = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }

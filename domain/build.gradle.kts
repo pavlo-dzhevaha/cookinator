@@ -14,5 +14,6 @@ kotlin {
         implementation(projects.dataModel)
         implementation(projects.dataNetwork)
         implementation(projects.dataDatabase)
+        implementation(projects.coreLogging)
     }
 }

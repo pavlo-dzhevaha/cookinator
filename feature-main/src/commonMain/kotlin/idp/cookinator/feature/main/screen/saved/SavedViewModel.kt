@@ -48,7 +48,10 @@ internal class SavedViewModel(
         observeJob = launch {
             observeLikedRecipes()
                 .onStart { updateState { it.copy(uiState = UiState.LOADING) } }
-                .catch { updateState { it.copy(uiState = UiState.ERROR) } }
+                .catch { e ->
+                    logger.e(e) { "Failed to observe liked recipes" }
+                    updateState { it.copy(uiState = UiState.ERROR) }
+                }
                 .collectLatest { recipes ->
                     val items = recipes.map { recipe ->
                         RecipeUiModel(recipe = recipe, isSaved = true)

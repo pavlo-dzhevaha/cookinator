@@ -74,7 +74,10 @@ internal class NotificationsViewModel(
         observeJob = launch {
             observeNotifications()
                 .onStart { updateState { it.copy(uiState = UiState.LOADING) } }
-                .catch { updateState { it.copy(uiState = UiState.ERROR) } }
+                .catch { e ->
+                    logger.e(e) { "Failed to observe notifications" }
+                    updateState { it.copy(uiState = UiState.ERROR) }
+                }
                 .collectLatest { list ->
                     val items = list.map(NotificationUiModel::from)
                     updateState { current ->

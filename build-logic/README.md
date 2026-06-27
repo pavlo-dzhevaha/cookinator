@@ -37,7 +37,7 @@ Adds common feature dependencies in `commonMain`:
 
 | Plugins | Modules |
 |---------|---------|
-| `cookinator.kmp.library` | data-model, data-preferences, data-network, data-database, domain, notification |
+| `cookinator.kmp.library` | data-model, data-preferences, data-network, data-database, domain, notification, core-logging |
 | kmp.library + compose | localisation, navigation, core-ui, host |
 | `cookinator.feature` | feature-splash, feature-onboarding, feature-main, feature-settings |
 | unchanged | androidApp, desktopApp |
@@ -49,6 +49,7 @@ Namespace suffix is derived from the Gradle module name:
 | Module | Suffix |
 |--------|--------|
 | core-ui | `.coreui` |
+| core-logging | `.logging` |
 | data-model | `.model` |
 | data-preferences | `.preferences` |
 | data-network | `.network` |

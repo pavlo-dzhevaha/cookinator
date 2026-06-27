@@ -60,7 +60,8 @@ internal class HomeViewModel(
                     return@launch
                 }
                 rawRecipes.value = list
-            }.onFailure {
+            }.onFailure { e ->
+                logger.e(e) { "Failed to fetch random recipes" }
                 updateState { it.copy(uiState = UiState.ERROR) }
             }
     }

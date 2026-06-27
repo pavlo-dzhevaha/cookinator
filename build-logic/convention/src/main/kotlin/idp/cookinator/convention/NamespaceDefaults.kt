@@ -4,6 +4,7 @@ import org.gradle.api.Project
 
 internal fun Project.defaultNamespaceSuffix(): String = when (name) {
     "core-ui" -> ".coreui"
+    "core-logging" -> ".logging"
     "data-model" -> ".model"
     "data-preferences" -> ".preferences"
     "data-network" -> ".network"

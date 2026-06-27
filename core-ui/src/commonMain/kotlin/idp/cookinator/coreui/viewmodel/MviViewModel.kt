@@ -49,7 +49,7 @@ abstract class MviViewModel<S : BaseState, I : BaseIntent, E : BaseEvent>(
      */
     protected fun trySendEvent(event: E) {
         eventChannel.trySend(event).onFailure { e ->
-            // TODO log dropped event
+            logger.w(e) { "Dropped event: $event" }
         }
     }
 

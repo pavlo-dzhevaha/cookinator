@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import idp.cookinator.coreui.viewmodel.base.BaseState
+import idp.cookinator.logging.AppLogger
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -55,6 +56,10 @@ abstract class StateViewModel<S : BaseState>(
 
     //endregion
 
+    protected val logger by lazy {
+        AppLogger.tag(this::class.simpleName ?: "ViewModel")
+    }
+
     //region Extensions
 
     /**
@@ -63,7 +68,7 @@ abstract class StateViewModel<S : BaseState>(
      * user.
      */
     private val crashHandler = CoroutineExceptionHandler { _, e ->
-        // TODO log crash
+        logger.e(e) { "Uncaught coroutine exception" }
     }
 
     /**

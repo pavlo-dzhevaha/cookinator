@@ -19,6 +19,7 @@ kotlin {
         implementation(libs.kmp.notifier.local)
 
         implementation(projects.coreUi)
+        implementation(projects.coreLogging)
         implementation(projects.navigation)
         implementation(projects.dataPreferences)
         implementation(projects.dataNetwork)

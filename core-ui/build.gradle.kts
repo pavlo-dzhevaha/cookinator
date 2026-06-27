@@ -23,6 +23,7 @@ kotlin {
 
         implementation(projects.localisation)
         implementation(projects.dataModel)
+        api(projects.coreLogging)
     }
 }
 
