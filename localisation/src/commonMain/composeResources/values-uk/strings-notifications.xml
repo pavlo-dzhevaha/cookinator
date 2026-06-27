@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notifications_title">Сповіщення</string>
+    <string name="notifications_empty_title">Сповіщень ще немає</string>
+    <string name="notifications_empty_unread">Непрочитаних сповіщень немає</string>
+    <string name="notifications_clear_all">Очистити список сповіщень</string>
+    <string name="notifications_send_now">Надіслати сповіщення зараз</string>
+    <string name="notifications_filter_all">Усі</string>
+    <string name="notifications_filter_unread">Непрочитані</string>
+    <string name="notifications_filter_read">Прочитані</string>
+    <string name="notifications_empty_read">Прочитаних сповіщень немає</string>
+    <string name="notifications_section_today">Сьогодні</string>
+    <string name="notifications_section_yesterday">Вчора</string>
+    <string name="notifications_all_set">На цьому все!</string>
+    <string name="notifications_date">%2$d %1$s %3$d р.</string>
+    <string name="notifications_month_january">січня</string>
+    <string name="notifications_month_february">лютого</string>
+    <string name="notifications_month_march">березня</string>
+    <string name="notifications_month_april">квітня</string>
+    <string name="notifications_month_may">травня</string>
+    <string name="notifications_month_june">червня</string>
+    <string name="notifications_month_july">липня</string>
+    <string name="notifications_month_august">серпня</string>
+    <string name="notifications_month_september">вересня</string>
+    <string name="notifications_month_october">жовтня</string>
+    <string name="notifications_month_november">листопада</string>
+    <string name="notifications_month_december">грудня</string>
+    <string name="notification_reminder_title">Час готувати!</string>
+    <string name="notification_reminder_body">Як щодо %1$s?</string>
 </resources>

@@ -23,14 +23,10 @@ import idp.cookinator.feature.main.extension.navigationKey
 import idp.cookinator.feature.main.navigation.internal.NavigationMainInternal
 import idp.cookinator.feature.main.navigation.internal.graph
 import idp.cookinator.feature.main.navigation.internal.internalConfiguration
-import idp.cookinator.feature.navigation.PendingRecipeNavigation
 import idp.cookinator.feature.navigation.extension.Navigator
-import idp.cookinator.feature.navigation.extension.navigate
 import idp.cookinator.feature.navigation.extension.navigationTransitionSpec
 import idp.cookinator.feature.navigation.extension.pushToTop
 import idp.cookinator.feature.navigation.extension.rememberSoloSceneStrategy
-import kotlinx.coroutines.flow.filterNotNull
-import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -44,16 +40,6 @@ internal fun MainScreen(
     )
     var currentTab by rememberSaveable { mutableStateOf(initialTab) }
     var isForward by remember { mutableStateOf(true) }
-    val pendingRecipeNavigation: PendingRecipeNavigation = koinInject()
-
-    LaunchedEffect(pendingRecipeNavigation) {
-        pendingRecipeNavigation.pendingRecipeId
-            .filterNotNull()
-            .collect { recipeId ->
-                internalNavigator.navigate(NavigationMainInternal.RecipeDetail(recipeId))
-                pendingRecipeNavigation.consumeRecipeDetail()
-            }
-    }
 
     LaunchedEffect(internalNavigator.lastOrNull()) {
         val entry = internalNavigator.lastOrNull()

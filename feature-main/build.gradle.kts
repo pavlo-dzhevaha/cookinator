@@ -22,6 +22,6 @@ kotlin {
         implementation(projects.localisation)
         implementation(projects.domain)
         implementation(projects.dataModel)
-        implementation(projects.dataPreferences)
+        implementation(libs.kotlinx.datetime)
     }
 }

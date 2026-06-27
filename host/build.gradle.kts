@@ -28,6 +28,7 @@ kotlin {
         implementation(projects.featureSplash)
         implementation(projects.featureOnboarding)
         implementation(projects.featureMain)
+        implementation(projects.featureRecipe)
         implementation(projects.featureSettings)
     }
 }

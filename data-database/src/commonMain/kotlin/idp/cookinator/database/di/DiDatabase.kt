@@ -4,6 +4,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import idp.cookinator.database.DatabaseManager
 import idp.cookinator.database.dao.AppDatabase
+import idp.cookinator.database.dao.NotificationDao
 import idp.cookinator.database.dao.RecipeDao
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
@@ -24,6 +25,10 @@ val dataDatabaseModule: Module = module {
 
     single<RecipeDao> {
         get<AppDatabase>().recipeDao()
+    }
+
+    single<NotificationDao> {
+        get<AppDatabase>().notificationDao()
     }
 
     singleOf(::DatabaseManager)

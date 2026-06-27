@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     id("cookinator.kmp.library")
+    id("cookinator.compose")
 }
 
 kotlin {
@@ -14,6 +15,10 @@ kotlin {
         implementation(projects.navigation)
         implementation(projects.dataDatabase)
         implementation(projects.dataModel)
+        implementation(projects.domain)
+        implementation(projects.localisation)
+
+        implementation(libs.compose.components.resources)
     }
 
     sourceSets {

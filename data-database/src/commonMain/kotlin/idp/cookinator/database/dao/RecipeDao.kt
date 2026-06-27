@@ -9,6 +9,7 @@ import androidx.room.Query
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import idp.cookinator.database.model.LikedRecipeEntity
+import idp.cookinator.database.model.NotificationEntity
 import idp.cookinator.database.model.RecipeEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -50,12 +51,15 @@ interface RecipeDao {
     entities = [
         RecipeEntity::class,
         LikedRecipeEntity::class,
+        NotificationEntity::class,
     ],
-    version = 1,
+    version = 2,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
+
+    abstract fun notificationDao(): NotificationDao
 }
 
 // Room 2.7+ uses this to automatically generate the implementation behind the scenes

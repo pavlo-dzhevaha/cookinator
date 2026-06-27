@@ -10,6 +10,7 @@ import com.mmk.kmpnotifier.KMPNotifier
 import com.mmk.kmpnotifier.local.LocalNotifications
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import idp.cookinator.host.App
+import idp.cookinator.host.registerNotificationClickHandler
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
             ),
             LocalNotifications,
         )
+        registerNotificationClickHandler()
 
         setContent {
             LaunchedEffect(Unit) {

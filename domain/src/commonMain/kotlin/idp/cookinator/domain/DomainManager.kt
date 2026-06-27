@@ -1,6 +1,7 @@
 package idp.cookinator.domain
 
 import idp.cookinator.database.DatabaseManager
+import idp.cookinator.model.AppNotification
 import idp.cookinator.model.Recipe
 import idp.cookinator.network.NetworkManager
 import idp.cookinator.network.model.RandomRecipesResponse
@@ -25,6 +26,7 @@ import kotlinx.coroutines.withContext
 class DomainManager(
     private val network: NetworkManager,
     private val database: DatabaseManager,
+    private val reminderSender: RecipeReminderSender,
 ) {
     /**
      * Fetches random recipes. The method first attempts to fetch cached recipes from the local
@@ -94,6 +96,13 @@ class DomainManager(
         .getOrDefault(flowOf(emptyList()))
 
     /**
+     * A reactive stream of in-app notification history.
+     */
+    val notifications: Flow<List<AppNotification>> = database
+        .observeNotifications()
+        .getOrDefault(flowOf(emptyList()))
+
+    /**
      * Toggles whether a specific recipe is liked by the user.
      */
     suspend fun setRecipeLiked(recipeId: Int, isLiked: Boolean): Result<Unit> = hardWork {
@@ -103,6 +112,18 @@ class DomainManager(
             }.onFailure { e ->
                 log { "Failed to update like state for recipe $recipeId. Error: ${e.message}" }
             }
+    }
+
+    suspend fun markNotificationRead(id: Long): Result<Unit> = hardWork {
+        database.markNotificationRead(id)
+    }
+
+    suspend fun clearNotifications(): Result<Unit> = hardWork {
+        database.clearNotifications()
+    }
+
+    suspend fun sendRecipeReminderNow(): Result<Unit> = hardWork {
+        reminderSender.sendRandomReminder()
     }
 
     /**

@@ -1,19 +1,16 @@
-package idp.cookinator.feature.main.screen.recipe.detail
+package idp.cookinator.feature.recipe.screen.detail
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.Dp
 import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.navigateUp
 
 @Composable
 internal fun RecipeDetailScreen(
     recipeId: Int,
-    internalNavigator: Navigator,
-    bottomBarHeight: Dp,
+    navigator: Navigator,
 ) {
     RecipeDetailContent(
         recipeId = recipeId,
-        bottomBarHeight = bottomBarHeight,
-        onBack = internalNavigator::navigateUp,
+        onBack = navigator::navigateUp,
     )
 }

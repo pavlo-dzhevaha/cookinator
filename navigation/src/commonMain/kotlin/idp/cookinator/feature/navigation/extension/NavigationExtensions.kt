@@ -13,6 +13,7 @@ import androidx.savedstate.serialization.SavedStateConfiguration
 import idp.cookinator.coreui.utils.defaultTween
 import idp.cookinator.feature.navigation.features.featureMainSerializer
 import idp.cookinator.feature.navigation.features.featureOnboardingSerializer
+import idp.cookinator.feature.navigation.features.featureRecipeSerializer
 import idp.cookinator.feature.navigation.features.featureSettingsSerializer
 import idp.cookinator.feature.navigation.features.featureSplashSerializer
 import kotlinx.serialization.modules.PolymorphicModuleBuilder
@@ -36,6 +37,7 @@ val appConfiguration = SavedStateConfiguration {
         include(featureSplashSerializer)
         include(featureOnboardingSerializer)
         include(featureMainSerializer)
+        include(featureRecipeSerializer)
         include(featureSettingsSerializer)
     }
 }
