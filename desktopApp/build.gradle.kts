@@ -31,6 +31,25 @@ compose {
                 targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
                 packageName = libs.versions.namespace.get()
                 packageVersion = libs.versions.version.get()
+
+                macOS {
+                    bundleID = "idp.cookinator"
+                    infoPlist {
+                        extraKeysRawXml = """
+                            <key>CFBundleURLTypes</key>
+                            <array>
+                                <dict>
+                                    <key>CFBundleURLName</key>
+                                    <string>Cookinator Recipe</string>
+                                    <key>CFBundleURLSchemes</key>
+                                    <array>
+                                        <string>app</string>
+                                    </array>
+                                </dict>
+                            </array>
+                        """.trimIndent()
+                    }
+                }
             }
         }
     }

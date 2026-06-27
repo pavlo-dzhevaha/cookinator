@@ -3,6 +3,7 @@ package idp.cookinator.host
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -25,6 +26,7 @@ import idp.cookinator.feature.onboarding.navigation.graph
 import idp.cookinator.feature.recipe.navigation.graph
 import idp.cookinator.feature.settings.navigation.graph
 import idp.cookinator.feature.splash.navigation.graph
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -41,7 +43,12 @@ fun App() {
     val pendingRecipeNavigation: PendingRecipeNavigation = koinInject()
 
     LaunchedEffect(pendingRecipeNavigation) {
-        pendingRecipeNavigation.pendingRecipeId
+        combine(
+            pendingRecipeNavigation.pendingRecipeId,
+            snapshotFlow { backStack.toList() },
+        ) { recipeId, stack ->
+            recipeId?.takeIf { stack.any { it is NavigationMain } }
+        }
             .filterNotNull()
             .collect { recipeId ->
                 backStack.navigate(NavigationRecipe.Detail(recipeId))

@@ -17,6 +17,7 @@ import cookinator.localisation.generated.resources.Res.string
 import cookinator.localisation.generated.resources.app_name
 import idp.cookinator.host.App
 import idp.cookinator.host.di.initKoin
+import idp.cookinator.host.registerDesktopDeepLinkHandlers
 import idp.cookinator.host.registerNotificationClickHandler
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.painterResource
@@ -24,7 +25,7 @@ import org.jetbrains.compose.resources.stringResource
 import java.awt.Dimension
 import java.io.File
 
-fun main() {
+fun main(args: Array<String>) {
     initKoin()
 
     val iconTempFile = File.createTempFile("notification_icon", ".png").apply {
@@ -45,6 +46,7 @@ fun main() {
     )
 
     registerNotificationClickHandler()
+    registerDesktopDeepLinkHandlers(args)
 
     application {
         Window(
