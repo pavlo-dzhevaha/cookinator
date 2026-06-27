@@ -8,5 +8,6 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 actual val notificationModule: Module = module {
+    includes(notificationCommonModule)
     singleOf(::DesktopNotificationScheduler) bind NotificationScheduler::class
 }

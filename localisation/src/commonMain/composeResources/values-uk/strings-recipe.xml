@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recipe_detail_title">Деталі рецепту</string>
+    <string name="recipe_detail_stub">Рецепт №%1$d — деталі незабаром</string>
+    <string name="recipe_detail_back">Назад</string>
+</resources>

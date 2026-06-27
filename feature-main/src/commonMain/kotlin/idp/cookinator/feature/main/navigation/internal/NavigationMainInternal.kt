@@ -7,6 +7,7 @@ import androidx.savedstate.serialization.SavedStateConfiguration
 import idp.cookinator.feature.main.screen.home.HomeScreen
 import idp.cookinator.feature.main.screen.notification.NotificationsScreen
 import idp.cookinator.feature.main.screen.profile.ProfileScreen
+import idp.cookinator.feature.main.screen.recipe.detail.RecipeDetailScreen
 import idp.cookinator.feature.main.screen.saved.SavedScreen
 import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.screen
@@ -21,6 +22,7 @@ internal val internalConfiguration = SavedStateConfiguration {
             screen<NavigationMainInternal.Saved>()
             screen<NavigationMainInternal.Notifications>()
             screen<NavigationMainInternal.Profile>()
+            screen<NavigationMainInternal.RecipeDetail>()
         }
     }
 }
@@ -38,6 +40,9 @@ internal sealed interface NavigationMainInternal : NavKey {
 
     @Serializable
     data object Profile : NavigationMainInternal
+
+    @Serializable
+    data class RecipeDetail(val recipeId: Int) : NavigationMainInternal
 
     private companion object
 }
@@ -71,6 +76,14 @@ internal fun NavigationMainInternal.graph(
     NavigationMainInternal.Profile -> NavEntry(this) {
         ProfileScreen(
             navigator = navigator,
+            bottomBarHeight = bottomBarHeight,
+        )
+    }
+
+    is NavigationMainInternal.RecipeDetail -> NavEntry(this) {
+        RecipeDetailScreen(
+            recipeId = recipeId,
+            internalNavigator = internalNavigator,
             bottomBarHeight = bottomBarHeight,
         )
     }

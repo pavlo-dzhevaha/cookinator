@@ -18,7 +18,8 @@ kotlin {
         implementation(libs.compose.uiToolingPreview)
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)
-        implementation(libs.kmp.notifier)
+        implementation(libs.koin.android)
+        implementation(libs.kmp.notifier.local)
 
         implementation(projects.host)
     }

@@ -1,11 +1,13 @@
 package idp.cookinator
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
-import com.mmk.kmpnotifier.notification.NotifierManager
+import com.mmk.kmpnotifier.KMPNotifier
+import com.mmk.kmpnotifier.local.LocalNotifications
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import idp.cookinator.host.App
 
@@ -14,19 +16,25 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        NotifierManager.initialize(
+        KMPNotifier.initialize(
             configuration = NotificationPlatformConfiguration.Android(
                 notificationIconResId = R.mipmap.ic_launcher_round,
                 showPushNotification = true,
-            )
+            ),
+            LocalNotifications,
         )
 
         setContent {
             LaunchedEffect(Unit) {
-                NotifierManager.getPermissionUtil().askNotificationPermission()
+                KMPNotifier.permissionUtil.askNotificationPermission()
             }
 
             App()
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
     }
 }

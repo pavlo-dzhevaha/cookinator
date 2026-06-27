@@ -16,7 +16,7 @@ kotlin {
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.compose)
         implementation(libs.koin.compose.viewmodel)
-        implementation(libs.kmp.notifier)
+        implementation(libs.kmp.notifier.local)
 
         implementation(projects.coreUi)
         implementation(projects.navigation)

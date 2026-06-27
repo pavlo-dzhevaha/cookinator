@@ -8,14 +8,12 @@ import idp.cookinator.feature.main.screen.home.contract.HomeIntent
 import idp.cookinator.feature.main.screen.home.contract.HomeState
 import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
 import idp.cookinator.model.Recipe
-import idp.cookinator.notification.NotificationScheduler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 
 internal class HomeViewModel(
     private val domain: DomainManager,
-    private val notificationScheduler: NotificationScheduler,
 ) : MviViewModel<HomeState, HomeIntent, HomeEvent>(HomeState.initialState) {
 
     private val rawRecipes = MutableStateFlow<List<Recipe>>(emptyList())
@@ -41,10 +39,6 @@ internal class HomeViewModel(
         domain.setRecipeLiked(
             recipeId = model.recipe.id,
             isLiked = !model.isSaved,
-        )
-        notificationScheduler.scheduleCookingReminder(
-            recipeTitle = model.recipe.title,
-            delayHours = 1,
         )
     }
 

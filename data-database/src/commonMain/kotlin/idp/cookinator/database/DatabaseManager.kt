@@ -41,6 +41,15 @@ class DatabaseManager(
     }
 
     /**
+     * Fetches all liked recipes from the local database.
+     */
+    suspend fun getLikedRecipes(): Result<List<Recipe>> = runCatching {
+        recipeDao
+            .getLikedRecipes()
+            .map(RecipeEntity::toDomainModel)
+    }
+
+    /**
      * Returns a reactive Flow of liked recipe IDs as Strings.
      */
     fun observeLikedRecipeIds(): Result<Flow<List<Int>>> =

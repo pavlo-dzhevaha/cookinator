@@ -9,7 +9,11 @@ kotlin {
     dependencies {
         implementation(platform(libs.koin.bom))
         implementation(libs.koin.core)
-        implementation(libs.kmp.notifier)
+        implementation(libs.kmp.notifier.local)
+
+        implementation(projects.navigation)
+        implementation(projects.dataDatabase)
+        implementation(projects.dataModel)
     }
 
     sourceSets {

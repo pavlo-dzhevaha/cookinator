@@ -21,7 +21,6 @@ kotlin {
         implementation(projects.navigation)
         implementation(projects.localisation)
         implementation(projects.domain)
-        implementation(projects.notification)
         implementation(projects.dataModel)
         implementation(projects.dataPreferences)
     }

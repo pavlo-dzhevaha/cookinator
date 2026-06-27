@@ -7,7 +7,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.mmk.kmpnotifier.notification.NotifierManager
+import com.mmk.kmpnotifier.KMPNotifier
+import com.mmk.kmpnotifier.local.LocalNotifications
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import cookinator.core_ui.generated.resources.Res
 import cookinator.core_ui.generated.resources.Res.drawable
@@ -25,23 +26,21 @@ import java.io.File
 fun main() {
     initKoin()
 
-    // 1. Extract the image from the JAR to a physical Temp File
     val iconTempFile = File.createTempFile("notification_icon", ".png").apply {
-        deleteOnExit() // Cleans up when the app closes
+        deleteOnExit()
     }
 
-    // 2. Read the bytes using the Compose Multiplatform Resource API
     runBlocking {
-        // Replace with your actual Res.drawable path
         val imageBytes = Res.readBytes("drawable/ic_launcher-playstore.png")
         iconTempFile.writeBytes(imageBytes)
     }
 
-    NotifierManager.initialize(
+    KMPNotifier.initialize(
         NotificationPlatformConfiguration.Desktop(
             showPushNotification = true,
-            notificationIconPath = iconTempFile.absolutePath
-        )
+            notificationIconPath = iconTempFile.absolutePath,
+        ),
+        LocalNotifications,
     )
 
     application {
@@ -49,7 +48,7 @@ fun main() {
             onCloseRequest = ::exitApplication,
             state = rememberWindowState(
                 position = WindowPosition.Aligned(Alignment.Center),
-                size = DpSize(1024.dp, 768.dp)
+                size = DpSize(1024.dp, 768.dp),
             ),
             title = stringResource(string.app_name),
             icon = painterResource(drawable.ic_launcher_playstore),

@@ -1,22 +1,29 @@
 package idp.cookinator.notification
 
-import com.mmk.kmpnotifier.notification.NotifierManager
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.runBlocking
 
-class DesktopNotificationScheduler : NotificationScheduler {
+class DesktopNotificationScheduler(
+    private val sender: FavoriteRecipeNotificationSender,
+) : NotificationScheduler {
 
-    // A background thread to keep track of time
     private val scheduler = Executors.newSingleThreadScheduledExecutor()
 
-    override fun scheduleCookingReminder(recipeTitle: String, delayHours: Long) {
-        scheduler.schedule({
-            // Trigger KMPNotifier when the delay is over
-            val notifier = NotifierManager.getLocalNotifier()
-            notifier.notify(
-                title = "Time to Cook! 🍳",
-                body = "It's time to start preparing $recipeTitle!"
-            )
-        }, delayHours, TimeUnit.HOURS)
+    override fun startPeriodicReminders() {
+        scheduler.scheduleAtFixedRate(
+            {
+                runBlocking {
+                    sender.sendRandomFavoriteReminder()
+                }
+            },
+            REMINDER_INTERVAL_HOURS,
+            REMINDER_INTERVAL_HOURS,
+            TimeUnit.HOURS,
+        )
+    }
+
+    private companion object {
+        const val REMINDER_INTERVAL_HOURS = 2L
     }
 }

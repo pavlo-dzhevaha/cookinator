@@ -11,6 +11,7 @@ kotlin {
     dependencies {
         api(libs.androidx.lifecycle.viewmodel.navigation3)
         api(libs.androidx.navigation3.ui)
+        api(libs.kotlinx.coroutines.core)
 
         api(projects.coreUi)
     }

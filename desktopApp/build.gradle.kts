@@ -11,7 +11,7 @@ kotlin {
         implementation(compose.desktop.currentOs)
         implementation(libs.kotlinx.coroutinesSwing)
         implementation(libs.compose.components.resources)
-        implementation(libs.kmp.notifier)
+        implementation(libs.kmp.notifier.local)
 
         implementation(projects.host)
         implementation(projects.localisation)

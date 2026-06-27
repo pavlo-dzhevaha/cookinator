@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recipe_detail_title">Recipe details</string>
+    <string name="recipe_detail_stub">Recipe #%1$d — details coming soon</string>
+    <string name="recipe_detail_back">Back</string>
+</resources>
