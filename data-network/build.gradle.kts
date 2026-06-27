@@ -1,28 +1,14 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidMultiplatformLibrary)
+    id("cookinator.kmp.library")
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.buildkonfig)
 }
 
 kotlin {
-    android {
-        namespace = libs.versions.namespace.get() + ".network"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
-
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    jvm()
-
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
         implementation(platform(libs.koin.bom))

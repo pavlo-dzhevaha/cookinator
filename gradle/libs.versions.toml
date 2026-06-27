@@ -79,6 +79,11 @@ coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.re
 #Notification
 kmp-notifier = { module = "io.github.mirzemehdi:kmpnotifier", version.ref = "kmp-notifier" }
 androidx-workmanager = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
+#Gradle plugins (build-logic)
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+gradle-api = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+compose-gradlePlugin = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "composeMultiplatform" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
