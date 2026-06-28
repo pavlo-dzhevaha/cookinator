@@ -8,8 +8,16 @@ import idp.cookinator.domain.notification.ObserveNotificationsUseCase
 import idp.cookinator.domain.notification.ObserveNotificationsUseCaseImpl
 import idp.cookinator.domain.notification.SendRecipeReminderUseCase
 import idp.cookinator.domain.notification.SendRecipeReminderUseCaseImpl
+import idp.cookinator.domain.recipe.ClearRecipeDraftUseCase
+import idp.cookinator.domain.recipe.ClearRecipeDraftUseCaseImpl
+import idp.cookinator.domain.recipe.CreateUserRecipeUseCase
+import idp.cookinator.domain.recipe.CreateUserRecipeUseCaseImpl
+import idp.cookinator.domain.recipe.DeleteUserRecipeUseCase
+import idp.cookinator.domain.recipe.DeleteUserRecipeUseCaseImpl
 import idp.cookinator.domain.recipe.GetRecipeByIdUseCase
 import idp.cookinator.domain.recipe.GetRecipeByIdUseCaseImpl
+import idp.cookinator.domain.recipe.GetUserRecipeByIdUseCase
+import idp.cookinator.domain.recipe.GetUserRecipeByIdUseCaseImpl
 import idp.cookinator.domain.recipe.GetRandomRecipesUseCase
 import idp.cookinator.domain.recipe.GetRandomRecipesUseCaseImpl
 import idp.cookinator.domain.recipe.ObserveDiscoveryRecipesUseCase
@@ -21,6 +29,14 @@ import idp.cookinator.domain.recipe.ObserveLikedRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveLikedRecipesUseCaseImpl
 import idp.cookinator.domain.recipe.ObserveRecipeDishTypesUseCase
 import idp.cookinator.domain.recipe.ObserveRecipeDishTypesUseCaseImpl
+import idp.cookinator.domain.recipe.ObserveRecipeDraftUseCase
+import idp.cookinator.domain.recipe.ObserveRecipeDraftUseCaseImpl
+import idp.cookinator.domain.recipe.ObserveUserRecipesUseCase
+import idp.cookinator.domain.recipe.ObserveUserRecipesUseCaseImpl
+import idp.cookinator.domain.recipe.SaveRecipeDraftUseCase
+import idp.cookinator.domain.recipe.SaveRecipeDraftUseCaseImpl
+import idp.cookinator.domain.recipe.UpdateUserRecipeUseCase
+import idp.cookinator.domain.recipe.UpdateUserRecipeUseCaseImpl
 import idp.cookinator.domain.recipe.ObserveRecentlyViewedUseCase
 import idp.cookinator.domain.recipe.ObserveRecentlyViewedUseCaseImpl
 import idp.cookinator.domain.recipe.ObserveRecipesByDishTypeUseCase
@@ -45,6 +61,14 @@ val domainModule = module {
     singleOf(::RecordRecipeViewedUseCaseImpl) bind RecordRecipeViewedUseCase::class
     singleOf(::ObserveRecentlyViewedUseCaseImpl) bind ObserveRecentlyViewedUseCase::class
     singleOf(::SetRecipeLikedUseCaseImpl) bind SetRecipeLikedUseCase::class
+    singleOf(::CreateUserRecipeUseCaseImpl) bind CreateUserRecipeUseCase::class
+    singleOf(::DeleteUserRecipeUseCaseImpl) bind DeleteUserRecipeUseCase::class
+    singleOf(::UpdateUserRecipeUseCaseImpl) bind UpdateUserRecipeUseCase::class
+    singleOf(::ObserveUserRecipesUseCaseImpl) bind ObserveUserRecipesUseCase::class
+    singleOf(::GetUserRecipeByIdUseCaseImpl) bind GetUserRecipeByIdUseCase::class
+    singleOf(::ObserveRecipeDraftUseCaseImpl) bind ObserveRecipeDraftUseCase::class
+    singleOf(::SaveRecipeDraftUseCaseImpl) bind SaveRecipeDraftUseCase::class
+    singleOf(::ClearRecipeDraftUseCaseImpl) bind ClearRecipeDraftUseCase::class
     singleOf(::ObserveNotificationsUseCaseImpl) bind ObserveNotificationsUseCase::class
     singleOf(::MarkNotificationReadUseCaseImpl) bind MarkNotificationReadUseCase::class
     singleOf(::ClearNotificationsUseCaseImpl) bind ClearNotificationsUseCase::class

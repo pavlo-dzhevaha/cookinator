@@ -8,6 +8,8 @@ internal data class RecipeDetailState(
     val uiState: UiState,
     val recipe: Recipe?,
     val isSaved: Boolean,
+    val isUserRecipe: Boolean = false,
+    val userRecipeId: Long? = null,
 ) : BaseState {
     companion object {
         val initialState = RecipeDetailState(

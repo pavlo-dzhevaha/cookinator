@@ -11,4 +11,6 @@ internal sealed interface AllRecipesIntent : BaseIntent {
     data object OnRetry : AllRecipesIntent
 
     data object OnBack : AllRecipesIntent
+
+    data class OnCustomizeRecipe(val model: RecipeUiModel) : AllRecipesIntent
 }

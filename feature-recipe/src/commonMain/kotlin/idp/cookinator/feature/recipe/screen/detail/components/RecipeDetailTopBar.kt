@@ -27,6 +27,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import cookinator.localisation.generated.resources.Res
+import cookinator.localisation.generated.resources.recipe_detail_edit
 import cookinator.localisation.generated.resources.recipe_detail_toggle_favorite
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
@@ -64,6 +65,9 @@ internal fun RecipeDetailTopBar(
     title: String,
     onBack: () -> Unit,
     onToggleFavorite: () -> Unit,
+    showFavorite: Boolean = true,
+    showEdit: Boolean = false,
+    onEdit: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var isOptionsMenuExpanded by remember { mutableStateOf(false) }
@@ -107,13 +111,24 @@ internal fun RecipeDetailTopBar(
                 ),
                 modifier = Modifier.width(optionsMenuWidth),
             ) {
-                DropdownMenuItem(
-                    text = { Text(stringResource(Res.string.recipe_detail_toggle_favorite)) },
-                    onClick = {
-                        isOptionsMenuExpanded = false
-                        onToggleFavorite()
-                    },
-                )
+                if (showEdit) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(Res.string.recipe_detail_edit)) },
+                        onClick = {
+                            isOptionsMenuExpanded = false
+                            onEdit()
+                        },
+                    )
+                }
+                if (showFavorite) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(Res.string.recipe_detail_toggle_favorite)) },
+                        onClick = {
+                            isOptionsMenuExpanded = false
+                            onToggleFavorite()
+                        },
+                    )
+                }
             }
         }
     }

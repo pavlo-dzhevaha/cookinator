@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="profile_title">Мій профіль</string>
+    <string name="profile_my_recipes">Мої рецепти</string>
+    <string name="profile_my_recipes_empty">Ви ще не створили жодного рецепту</string>
+    <string name="profile_recipe_delete">Видалити</string>
+    <string name="profile_recipe_delete_title">Видалити рецепт?</string>
+    <string name="profile_recipe_delete_message">Ви впевнені, що хочете видалити «%1$s»? Цю дію не можна скасувати.</string>
+    <string name="profile_recipe_delete_cancel">Скасувати</string>
 </resources>

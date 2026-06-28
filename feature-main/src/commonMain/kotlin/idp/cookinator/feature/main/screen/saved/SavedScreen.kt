@@ -14,6 +14,7 @@ import idp.cookinator.feature.main.screen.saved.contract.SavedIntent
 import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.navigate
 import idp.cookinator.feature.navigation.extension.pushToTop
+import idp.cookinator.feature.navigation.features.NavigationCreateRecipe
 import idp.cookinator.feature.navigation.features.NavigationRecipe
 import idp.cookinator.localisation.UiText.Companion.asUiText
 import org.koin.compose.viewmodel.koinViewModel
@@ -31,6 +32,9 @@ internal fun SavedScreen(
             when (event) {
                 is SavedEvent.NavigateToRecipe -> {
                     navigator.navigate(NavigationRecipe.Detail(event.recipeId))
+                }
+                is SavedEvent.NavigateToCustomizeRecipe -> {
+                    navigator.add(NavigationCreateRecipe.CreateFromRecipe(event.recipeId))
                 }
             }
         },

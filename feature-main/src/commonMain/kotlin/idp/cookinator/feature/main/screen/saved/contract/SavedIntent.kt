@@ -8,5 +8,7 @@ internal sealed interface SavedIntent : BaseIntent {
 
     data class OnRecipeClick(val model: RecipeUiModel) : SavedIntent
 
+    data class OnCustomizeRecipe(val model: RecipeUiModel) : SavedIntent
+
     data object OnRetry : SavedIntent
 }

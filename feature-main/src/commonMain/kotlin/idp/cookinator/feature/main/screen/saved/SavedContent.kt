@@ -6,12 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import cookinator.localisation.generated.resources.Res
+import cookinator.localisation.generated.resources.recipe_card_customize
 import cookinator.localisation.generated.resources.saved_title
 import idp.cookinator.coreui.component.apptopbar.AppTopBar
 import idp.cookinator.coreui.component.grid.AdaptiveLazyVerticalGrid
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.component.recipecard.RecipeCard
+import idp.cookinator.coreui.component.recipecard.RecipeCardMenuItem
 import idp.cookinator.coreui.model.RecipeUiModel
 import idp.cookinator.feature.main.screen.saved.contract.SavedIntent
 import idp.cookinator.feature.main.screen.saved.contract.SavedState
@@ -41,6 +43,12 @@ internal fun SavedContent(
                     imageHeight = Dp.Unspecified,
                     onClick = { onIntent(SavedIntent.OnRecipeClick(item)) },
                     onLike = { onIntent(SavedIntent.OnToggleSaved(item)) },
+                    optionsMenuItems = listOf(
+                        RecipeCardMenuItem(
+                            label = stringResource(Res.string.recipe_card_customize),
+                            onClick = { onIntent(SavedIntent.OnCustomizeRecipe(item)) },
+                        ),
+                    ),
                     modifier = Modifier.animateItem(),
                 )
             }

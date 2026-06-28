@@ -54,6 +54,8 @@ internal class HomeViewModel(
             is HomeIntent.OnPopularCategorySeeAllClick -> sendEvent(
                 HomeEvent.NavigateToAllRecipes(AllRecipesFilter.Category(intent.category)),
             )
+            is HomeIntent.OnCustomizeRecipe ->
+                sendEvent(HomeEvent.NavigateToCustomizeRecipe(intent.model.recipe.id))
         }
     }
 

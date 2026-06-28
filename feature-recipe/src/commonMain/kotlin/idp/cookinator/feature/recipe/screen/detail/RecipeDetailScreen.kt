@@ -11,6 +11,8 @@ import idp.cookinator.coreui.component.info.InfoContainer
 import idp.cookinator.coreui.viewmodel.components.MviStateProvider
 import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.navigateUp
+import idp.cookinator.feature.navigation.features.NavigationCreateRecipe
+import idp.cookinator.feature.recipe.screen.detail.contract.RecipeDetailEvent
 import idp.cookinator.feature.recipe.screen.detail.contract.RecipeDetailIntent
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -18,13 +20,18 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 internal fun RecipeDetailScreen(
-    recipeId: Int,
+    args: RecipeDetailArgs,
     navigator: Navigator,
-    viewModel: RecipeDetailViewModel = koinViewModel { parametersOf(recipeId) },
+    viewModel: RecipeDetailViewModel = koinViewModel { parametersOf(args) },
 ) {
     MviStateProvider(
         viewModel = viewModel,
-        onEvent = {},
+        onEvent = { event ->
+            when (event) {
+                is RecipeDetailEvent.NavigateToEdit ->
+                    navigator.add(NavigationCreateRecipe.Edit(event.userRecipeId))
+            }
+        },
     ) { state ->
         state.uiState.Render(
             loading = {

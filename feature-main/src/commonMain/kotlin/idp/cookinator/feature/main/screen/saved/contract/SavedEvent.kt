@@ -4,4 +4,6 @@ import idp.cookinator.coreui.viewmodel.base.BaseEvent
 
 internal sealed interface SavedEvent : BaseEvent {
     data class NavigateToRecipe(val recipeId: Int) : SavedEvent
+
+    data class NavigateToCustomizeRecipe(val recipeId: Int) : SavedEvent
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="create_recipe_title">Create recipe</string>
+    <string name="create_recipe_edit_title">Edit recipe</string>
+    <string name="create_recipe_photo_hint">Add photo</string>
+    <string name="create_recipe_title_hint">Recipe name</string>
+    <string name="create_recipe_serves">Serves</string>
+    <string name="create_recipe_cook_time">Cook time</string>
+    <string name="create_recipe_category_title">Category</string>
+    <string name="create_recipe_category_custom_hint">Add custom category</string>
+    <string name="create_recipe_ingredients_title">Ingredients</string>
+    <string name="create_recipe_ingredient_name_hint">Item name</string>
+    <string name="create_recipe_ingredient_quantity_hint">Quantity</string>
+    <string name="create_recipe_save">Save my recipes</string>
+    <string name="create_recipe_exit_title">Discard changes?</string>
+    <string name="create_recipe_exit_message">You have unsaved changes. What would you like to do?</string>
+    <string name="create_recipe_exit_discard">Yes, exit</string>
+    <string name="create_recipe_exit_save_draft">Save to drafts and exit</string>
+    <string name="create_recipe_exit_cancel">No, go back</string>
+    <string name="create_recipe_image_source_title">Choose photo source</string>
+    <string name="create_recipe_image_camera">Take photo</string>
+    <string name="create_recipe_image_gallery">Choose from gallery</string>
+</resources>

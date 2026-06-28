@@ -9,6 +9,7 @@ import kotlinx.serialization.modules.polymorphic
 val featureRecipeSerializer = SerializersModule {
     polymorphic(NavKey::class) {
         screen<NavigationRecipe.Detail>()
+        screen<NavigationRecipe.UserDetail>()
     }
 }
 
@@ -16,6 +17,9 @@ val featureRecipeSerializer = SerializersModule {
 sealed interface NavigationRecipe : NavKey {
     @Serializable
     data class Detail(val recipeId: Int) : NavigationRecipe
+
+    @Serializable
+    data class UserDetail(val userRecipeId: Long) : NavigationRecipe
 
     private companion object
 }

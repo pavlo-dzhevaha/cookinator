@@ -24,6 +24,7 @@ import idp.cookinator.feature.main.navigation.internal.NavigationMainInternal
 import idp.cookinator.feature.main.navigation.internal.graph
 import idp.cookinator.feature.main.navigation.internal.internalConfiguration
 import idp.cookinator.feature.navigation.extension.Navigator
+import idp.cookinator.feature.navigation.features.NavigationCreateRecipe
 import idp.cookinator.feature.navigation.extension.navigationTransitionSpec
 import idp.cookinator.feature.navigation.extension.pushToTop
 import idp.cookinator.feature.navigation.extension.rememberSoloSceneStrategy
@@ -59,7 +60,7 @@ internal fun MainScreen(
                 onItemSelected = { item ->
                     internalNavigator.pushToTop(item.navigationKey)
                 },
-                onAddClick = { /* TODO */ },
+                onAddClick = { navigator.add(NavigationCreateRecipe.Create) },
             )
         },
     ) { paddingValues ->

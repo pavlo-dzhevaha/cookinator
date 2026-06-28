@@ -32,5 +32,6 @@ kotlin {
         implementation(projects.featureRecipe)
         implementation(projects.featureAllRecipes)
         implementation(projects.featureSettings)
+        implementation(projects.featureCreateRecipe)
     }
 }

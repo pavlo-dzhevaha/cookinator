@@ -18,4 +18,6 @@ internal sealed interface HomeIntent : BaseIntent {
     data class OnCategorySelected(val category: String) : HomeIntent
 
     data class OnPopularCategorySeeAllClick(val category: String) : HomeIntent
+
+    data class OnCustomizeRecipe(val model: RecipeUiModel) : HomeIntent
 }

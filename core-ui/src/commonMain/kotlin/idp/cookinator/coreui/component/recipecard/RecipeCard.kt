@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,8 +32,10 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import cookinator.localisation.generated.resources.Res
@@ -58,6 +62,7 @@ fun RecipeCard(
     imageHeight: Dp,
     onClick: () -> Unit,
     onLike: () -> Unit,
+    optionsMenuItems: List<RecipeCardMenuItem> = emptyList(),
 ) {
     val density = LocalDensity.current
     val shape = RoundedCornerShape(Theme.size.s10)
@@ -106,9 +111,8 @@ fun RecipeCard(
             SpacerHeight(Theme.size.s12)
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .width(itemWidth),
+                horizontalArrangement = Arrangement.spacedBy(Theme.size.s4),
+                modifier = Modifier.width(itemWidth),
             ) {
                 Text(
                     text = item.recipe.title,
@@ -116,17 +120,11 @@ fun RecipeCard(
                     color = Theme.color.neutral.n90,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .weight(1f),
+                    modifier = Modifier.weight(1f),
                 )
-                Icon(
-                    imageVector = Icons.More,
-                    contentDescription = ContentDescription.ICON,
-                    tint = Theme.color.neutral.n90,
-                    modifier = Modifier
-                        .size(Theme.size.s20)
-                        .clickable { /*TODO show options*/ }
-                )
+                if (optionsMenuItems.isNotEmpty()) {
+                    RecipeCardOptionsMenu(items = optionsMenuItems)
+                }
             }
             SpacerHeight(Theme.size.s6)
         }
@@ -180,6 +178,50 @@ fun RecipeCard(
                 modifier = Modifier
                     .fillMaxSize(),
             )
+        }
+    }
+}
+
+@Composable
+private fun RecipeCardOptionsMenu(
+    items: List<RecipeCardMenuItem>,
+) {
+    var isExpanded by remember { mutableStateOf(false) }
+    val menuWidth = 200.dp
+
+    Box {
+        Icon(
+            imageVector = Icons.More,
+            contentDescription = ContentDescription.ICON,
+            tint = Theme.color.neutral.n90,
+            modifier = Modifier
+                .size(Theme.size.s32)
+                .clip(CircleShape)
+                .clickable(
+                    onClick = { isExpanded = true },
+                    role = Role.Button,
+                )
+                .padding(Theme.size.s6)
+                .size(Theme.size.s20),
+        )
+        DropdownMenu(
+            expanded = isExpanded,
+            onDismissRequest = { isExpanded = false },
+            offset = DpOffset(
+                x = Theme.size.s32 - menuWidth,
+                y = Theme.size.s4,
+            ),
+            modifier = Modifier.width(menuWidth),
+        ) {
+            items.forEach { item ->
+                DropdownMenuItem(
+                    text = { Text(item.label) },
+                    onClick = {
+                        isExpanded = false
+                        item.onClick()
+                    },
+                )
+            }
         }
     }
 }

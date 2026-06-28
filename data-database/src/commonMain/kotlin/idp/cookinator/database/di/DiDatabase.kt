@@ -6,6 +6,7 @@ import idp.cookinator.database.AppDatabase
 import idp.cookinator.database.DatabaseManager
 import idp.cookinator.database.dao.NotificationDao
 import idp.cookinator.database.dao.RecipeDao
+import idp.cookinator.database.dao.UserRecipeDao
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -29,6 +30,10 @@ val dataDatabaseModule: Module = module {
 
     single<NotificationDao> {
         get<AppDatabase>().notificationDao()
+    }
+
+    single<UserRecipeDao> {
+        get<AppDatabase>().userRecipeDao()
     }
 
     singleOf(::DatabaseManager)

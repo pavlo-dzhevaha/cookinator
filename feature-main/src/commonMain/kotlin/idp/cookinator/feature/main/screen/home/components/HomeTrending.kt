@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import cookinator.localisation.generated.resources.Res
 import cookinator.localisation.generated.resources.home_trending_action
 import cookinator.localisation.generated.resources.home_trending_title
+import cookinator.localisation.generated.resources.recipe_card_customize
 import idp.cookinator.coreui.component.spacer.SpacerHeight
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
@@ -28,6 +29,7 @@ import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
 import idp.cookinator.feature.navigation.features.AllRecipesFilter
 import idp.cookinator.coreui.component.recipecard.RecipeCard
+import idp.cookinator.coreui.component.recipecard.RecipeCardMenuItem
 import idp.cookinator.coreui.model.RecipeUiModel
 import org.jetbrains.compose.resources.stringResource
 
@@ -88,6 +90,12 @@ internal fun HomeTrending(
                     imageHeight = imageHeight,
                     onClick = { onIntent(HomeIntent.OnRecipeClick(item)) },
                     onLike = { onIntent(HomeIntent.OnToggleSaved(item)) },
+                    optionsMenuItems = listOf(
+                        RecipeCardMenuItem(
+                            label = stringResource(Res.string.recipe_card_customize),
+                            onClick = { onIntent(HomeIntent.OnCustomizeRecipe(item)) },
+                        ),
+                    ),
                 )
             }
         }

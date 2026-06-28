@@ -6,11 +6,13 @@ import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import idp.cookinator.database.dao.NotificationDao
 import idp.cookinator.database.dao.RecipeDao
+import idp.cookinator.database.dao.UserRecipeDao
 import idp.cookinator.database.model.LikedRecipeEntity
 import idp.cookinator.database.model.NotificationEntity
 import idp.cookinator.database.model.RecentlyViewedRecipeEntity
 import idp.cookinator.database.model.RecipeDishTypeEntity
 import idp.cookinator.database.model.RecipeEntity
+import idp.cookinator.database.model.UserRecipeEntity
 
 @Database(
     entities = [
@@ -19,14 +21,17 @@ import idp.cookinator.database.model.RecipeEntity
         NotificationEntity::class,
         RecipeDishTypeEntity::class,
         RecentlyViewedRecipeEntity::class,
+        UserRecipeEntity::class,
     ],
-    version = 5,
+    version = 6,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
 
     abstract fun notificationDao(): NotificationDao
+
+    abstract fun userRecipeDao(): UserRecipeDao
 }
 
 // Room 2.7+ uses this to automatically generate the implementation behind the scenes

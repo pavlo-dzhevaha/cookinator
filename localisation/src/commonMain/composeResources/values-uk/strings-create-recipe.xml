@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="create_recipe_title">Створити рецепт</string>
+    <string name="create_recipe_edit_title">Редагувати рецепт</string>
+    <string name="create_recipe_photo_hint">Додати фото</string>
+    <string name="create_recipe_title_hint">Назва рецепту</string>
+    <string name="create_recipe_serves">Порцій</string>
+    <string name="create_recipe_cook_time">Час приготування</string>
+    <string name="create_recipe_category_title">Категорія</string>
+    <string name="create_recipe_category_custom_hint">Додати власну категорію</string>
+    <string name="create_recipe_ingredients_title">Інгредієнти</string>
+    <string name="create_recipe_ingredient_name_hint">Назва</string>
+    <string name="create_recipe_ingredient_quantity_hint">Кількість</string>
+    <string name="create_recipe_save">Зберегти мої рецепти</string>
+    <string name="create_recipe_exit_title">Скасувати зміни?</string>
+    <string name="create_recipe_exit_message">Є незбережені зміни. Що зробити?</string>
+    <string name="create_recipe_exit_discard">Так, вийти</string>
+    <string name="create_recipe_exit_save_draft">Зберегти в чернетки та вийти</string>
+    <string name="create_recipe_exit_cancel">Ні, повернутися</string>
+    <string name="create_recipe_image_source_title">Оберіть джерело фото</string>
+    <string name="create_recipe_image_camera">Зробити фото</string>
+    <string name="create_recipe_image_gallery">Обрати з галереї</string>
+</resources>

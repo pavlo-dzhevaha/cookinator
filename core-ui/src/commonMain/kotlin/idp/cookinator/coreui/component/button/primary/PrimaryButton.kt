@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
 import idp.cookinator.coreui.component.button.core.ButtonType
 import idp.cookinator.coreui.styling.theme.AppTheme
@@ -100,10 +101,9 @@ fun PrimaryButton(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .background(
-                color = backgroundColor,
-                shape = RoundedCornerShape(Theme.size.s10),
-            ).clickable(
+            .clip(RoundedCornerShape(Theme.size.s10))
+            .background(backgroundColor)
+            .clickable(
                 interactionSource = interactionSource,
                 indication = null,
                 enabled = enabled && !loading,

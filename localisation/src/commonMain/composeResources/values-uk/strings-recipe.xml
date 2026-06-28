@@ -14,4 +14,6 @@
     <string name="recipe_detail_diet_dairy_free">Без лактози</string>
     <string name="recipe_detail_show_more">Показати більше</string>
     <string name="recipe_detail_show_less">Приховати</string>
+    <string name="recipe_detail_edit">Редагувати</string>
+    <string name="recipe_card_customize">Змінити рецепт</string>
 </resources>

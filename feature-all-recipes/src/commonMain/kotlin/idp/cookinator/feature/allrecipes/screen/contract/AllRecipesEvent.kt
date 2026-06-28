@@ -6,4 +6,6 @@ internal sealed interface AllRecipesEvent : BaseEvent {
     data class NavigateToRecipe(val recipeId: Int) : AllRecipesEvent
 
     data object NavigateBack : AllRecipesEvent
+
+    data class NavigateToCustomizeRecipe(val recipeId: Int) : AllRecipesEvent
 }

@@ -16,6 +16,7 @@ import idp.cookinator.feature.main.screen.home.contract.HomeIntent
 import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.navigate
 import idp.cookinator.feature.navigation.features.NavigationAllRecipes
+import idp.cookinator.feature.navigation.features.NavigationCreateRecipe
 import idp.cookinator.feature.navigation.features.NavigationRecipe
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -35,6 +36,9 @@ internal fun HomeScreen(
                 }
                 is HomeEvent.NavigateToAllRecipes -> {
                     navigator.navigate(NavigationAllRecipes.All(event.filter))
+                }
+                is HomeEvent.NavigateToCustomizeRecipe -> {
+                    navigator.add(NavigationCreateRecipe.CreateFromRecipe(event.recipeId))
                 }
             }
         },

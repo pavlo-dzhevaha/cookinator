@@ -46,6 +46,9 @@ internal fun RecipeDetailContent(
                 title = stringResource(Res.string.recipe_detail_title, recipe.title),
                 onBack = onBack,
                 onToggleFavorite = { onIntent(RecipeDetailIntent.OnToggleFavorite) },
+                showFavorite = !state.isUserRecipe,
+                showEdit = state.isUserRecipe,
+                onEdit = { onIntent(RecipeDetailIntent.OnEdit) },
             )
         }
         item {

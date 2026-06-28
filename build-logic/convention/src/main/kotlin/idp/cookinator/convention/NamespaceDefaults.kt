@@ -15,6 +15,7 @@ internal fun Project.defaultNamespaceSuffix(): String = when (name) {
     "feature-settings" -> ".feature.settings"
     "feature-recipe" -> ".feature.recipe"
     "feature-all-recipes" -> ".feature.allrecipes"
+    "feature-create-recipe" -> ".feature.createrecipe"
     else -> ".${name.replace('-', '.')}"
 }
 

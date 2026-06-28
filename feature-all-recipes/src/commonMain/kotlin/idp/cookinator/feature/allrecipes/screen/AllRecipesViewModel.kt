@@ -39,6 +39,8 @@ internal class AllRecipesViewModel(
             is AllRecipesIntent.OnToggleSaved -> onToggleSaved(intent.model)
             AllRecipesIntent.OnRetry -> fetchData(forceRefresh = true)
             AllRecipesIntent.OnBack -> sendEvent(AllRecipesEvent.NavigateBack)
+            is AllRecipesIntent.OnCustomizeRecipe ->
+                sendEvent(AllRecipesEvent.NavigateToCustomizeRecipe(intent.model.recipe.id))
         }
     }
 

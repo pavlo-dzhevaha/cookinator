@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="profile_title">My profile</string>
+    <string name="profile_my_recipes">My recipes</string>
+    <string name="profile_my_recipes_empty">You have not created any recipes yet</string>
+    <string name="profile_recipe_delete">Delete</string>
+    <string name="profile_recipe_delete_title">Delete recipe?</string>
+    <string name="profile_recipe_delete_message">Are you sure you want to delete \"%1$s\"? This action cannot be undone.</string>
+    <string name="profile_recipe_delete_cancel">Cancel</string>
 </resources>
