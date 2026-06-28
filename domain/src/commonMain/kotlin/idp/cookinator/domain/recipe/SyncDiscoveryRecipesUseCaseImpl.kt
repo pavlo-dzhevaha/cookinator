@@ -1,6 +1,6 @@
 package idp.cookinator.domain.recipe
 
-import idp.cookinator.database.DatabaseManager
+import idp.cookinator.database.RecipeDatabaseManager
 import idp.cookinator.domain.internal.useCaseIo
 import idp.cookinator.domain.internal.useCaseLog
 import idp.cookinator.model.Recipe
@@ -10,7 +10,7 @@ import idp.cookinator.network.model.toDomainModels
 
 internal class SyncDiscoveryRecipesUseCaseImpl(
     private val network: NetworkManager,
-    private val database: DatabaseManager,
+    private val database: RecipeDatabaseManager,
     private val orderStore: DiscoveryOrderStore,
 ) : SyncDiscoveryRecipesUseCase {
     override suspend fun invoke(forceRefresh: Boolean): Result<Unit> = useCaseIo {

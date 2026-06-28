@@ -5,13 +5,15 @@ import com.mmk.kmpnotifier.local.localNotifier
 import cookinator.localisation.generated.resources.Res
 import cookinator.localisation.generated.resources.notification_reminder_body
 import cookinator.localisation.generated.resources.notification_reminder_title
-import idp.cookinator.database.DatabaseManager
+import idp.cookinator.database.NotificationDatabaseManager
+import idp.cookinator.database.RecipeDatabaseManager
 import idp.cookinator.domain.RecipeReminderSender
 import idp.cookinator.model.Recipe
 import org.jetbrains.compose.resources.getString
 
 class FavoriteRecipeNotificationSender(
-    private val database: DatabaseManager,
+    private val recipeDatabase: RecipeDatabaseManager,
+    private val notificationDatabase: NotificationDatabaseManager,
 ) : RecipeReminderSender {
 
     override suspend fun sendRandomReminder(): Result<Unit> = runCatching {
@@ -26,7 +28,7 @@ class FavoriteRecipeNotificationSender(
     private suspend fun sendReminderForRecipe(recipe: Recipe) {
         val title = getString(Res.string.notification_reminder_title)
         val body = getString(Res.string.notification_reminder_body, recipe.title)
-        val notificationId = database
+        val notificationId = notificationDatabase
             .insertNotification(
                 recipeId = recipe.id,
                 title = title,
@@ -46,13 +48,13 @@ class FavoriteRecipeNotificationSender(
     }
 
     private suspend fun pickRandomRecipe(): Recipe? {
-        database
+        recipeDatabase
             .getLikedRecipes()
             .getOrNull()
             ?.randomOrNull()
             ?.let { return it }
 
-        return database
+        return recipeDatabase
             .getAllCachedRecipes()
             .getOrNull()
             ?.randomOrNull()

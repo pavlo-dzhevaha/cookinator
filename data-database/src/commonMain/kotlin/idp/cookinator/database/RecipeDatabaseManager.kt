@@ -1,18 +1,13 @@
 package idp.cookinator.database
 
-import idp.cookinator.database.dao.NotificationDao
 import idp.cookinator.database.dao.RecipeDao
-import idp.cookinator.database.dao.UserRecipeDao
 import idp.cookinator.database.model.LikedRecipeEntity
-import idp.cookinator.database.model.NotificationEntity
 import idp.cookinator.database.model.RecentlyViewedRecipeEntity
 import idp.cookinator.database.model.RecipeDishTypeEntity
 import idp.cookinator.database.model.RecipeEntity
 import idp.cookinator.database.model.toDomainModel
 import idp.cookinator.database.model.toEntity
-import idp.cookinator.model.AppNotification
 import idp.cookinator.model.Recipe
-import idp.cookinator.model.UserRecipe
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -23,10 +18,8 @@ import kotlinx.coroutines.flow.map
  *
  * @property recipeDao The Data Access Object (DAO) for performing database operations on recipes.
  */
-class DatabaseManager(
+class RecipeDatabaseManager(
     private val recipeDao: RecipeDao,
-    private val notificationDao: NotificationDao,
-    private val userRecipeDao: UserRecipeDao,
 ) {
     /**
      * Saves a list of [Recipe] objects to the local database. Each [Recipe] is converted to a
@@ -140,57 +133,5 @@ class DatabaseManager(
 
     private companion object {
         const val MAX_RECENTLY_VIEWED_STORED = 50
-    }
-
-    fun observeNotifications(): Result<Flow<List<AppNotification>>> = runCatching {
-        notificationDao
-            .observeAll()
-            .map { entities -> entities.map { it.toDomainModel() } }
-    }
-
-    suspend fun insertNotification(
-        recipeId: Int,
-        title: String,
-        body: String,
-        createdAt: Long = System.currentTimeMillis(),
-    ): Result<Long> = runCatching {
-        notificationDao.insert(
-            NotificationEntity(
-                recipeId = recipeId,
-                title = title,
-                body = body,
-                createdAt = createdAt,
-            ),
-        )
-    }
-
-    suspend fun markNotificationRead(id: Long): Result<Unit> = runCatching {
-        notificationDao.markRead(id)
-    }
-
-    suspend fun clearNotifications(): Result<Unit> = runCatching {
-        notificationDao.deleteAll()
-    }
-
-    suspend fun insertUserRecipe(recipe: UserRecipe): Result<Unit> = runCatching {
-        userRecipeDao.insert(recipe.toEntity())
-    }
-
-    suspend fun updateUserRecipe(recipe: UserRecipe): Result<Unit> = runCatching {
-        userRecipeDao.update(recipe.toEntity())
-    }
-
-    suspend fun getUserRecipeById(id: Long): Result<UserRecipe?> = runCatching {
-        userRecipeDao.getById(id)?.toDomainModel()
-    }
-
-    fun observeUserRecipes(): Result<Flow<List<UserRecipe>>> = runCatching {
-        userRecipeDao.observeAll().map { entities ->
-            entities.map { it.toDomainModel() }
-        }
-    }
-
-    suspend fun deleteUserRecipe(id: Long): Result<Unit> = runCatching {
-        userRecipeDao.deleteById(id)
     }
 }

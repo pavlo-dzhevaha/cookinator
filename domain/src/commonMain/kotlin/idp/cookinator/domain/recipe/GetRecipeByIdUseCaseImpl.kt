@@ -1,6 +1,6 @@
 package idp.cookinator.domain.recipe
 
-import idp.cookinator.database.DatabaseManager
+import idp.cookinator.database.RecipeDatabaseManager
 import idp.cookinator.domain.internal.useCaseIo
 import idp.cookinator.domain.internal.useCaseLog
 import idp.cookinator.model.Recipe
@@ -9,7 +9,7 @@ import idp.cookinator.network.model.toDomainModel
 
 internal class GetRecipeByIdUseCaseImpl(
     private val network: NetworkManager,
-    private val database: DatabaseManager,
+    private val database: RecipeDatabaseManager,
 ) : GetRecipeByIdUseCase {
     override suspend fun invoke(recipeId: Int): Result<Recipe> = useCaseIo {
         database

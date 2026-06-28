@@ -1,6 +1,6 @@
 package idp.cookinator.domain.recipe
 
-import idp.cookinator.database.DatabaseManager
+import idp.cookinator.database.UserRecipeDatabaseManager
 import idp.cookinator.domain.internal.useCaseIo
 import idp.cookinator.domain.internal.useCaseLog
 import idp.cookinator.model.Ingredient
@@ -10,7 +10,7 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 internal class CreateUserRecipeUseCaseImpl(
-    private val database: DatabaseManager,
+    private val database: UserRecipeDatabaseManager,
 ) : CreateUserRecipeUseCase {
     override suspend fun invoke(
         title: String,

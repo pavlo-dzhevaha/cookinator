@@ -3,7 +3,9 @@ package idp.cookinator.database.di
 import androidx.room.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import idp.cookinator.database.AppDatabase
-import idp.cookinator.database.DatabaseManager
+import idp.cookinator.database.NotificationDatabaseManager
+import idp.cookinator.database.RecipeDatabaseManager
+import idp.cookinator.database.UserRecipeDatabaseManager
 import idp.cookinator.database.dao.NotificationDao
 import idp.cookinator.database.dao.RecipeDao
 import idp.cookinator.database.dao.UserRecipeDao
@@ -36,5 +38,7 @@ val dataDatabaseModule: Module = module {
         get<AppDatabase>().userRecipeDao()
     }
 
-    singleOf(::DatabaseManager)
+    singleOf(::RecipeDatabaseManager)
+    singleOf(::NotificationDatabaseManager)
+    singleOf(::UserRecipeDatabaseManager)
 }

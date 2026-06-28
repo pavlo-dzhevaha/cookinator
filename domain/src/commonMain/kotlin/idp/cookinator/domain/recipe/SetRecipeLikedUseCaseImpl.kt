@@ -1,11 +1,11 @@
 package idp.cookinator.domain.recipe
 
-import idp.cookinator.database.DatabaseManager
+import idp.cookinator.database.RecipeDatabaseManager
 import idp.cookinator.domain.internal.useCaseIo
 import idp.cookinator.domain.internal.useCaseLog
 
 internal class SetRecipeLikedUseCaseImpl(
-    private val database: DatabaseManager,
+    private val database: RecipeDatabaseManager,
 ) : SetRecipeLikedUseCase {
     override suspend fun invoke(recipeId: Int, isLiked: Boolean): Result<Unit> = useCaseIo {
         database.toggleRecipeLike(recipeId, isLiked)
