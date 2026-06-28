@@ -29,7 +29,7 @@ data class Recipe(
             image = "https://img.spoonacular.com/recipes/633080-556x370.jpg",
             readyInMinutes = 1382,
             servings = 8237,
-            summary = "ei",
+            summary = "<p>A hearty salad with <b>fresh greens</b> and seasonal vegetables.</p>",
             vegetarian = false,
             vegan = false,
             glutenFree = false,

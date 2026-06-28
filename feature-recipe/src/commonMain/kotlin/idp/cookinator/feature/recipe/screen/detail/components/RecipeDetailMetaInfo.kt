@@ -34,10 +34,16 @@ import idp.cookinator.coreui.vector.Star
 import idp.cookinator.model.Recipe
 import org.jetbrains.compose.resources.stringResource
 
+internal enum class RecipeDetailMetaLayout {
+    Flow,
+    Column,
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun RecipeDetailMetaInfo(
     recipe: Recipe,
+    layout: RecipeDetailMetaLayout,
     modifier: Modifier = Modifier,
 ) {
     val dietTags = remember(recipe) {
@@ -49,10 +55,7 @@ internal fun RecipeDetailMetaInfo(
         }
     }
 
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Theme.size.s12),
-    ) {
+    val metaItems: @Composable () -> Unit = {
         recipe.readyInMinutes?.let { minutes ->
             MetaInfoRow(
                 icon = Icons.Clock,
@@ -68,15 +71,27 @@ internal fun RecipeDetailMetaInfo(
                 text = stringResource(Res.string.recipe_detail_servings, servings),
             )
         }
-        if (dietTags.isNotEmpty()) {
+        dietTags.forEach { tag ->
+            DietTag(label = stringResource(tag))
+        }
+    }
+
+    when (layout) {
+        RecipeDetailMetaLayout.Flow -> {
             FlowRow(
+                modifier = modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(Theme.size.s8),
                 verticalArrangement = Arrangement.spacedBy(Theme.size.s8),
-            ) {
-                dietTags.forEach { tag ->
-                    DietTag(label = stringResource(tag))
-                }
-            }
+                content = { metaItems() },
+            )
+        }
+
+        RecipeDetailMetaLayout.Column -> {
+            Column(
+                modifier = modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(Theme.size.s8),
+                content = { metaItems() },
+            )
         }
     }
 }
@@ -129,12 +144,26 @@ private fun DietTag(
 
 @LightDarkPreview
 @Composable
-private fun Preview() = AppTheme {
+private fun PreviewFlow() = AppTheme {
     RecipeDetailMetaInfo(
         recipe = Recipe.stub.copy(
             vegetarian = true,
             glutenFree = true,
         ),
+        layout = RecipeDetailMetaLayout.Flow,
+        modifier = Modifier.padding(Theme.size.s20),
+    )
+}
+
+@LightDarkPreview
+@Composable
+private fun PreviewColumn() = AppTheme {
+    RecipeDetailMetaInfo(
+        recipe = Recipe.stub.copy(
+            vegetarian = true,
+            glutenFree = true,
+        ),
+        layout = RecipeDetailMetaLayout.Column,
         modifier = Modifier.padding(Theme.size.s20),
     )
 }

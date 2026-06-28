@@ -52,23 +52,32 @@ internal fun RecipeDetailHeroSection(
                 modifier = Modifier.fillMaxWidth(),
             )
             SpacerHeight(Theme.size.s16)
-            RecipeDetailMetaInfo(recipe = recipe)
-        }
-    } else {
-        Row(
-            modifier = sectionModifier,
-            horizontalArrangement = Arrangement.spacedBy(Theme.size.s16),
-            verticalAlignment = Alignment.Top,
-        ) {
-            RecipeDetailImage(
-                imageUrl = recipe.image,
-                isSaved = isSaved,
-                modifier = Modifier.weight(1f),
-            )
             RecipeDetailMetaInfo(
                 recipe = recipe,
-                modifier = Modifier.weight(1f),
+                layout = RecipeDetailMetaLayout.Flow,
             )
+            SpacerHeight(Theme.size.s12)
+            RecipeDetailDescription(recipe = recipe)
+        }
+    } else {
+        Column(modifier = sectionModifier) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(Theme.size.s16),
+                verticalAlignment = Alignment.Top,
+            ) {
+                RecipeDetailImage(
+                    imageUrl = recipe.image,
+                    isSaved = isSaved,
+                    modifier = Modifier.weight(1f),
+                )
+                RecipeDetailMetaInfo(
+                    recipe = recipe,
+                    layout = RecipeDetailMetaLayout.Column,
+                    modifier = Modifier.weight(1f),
+                )
+            }
+            SpacerHeight(Theme.size.s12)
+            RecipeDetailDescription(recipe = recipe)
         }
     }
 }

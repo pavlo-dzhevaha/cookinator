@@ -12,4 +12,6 @@
     <string name="recipe_detail_diet_vegan">Веганське</string>
     <string name="recipe_detail_diet_gluten_free">Без глютену</string>
     <string name="recipe_detail_diet_dairy_free">Без лактози</string>
+    <string name="recipe_detail_show_more">Показати більше</string>
+    <string name="recipe_detail_show_less">Приховати</string>
 </resources>

@@ -12,4 +12,6 @@
     <string name="recipe_detail_diet_vegan">Vegan</string>
     <string name="recipe_detail_diet_gluten_free">Gluten-free</string>
     <string name="recipe_detail_diet_dairy_free">Dairy-free</string>
+    <string name="recipe_detail_show_more">Show more</string>
+    <string name="recipe_detail_show_less">Show less</string>
 </resources>
