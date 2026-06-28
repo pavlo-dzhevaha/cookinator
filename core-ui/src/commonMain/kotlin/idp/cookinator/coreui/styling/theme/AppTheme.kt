@@ -79,12 +79,12 @@ fun AppTheme(
     name = "0Light Mode",
     uiMode = AndroidUiModes.UI_MODE_NIGHT_NO,
     showBackground = true,
-    backgroundColor = 0xFFF1F1F1,
+    backgroundColor = 0xFFFFFFFF,
 )
 @Preview(
     name = "1Dark Mode",
     uiMode = AndroidUiModes.UI_MODE_NIGHT_YES,
     showBackground = true,
-    backgroundColor = 0xFF181818,
+    backgroundColor = 0xFF000000,
 )
 annotation class LightDarkPreview

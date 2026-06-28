@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="recipe_detail_title">Деталі рецепту</string>
+    <string name="recipe_detail_title">Як приготувати %1$s</string>
     <string name="recipe_detail_stub">Рецепт №%1$d — деталі незабаром</string>
     <string name="recipe_detail_back">Назад</string>
+    <string name="recipe_detail_ingredients">Інгредієнти</string>
+    <string name="recipe_detail_ingredients_count">%1$d елементів</string>
+    <string name="recipe_detail_error">Не вдалося завантажити рецепт</string>
+    <string name="recipe_detail_toggle_favorite">Перемкнути обране</string>
+    <string name="recipe_detail_servings">%1$d порцій</string>
+    <string name="recipe_detail_diet_vegetarian">Вегетаріанське</string>
+    <string name="recipe_detail_diet_vegan">Веганське</string>
+    <string name="recipe_detail_diet_gluten_free">Без глютену</string>
+    <string name="recipe_detail_diet_dairy_free">Без лактози</string>
 </resources>

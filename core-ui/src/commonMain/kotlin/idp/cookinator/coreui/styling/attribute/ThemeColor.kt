@@ -201,7 +201,7 @@ fun ThemeColor.asMaterialColorScheme(): ColorScheme =
         isLight -> lightColorScheme(
             primary = primary.p100,
             primaryContainer = primary.p10,
-            background = neutral.n10,
+            background = neutral.n0,
             surface = neutral.n10,
             surfaceContainerHigh = neutral.n10,
             surfaceContainerLow = neutral.n0,
@@ -214,7 +214,7 @@ fun ThemeColor.asMaterialColorScheme(): ColorScheme =
         else -> darkColorScheme(
             primary = primary.p50,
             primaryContainer = primary.p0,
-            background = neutral.n10,
+            background = neutral.n0,
             surface = neutral.n10,
             surfaceContainerHigh = neutral.n20,
             surfaceContainerLow = neutral.n10,

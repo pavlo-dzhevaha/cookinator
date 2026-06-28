@@ -46,6 +46,15 @@ class DatabaseManager(
     }
 
     /**
+     * Fetches a single cached recipe by id from the local database.
+     */
+    suspend fun getCachedRecipeById(id: Int): Result<Recipe?> = runCatching {
+        recipeDao
+            .getRecipeById(id)
+            ?.toDomainModel()
+    }
+
+    /**
      * Fetches all liked recipes from the local database.
      */
     suspend fun getLikedRecipes(): Result<List<Recipe>> = runCatching {

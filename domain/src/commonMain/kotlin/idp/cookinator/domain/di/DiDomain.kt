@@ -8,6 +8,8 @@ import idp.cookinator.domain.notification.ObserveNotificationsUseCase
 import idp.cookinator.domain.notification.ObserveNotificationsUseCaseImpl
 import idp.cookinator.domain.notification.SendRecipeReminderUseCase
 import idp.cookinator.domain.notification.SendRecipeReminderUseCaseImpl
+import idp.cookinator.domain.recipe.GetRecipeByIdUseCase
+import idp.cookinator.domain.recipe.GetRecipeByIdUseCaseImpl
 import idp.cookinator.domain.recipe.GetRandomRecipesUseCase
 import idp.cookinator.domain.recipe.GetRandomRecipesUseCaseImpl
 import idp.cookinator.domain.recipe.ObserveDiscoveryRecipesUseCase
@@ -26,6 +28,7 @@ import org.koin.dsl.module
 val domainModule = module {
     singleOf(::RecipeDiscoveryStore)
     singleOf(::GetRandomRecipesUseCaseImpl) bind GetRandomRecipesUseCase::class
+    singleOf(::GetRecipeByIdUseCaseImpl) bind GetRecipeByIdUseCase::class
     singleOf(::ObserveDiscoveryRecipesUseCaseImpl) bind ObserveDiscoveryRecipesUseCase::class
     singleOf(::ObserveLikedRecipeIdsUseCaseImpl) bind ObserveLikedRecipeIdsUseCase::class
     singleOf(::ObserveLikedRecipesUseCaseImpl) bind ObserveLikedRecipesUseCase::class

@@ -51,36 +51,36 @@ data class InstructionStep(
     val step: String
 )
 
-fun RandomRecipesResponse.toDomainModels(): List<Recipe> = recipes.map { recipe ->
-    Recipe(
-        id = recipe.id,
-        title = recipe.title,
-        image = recipe.image,
-        readyInMinutes = recipe.readyInMinutes,
-        servings = recipe.servings,
-        summary = recipe.summary,
-        vegetarian = recipe.vegetarian ?: false,
-        vegan = recipe.vegan ?: false,
-        glutenFree = recipe.glutenFree ?: false,
-        dairyFree = recipe.dairyFree ?: false,
-        extendedIngredients = recipe.extendedIngredients.compactMap { ingredient ->
-            idp.cookinator.model.Ingredient(
-                id = ingredient.id,
-                name = ingredient.name,
-                original = ingredient.original,
-                image = ingredient.image
-            )
-        },
-        analyzedInstructions = recipe.analyzedInstructions.compactMap { instruction ->
-            idp.cookinator.model.Instruction(
-                name = instruction.name,
-                steps = instruction.steps.compactMap { step ->
-                    idp.cookinator.model.InstructionStep(
-                        number = step.number,
-                        step = step.step
-                    )
-                },
-            )
-        }
-    )
-}
+fun RandomRecipesResponse.toDomainModels(): List<Recipe> = recipes.map(RecipeResponse::toDomainModel)
+
+fun RecipeResponse.toDomainModel(): Recipe = Recipe(
+    id = id,
+    title = title,
+    image = image,
+    readyInMinutes = readyInMinutes,
+    servings = servings,
+    summary = summary,
+    vegetarian = vegetarian ?: false,
+    vegan = vegan ?: false,
+    glutenFree = glutenFree ?: false,
+    dairyFree = dairyFree ?: false,
+    extendedIngredients = extendedIngredients.compactMap { ingredient ->
+        idp.cookinator.model.Ingredient(
+            id = ingredient.id,
+            name = ingredient.name,
+            original = ingredient.original,
+            image = ingredient.image,
+        )
+    },
+    analyzedInstructions = analyzedInstructions.compactMap { instruction ->
+        idp.cookinator.model.Instruction(
+            name = instruction.name,
+            steps = instruction.steps.compactMap { step ->
+                idp.cookinator.model.InstructionStep(
+                    number = step.number,
+                    step = step.step,
+                )
+            },
+        )
+    },
+)

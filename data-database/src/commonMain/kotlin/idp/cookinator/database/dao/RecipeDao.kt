@@ -21,6 +21,9 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes")
     suspend fun getAllRecipes(): List<RecipeEntity>
 
+    @Query("SELECT * FROM recipes WHERE id = :id LIMIT 1")
+    suspend fun getRecipeById(id: Int): RecipeEntity?
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun likeRecipe(likedRecipe: LikedRecipeEntity)
 

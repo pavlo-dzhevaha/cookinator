@@ -46,7 +46,7 @@ internal fun HomeSearch(
             .background(
                 brush = Brush.linearGradient(
                     colors = listOf(
-                        Theme.color.neutral.n10,
+                        Theme.color.neutral.n0,
                         Theme.color.system.transparent,
                     ),
                     end = Offset(

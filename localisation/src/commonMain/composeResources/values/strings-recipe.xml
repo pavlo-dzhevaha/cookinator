@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="recipe_detail_title">Recipe details</string>
+    <string name="recipe_detail_title">How to make %1$s</string>
     <string name="recipe_detail_stub">Recipe #%1$d — details coming soon</string>
     <string name="recipe_detail_back">Back</string>
+    <string name="recipe_detail_ingredients">Ingredients</string>
+    <string name="recipe_detail_ingredients_count">%1$d items</string>
+    <string name="recipe_detail_error">Could not load recipe</string>
+    <string name="recipe_detail_toggle_favorite">Toggle favorite</string>
+    <string name="recipe_detail_servings">%1$d servings</string>
+    <string name="recipe_detail_diet_vegetarian">Vegetarian</string>
+    <string name="recipe_detail_diet_vegan">Vegan</string>
+    <string name="recipe_detail_diet_gluten_free">Gluten-free</string>
+    <string name="recipe_detail_diet_dairy_free">Dairy-free</string>
 </resources>

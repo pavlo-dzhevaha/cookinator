@@ -40,6 +40,17 @@ class NetworkManager(
      *
      * @return A [Result] containing a [RandomRecipesResponse] on success, or an [Exception] on failure.
      */
+    /**
+     * Fetches detailed information for a single recipe from the Spoonacular API.
+     */
+    suspend fun getRecipeInformation(id: Int): Result<RecipeResponse> = request<RecipeResponse> {
+        get("$baseUrl/recipes/$id/information") {
+            authorized()
+            parameter("includeNutrition", false)
+            parameter("language", "ukrainian")
+        }
+    }
+
     suspend fun getRandomRecipes(): Result<RandomRecipesResponse> = request<RandomRecipesResponse> {
         get("$baseUrl/recipes/random") {
             // Authentication
