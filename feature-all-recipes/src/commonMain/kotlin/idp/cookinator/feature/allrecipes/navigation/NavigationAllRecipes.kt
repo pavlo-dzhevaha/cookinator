@@ -11,7 +11,7 @@ fun NavigationAllRecipes.graph(
 ): NavEntry<NavKey> = when (this) {
     is NavigationAllRecipes.All -> NavEntry(this) {
         AllRecipesScreen(
-            section = section,
+            filter = filter,
             navigator = navigator,
         )
     }

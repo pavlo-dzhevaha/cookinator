@@ -65,6 +65,26 @@ internal class GetRandomRecipesUseCaseImpl(
             }.map { saveAndReturn(it.shuffled()) }
     }
 
+    // TODO: REMOVE — temporary Supabase seeding only
+    // override suspend fun invoke(forceRefresh: Boolean): Result<List<Recipe>> = useCaseIo {
+    //     // TODO: REMOVE — temporary Supabase seeding only
+    //     repeat(10) { index ->
+    //         network
+    //             .getRandomRecipes()
+    //             .onSuccess { response ->
+    //                 log {
+    //                     "Supabase seed ${index + 1}/$SUPABASE_SEED_REQUEST_COUNT: " +
+    //                         "upserted ${response.recipes.size} recipes."
+    //                 }
+    //             }.onFailure { error ->
+    //                 log {
+    //                     "Supabase seed ${index + 1}/$SUPABASE_SEED_REQUEST_COUNT failed: ${error.message}"
+    //                 }
+    //             }
+    //     }
+    //     Result.success(emptyList())
+    // }
+
     private fun saveAndReturn(recipes: List<Recipe>): List<Recipe> {
         discoveryStore.set(recipes)
         return recipes

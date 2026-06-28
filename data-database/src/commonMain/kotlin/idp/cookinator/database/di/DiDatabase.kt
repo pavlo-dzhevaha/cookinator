@@ -2,8 +2,8 @@ package idp.cookinator.database.di
 
 import androidx.room.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import idp.cookinator.database.AppDatabase
 import idp.cookinator.database.DatabaseManager
-import idp.cookinator.database.dao.AppDatabase
 import idp.cookinator.database.dao.NotificationDao
 import idp.cookinator.database.dao.RecipeDao
 import org.koin.core.module.Module

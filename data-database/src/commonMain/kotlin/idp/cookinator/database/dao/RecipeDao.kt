@@ -1,15 +1,12 @@
 package idp.cookinator.database.dao
 
-import androidx.room.ConstructedBy
 import androidx.room.Dao
-import androidx.room.Database
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.RoomDatabase
-import androidx.room.RoomDatabaseConstructor
+import androidx.room.Transaction
 import idp.cookinator.database.model.LikedRecipeEntity
-import idp.cookinator.database.model.NotificationEntity
+import idp.cookinator.database.model.RecipeDishTypeEntity
 import idp.cookinator.database.model.RecipeEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -17,6 +14,39 @@ import kotlinx.coroutines.flow.Flow
 interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipes(recipe: List<RecipeEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecipeDishTypes(types: List<RecipeDishTypeEntity>)
+
+    @Query("DELETE FROM recipe_dish_types WHERE recipeId IN (:recipeIds)")
+    suspend fun deleteDishTypesForRecipes(recipeIds: List<Int>)
+
+    @Transaction
+    suspend fun upsertRecipesWithDishTypes(
+        recipes: List<RecipeEntity>,
+        dishTypes: List<RecipeDishTypeEntity>,
+    ) {
+        insertRecipes(recipes)
+        if (recipes.isNotEmpty()) {
+            deleteDishTypesForRecipes(recipes.map { it.id })
+        }
+        if (dishTypes.isNotEmpty()) {
+            insertRecipeDishTypes(dishTypes)
+        }
+    }
+
+    @Query("SELECT DISTINCT dishType FROM recipe_dish_types ORDER BY dishType COLLATE NOCASE")
+    fun observeDishTypes(): Flow<List<String>>
+
+    @Query(
+        """
+        SELECT recipes.* FROM recipes
+        INNER JOIN recipe_dish_types ON recipes.id = recipe_dish_types.recipeId
+        WHERE recipe_dish_types.dishType = :dishType
+        ORDER BY recipes.title COLLATE NOCASE
+        """,
+    )
+    fun observeRecipesByDishType(dishType: String): Flow<List<RecipeEntity>>
 
     @Query("SELECT * FROM recipes")
     suspend fun getAllRecipes(): List<RecipeEntity>
@@ -48,25 +78,4 @@ interface RecipeDao {
         """,
     )
     fun observeLikedRecipes(): Flow<List<RecipeEntity>>
-}
-
-@Database(
-    entities = [
-        RecipeEntity::class,
-        LikedRecipeEntity::class,
-        NotificationEntity::class,
-    ],
-    version = 2,
-)
-@ConstructedBy(AppDatabaseConstructor::class)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun recipeDao(): RecipeDao
-
-    abstract fun notificationDao(): NotificationDao
-}
-
-// Room 2.7+ uses this to automatically generate the implementation behind the scenes
-@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
-    override fun initialize(): AppDatabase
 }

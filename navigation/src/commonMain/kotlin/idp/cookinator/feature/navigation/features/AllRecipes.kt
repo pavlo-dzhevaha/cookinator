@@ -15,7 +15,7 @@ val featureAllRecipesSerializer = SerializersModule {
 @Serializable
 sealed interface NavigationAllRecipes : NavKey {
     @Serializable
-    data class All(val section: HomeRecipeSection) : NavigationAllRecipes
+    data class All(val filter: AllRecipesFilter) : NavigationAllRecipes
 
     private companion object
 }

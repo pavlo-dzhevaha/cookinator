@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "40762be885d28f05c0a7f5e6f9f1f0e0",
+    "version": 4,
+    "identityHash": "e83ecf0a0b9e03e69090a033ae2a1edf",
     "entities": [
       {
         "tableName": "recipes",
@@ -155,11 +155,60 @@
             "id"
           ]
         }
+      },
+      {
+        "tableName": "recipe_dish_types",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recipeId` INTEGER NOT NULL, `dishType` TEXT NOT NULL, PRIMARY KEY(`recipeId`, `dishType`), FOREIGN KEY(`recipeId`) REFERENCES `recipes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "recipeId",
+            "columnName": "recipeId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dishType",
+            "columnName": "dishType",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "recipeId",
+            "dishType"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_recipe_dish_types_dishType",
+            "unique": false,
+            "columnNames": [
+              "dishType"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_recipe_dish_types_dishType` ON `${TABLE_NAME}` (`dishType`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "recipes",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "recipeId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '40762be885d28f05c0a7f5e6f9f1f0e0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e83ecf0a0b9e03e69090a033ae2a1edf')"
     ]
   }
 }

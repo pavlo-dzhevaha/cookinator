@@ -8,12 +8,20 @@ internal data class HomeState(
     val uiState: UiState,
     val query: String,
     val trending: List<RecipeUiModel>,
+    val categories: List<String>,
+    val selectedCategory: String?,
+    val popularRecipes: List<RecipeUiModel>,
+    val showPopularSeeAll: Boolean,
 ) : BaseState {
     companion object {
         val initialState = HomeState(
             uiState = UiState.LOADING,
             query = "",
             trending = emptyList(),
+            categories = emptyList(),
+            selectedCategory = null,
+            popularRecipes = emptyList(),
+            showPopularSeeAll = false,
         )
     }
 }

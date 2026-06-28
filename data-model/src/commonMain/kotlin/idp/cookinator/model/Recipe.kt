@@ -16,6 +16,7 @@ data class Recipe(
     val vegan: Boolean,
     val glutenFree: Boolean,
     val dairyFree: Boolean,
+    val dishTypes: List<String> = emptyList(),
 
     // Detailed lists for the Recipe Detail Screen
     val extendedIngredients: List<Ingredient>,
@@ -33,16 +34,24 @@ data class Recipe(
             vegan = false,
             glutenFree = false,
             dairyFree = false,
-            extendedIngredients = listOf(),
+            dishTypes = listOf("salad"),
+            extendedIngredients = listOf(
+                Ingredient(
+                    id = 0,
+                    name = "Tommie Preston",
+                    original = "pretium",
+                    image = null,
+                )
+            ),
             analyzedInstructions = listOf(),
         )
 
         val stubs = listOf(
             stub,
-            stub.copy(id = 3108, title = "expetenda 2"),
-            stub.copy(id = 3109, title = "expetenda 3"),
-            stub.copy(id = 3110, title = "expetenda 4"),
-            stub.copy(id = 3111, title = "expetenda 5"),
+            stub.copy(id = 3108, title = "expetenda 2", dishTypes = listOf("breakfast")),
+            stub.copy(id = 3109, title = "expetenda 3", dishTypes = listOf("noodle")),
+            stub.copy(id = 3110, title = "expetenda 4", dishTypes = listOf("lunch")),
+            stub.copy(id = 3111, title = "expetenda 5", dishTypes = listOf("appetizer")),
         )
     }
 }

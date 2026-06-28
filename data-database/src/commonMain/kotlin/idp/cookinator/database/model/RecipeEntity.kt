@@ -18,7 +18,8 @@ data class RecipeEntity(
     val glutenFree: Boolean,
     val dairyFree: Boolean,
     val ingredientsJson: String,
-    val instructionsJson: String
+    val instructionsJson: String,
+    val dishTypesJson: String = "",
 )
 
 // Extension to map from Domain to Database
@@ -34,7 +35,8 @@ fun Recipe.toEntity(): RecipeEntity = RecipeEntity(
     glutenFree = glutenFree,
     dairyFree = dairyFree,
     ingredientsJson = Json.encodeToString(extendedIngredients),
-    instructionsJson = Json.encodeToString(analyzedInstructions)
+    instructionsJson = Json.encodeToString(analyzedInstructions),
+    dishTypesJson = Json.encodeToString(dishTypes),
 )
 
 // Extension to map from Database back to Domain
@@ -56,5 +58,9 @@ fun RecipeEntity.toDomainModel(): Recipe = Recipe(
     analyzedInstructions = when {
         instructionsJson.isNotEmpty() -> Json.decodeFromString(instructionsJson)
         else -> emptyList()
-    }
+    },
+    dishTypes = when {
+        dishTypesJson.isNotEmpty() -> Json.decodeFromString(dishTypesJson)
+        else -> emptyList()
+    },
 )

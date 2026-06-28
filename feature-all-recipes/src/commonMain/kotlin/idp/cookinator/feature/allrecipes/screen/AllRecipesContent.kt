@@ -13,22 +13,21 @@ import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.vector.ArrowLeft
 import idp.cookinator.coreui.vector.Icons
-import idp.cookinator.feature.allrecipes.model.titleRes
+import idp.cookinator.feature.allrecipes.model.title
 import idp.cookinator.feature.allrecipes.screen.contract.AllRecipesIntent
 import idp.cookinator.feature.allrecipes.screen.contract.AllRecipesState
-import idp.cookinator.feature.navigation.features.HomeRecipeSection
-import org.jetbrains.compose.resources.stringResource
+import idp.cookinator.feature.navigation.features.AllRecipesFilter
 
 @Composable
 internal fun AllRecipesContent(
-    section: HomeRecipeSection,
+    filter: AllRecipesFilter,
     state: AllRecipesState,
     onIntent: (AllRecipesIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         AppTopBar(
-            title = stringResource(section.titleRes()),
+            title = filter.title(),
             leadingIcon = Icons.ArrowLeft,
             onLeadingAction = { onIntent(AllRecipesIntent.OnBack) },
         )
@@ -53,7 +52,7 @@ internal fun AllRecipesContent(
 @Composable
 private fun Preview() = AppTheme {
     AllRecipesContent(
-        section = HomeRecipeSection.Trending,
+        filter = AllRecipesFilter.Category("breakfast"),
         state = AllRecipesState.initialState.copy(
             items = RecipeUiModel.stubs,
         ),

@@ -1,7 +1,7 @@
 package idp.cookinator.feature.main.screen.home.contract
 
 import idp.cookinator.coreui.viewmodel.base.BaseIntent
-import idp.cookinator.feature.navigation.features.HomeRecipeSection
+import idp.cookinator.feature.navigation.features.AllRecipesFilter
 import idp.cookinator.coreui.model.RecipeUiModel
 
 internal sealed interface HomeIntent : BaseIntent {
@@ -13,5 +13,9 @@ internal sealed interface HomeIntent : BaseIntent {
 
     data class OnSearchQueryChange(val query: String) : HomeIntent
 
-    data class OnSeeAllClick(val section: HomeRecipeSection) : HomeIntent
+    data class OnSeeAllClick(val filter: AllRecipesFilter) : HomeIntent
+
+    data class OnCategorySelected(val category: String) : HomeIntent
+
+    data class OnPopularCategorySeeAllClick(val category: String) : HomeIntent
 }

@@ -13,6 +13,7 @@ import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
 import idp.cookinator.coreui.utils.realImePadding
+import idp.cookinator.feature.main.screen.home.components.HomePopularCategories
 import idp.cookinator.feature.main.screen.home.components.HomeSearch
 import idp.cookinator.feature.main.screen.home.components.HomeTrending
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
@@ -53,6 +54,15 @@ internal fun HomeContent(
                 onIntent = onIntent,
             )
         }
+        item {
+            HomePopularCategories(
+                categories = state.categories,
+                selectedCategory = state.selectedCategory,
+                items = state.popularRecipes,
+                showSeeAll = state.showPopularSeeAll,
+                onIntent = onIntent,
+            )
+        }
     }
 }
 
@@ -63,6 +73,10 @@ private fun Preview() = AppTheme {
         bottomBarHeight = Dp.Hairline,
         state = HomeState.initialState.copy(
             trending = RecipeUiModel.stubs,
+            categories = listOf("salad", "breakfast", "noodle"),
+            selectedCategory = "breakfast",
+            popularRecipes = RecipeUiModel.stubs.filter { "breakfast" in it.recipe.dishTypes }.take(3),
+            showPopularSeeAll = true,
         ),
         onIntent = {},
     )

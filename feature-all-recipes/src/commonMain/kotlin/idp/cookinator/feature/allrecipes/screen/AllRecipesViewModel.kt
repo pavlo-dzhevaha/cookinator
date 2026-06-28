@@ -6,18 +6,22 @@ import idp.cookinator.coreui.viewmodel.MviViewModel
 import idp.cookinator.domain.recipe.GetRandomRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveDiscoveryRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveLikedRecipeIdsUseCase
+import idp.cookinator.domain.recipe.ObserveRecipesByDishTypeUseCase
 import idp.cookinator.domain.recipe.SetRecipeLikedUseCase
 import idp.cookinator.feature.allrecipes.screen.contract.AllRecipesEvent
 import idp.cookinator.feature.allrecipes.screen.contract.AllRecipesIntent
 import idp.cookinator.feature.allrecipes.screen.contract.AllRecipesState
+import idp.cookinator.feature.navigation.features.AllRecipesFilter
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 
 internal class AllRecipesViewModel(
+    private val filter: AllRecipesFilter,
     private val getRandomRecipes: GetRandomRecipesUseCase,
     private val observeDiscoveryRecipes: ObserveDiscoveryRecipesUseCase,
+    private val observeRecipesByDishType: ObserveRecipesByDishTypeUseCase,
     private val observeLikedRecipeIds: ObserveLikedRecipeIdsUseCase,
     private val setRecipeLiked: SetRecipeLikedUseCase,
 ) : MviViewModel<AllRecipesState, AllRecipesIntent, AllRecipesEvent>(AllRecipesState.initialState) {
@@ -64,19 +68,17 @@ internal class AllRecipesViewModel(
     }
 
     private fun observeAndCombineData() = launch {
-        combine(
-            observeDiscoveryRecipes(),
-            observeLikedRecipeIds(),
-        ) { recipes, savedIds ->
-            recipes.map { recipe ->
-                RecipeUiModel(
-                    recipe = recipe,
-                    isSaved = savedIds.contains(recipe.id),
-                )
+        observeRecipes(filter)
+            .combine(observeLikedRecipeIds()) { recipes, savedIds ->
+                recipes.map { recipe ->
+                    RecipeUiModel(
+                        recipe = recipe,
+                        isSaved = savedIds.contains(recipe.id),
+                    )
+                }
             }
-        }
             .catch { e ->
-                logger.e(e) { "Failed to observe discovery recipes" }
+                logger.e(e) { "Failed to observe recipes for filter=$filter" }
                 updateState { it.copy(uiState = UiState.ERROR) }
             }
             .collectLatest { items ->
@@ -89,5 +91,10 @@ internal class AllRecipesViewModel(
                     }
                 }
             }
+    }
+
+    private fun observeRecipes(filter: AllRecipesFilter) = when (filter) {
+        AllRecipesFilter.Trending -> observeDiscoveryRecipes()
+        is AllRecipesFilter.Category -> observeRecipesByDishType(filter.dishType)
     }
 }

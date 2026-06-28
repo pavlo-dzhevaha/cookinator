@@ -26,7 +26,7 @@ import idp.cookinator.coreui.utils.ContentDescription
 import idp.cookinator.coreui.vector.ArrowRight
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
-import idp.cookinator.feature.navigation.features.HomeRecipeSection
+import idp.cookinator.feature.navigation.features.AllRecipesFilter
 import idp.cookinator.coreui.component.recipecard.RecipeCard
 import idp.cookinator.coreui.model.RecipeUiModel
 import org.jetbrains.compose.resources.stringResource
@@ -63,7 +63,7 @@ internal fun HomeTrending(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Theme.size.s4),
                 modifier = Modifier
-                    .clickable { onIntent(HomeIntent.OnSeeAllClick(HomeRecipeSection.Trending)) }
+                    .clickable { onIntent(HomeIntent.OnSeeAllClick(AllRecipesFilter.Trending)) }
             ) {
                 Text(
                     text = stringResource(Res.string.home_trending_action),

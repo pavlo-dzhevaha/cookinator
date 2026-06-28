@@ -34,7 +34,7 @@ internal fun HomeScreen(
                     navigator.navigate(NavigationRecipe.Detail(event.recipeId))
                 }
                 is HomeEvent.NavigateToAllRecipes -> {
-                    navigator.navigate(NavigationAllRecipes.All(event.section))
+                    navigator.navigate(NavigationAllRecipes.All(event.filter))
                 }
             }
         },

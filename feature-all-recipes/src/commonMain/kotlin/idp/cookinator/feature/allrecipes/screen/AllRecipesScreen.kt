@@ -15,16 +15,17 @@ import idp.cookinator.feature.allrecipes.screen.contract.AllRecipesIntent
 import idp.cookinator.feature.navigation.extension.Navigator
 import idp.cookinator.feature.navigation.extension.navigate
 import idp.cookinator.feature.navigation.extension.navigateUp
-import idp.cookinator.feature.navigation.features.HomeRecipeSection
+import idp.cookinator.feature.navigation.features.AllRecipesFilter
 import idp.cookinator.feature.navigation.features.NavigationRecipe
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 internal fun AllRecipesScreen(
-    section: HomeRecipeSection,
+    filter: AllRecipesFilter,
     navigator: Navigator,
-    viewModel: AllRecipesViewModel = koinViewModel(),
+    viewModel: AllRecipesViewModel = koinViewModel { parametersOf(filter) },
 ) {
     MviStateProvider(
         viewModel = viewModel,
@@ -55,7 +56,7 @@ internal fun AllRecipesScreen(
             },
             success = {
                 AllRecipesContent(
-                    section = section,
+                    filter = filter,
                     state = state,
                     onIntent = viewModel::onIntent,
                 )

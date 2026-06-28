@@ -7,4 +7,9 @@
     <string name="home_trending_title">Зараз у тренді 🔥</string>
     <string name="home_trending_action">Переглянути всі</string>
     <string name="home_trending_item_time">%1$sхв</string>
+    <string name="home_popular_category_title">Популярні категорії</string>
+    <string name="home_popular_category_time_label">Час</string>
+    <string name="home_popular_category_time_value">%1$s хв</string>
+    <string name="home_popular_category_see_all">Переглянути всі</string>
+    <string name="home_all_recipes_category_title">Категорія %1$s</string>
 </resources>

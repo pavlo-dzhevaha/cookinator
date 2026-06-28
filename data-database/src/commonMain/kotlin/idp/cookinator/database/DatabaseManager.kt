@@ -4,6 +4,7 @@ import idp.cookinator.database.dao.NotificationDao
 import idp.cookinator.database.dao.RecipeDao
 import idp.cookinator.database.model.LikedRecipeEntity
 import idp.cookinator.database.model.NotificationEntity
+import idp.cookinator.database.model.RecipeDishTypeEntity
 import idp.cookinator.database.model.RecipeEntity
 import idp.cookinator.database.model.toDomainModel
 import idp.cookinator.database.model.toEntity
@@ -30,8 +31,13 @@ class DatabaseManager(
      * @param recipes The list of [Recipe] objects to be saved.
      */
     suspend fun saveRecipes(recipes: List<Recipe>) = runCatching {
-        recipeDao
-            .insertRecipes(recipes.map(Recipe::toEntity))
+        val entities = recipes.map(Recipe::toEntity)
+        val dishTypes = recipes.flatMap { recipe ->
+            recipe.dishTypes.map { dishType ->
+                RecipeDishTypeEntity(recipeId = recipe.id, dishType = dishType)
+            }
+        }
+        recipeDao.upsertRecipesWithDishTypes(entities, dishTypes)
     }
 
     /**
@@ -75,6 +81,16 @@ class DatabaseManager(
     fun observeLikedRecipes(): Result<Flow<List<Recipe>>> = runCatching {
         recipeDao
             .observeLikedRecipes()
+            .map { entities -> entities.map(RecipeEntity::toDomainModel) }
+    }
+
+    fun observeDishTypes(): Result<Flow<List<String>>> = runCatching {
+        recipeDao.observeDishTypes()
+    }
+
+    fun observeRecipesByDishType(dishType: String): Result<Flow<List<Recipe>>> = runCatching {
+        recipeDao
+            .observeRecipesByDishType(dishType)
             .map { entities -> entities.map(RecipeEntity::toDomainModel) }
     }
 

@@ -23,6 +23,7 @@ data class RecipeResponse(
     val vegan: Boolean? = null,
     val glutenFree: Boolean? = null,
     val dairyFree: Boolean? = null,
+    val dishTypes: List<String>? = null,
 
     // Detailed lists for the Recipe Detail Screen
     val extendedIngredients: List<Ingredient?>? = null,
@@ -64,6 +65,7 @@ fun RecipeResponse.toDomainModel(): Recipe = Recipe(
     vegan = vegan ?: false,
     glutenFree = glutenFree ?: false,
     dairyFree = dairyFree ?: false,
+    dishTypes = dishTypes.orEmpty(),
     extendedIngredients = extendedIngredients.compactMap { ingredient ->
         idp.cookinator.model.Ingredient(
             id = ingredient.id,
