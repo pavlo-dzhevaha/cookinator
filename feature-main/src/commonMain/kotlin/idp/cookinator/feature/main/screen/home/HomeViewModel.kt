@@ -3,7 +3,7 @@ package idp.cookinator.feature.main.screen.home
 import idp.cookinator.coreui.model.RecipeUiModel
 import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.MviViewModel
-import idp.cookinator.domain.recipe.GetRandomRecipesUseCase
+import idp.cookinator.domain.recipe.SyncDiscoveryRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveDiscoveryRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveLikedRecipeIdsUseCase
 import idp.cookinator.domain.recipe.ObserveRecentlyViewedUseCase
@@ -22,11 +22,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class HomeViewModel(
-    private val getRandomRecipes: GetRandomRecipesUseCase,
+    private val syncDiscoveryRecipes: SyncDiscoveryRecipesUseCase,
     private val observeDiscoveryRecipes: ObserveDiscoveryRecipesUseCase,
     private val observeRecipeDishTypes: ObserveRecipeDishTypesUseCase,
     private val observeRecipesByDishType: ObserveRecipesByDishTypeUseCase,
@@ -79,17 +80,17 @@ internal class HomeViewModel(
         )
     }
 
-    private fun fetchData() = launch {
-        updateState { it.copy(uiState = UiState.LOADING) }
-        getRandomRecipes(forceRefresh = true)
-            .onSuccess { list ->
-                if (list.isEmpty()) {
-                    updateState { it.copy(uiState = UiState.EMPTY) }
-                    return@launch
+    private fun fetchData(forceRefresh: Boolean = true) = launch {
+        val hasCachedData = observeDiscoveryRecipes().first().isNotEmpty()
+        if (!hasCachedData) {
+            updateState { it.copy(uiState = UiState.LOADING) }
+        }
+        syncDiscoveryRecipes(forceRefresh = forceRefresh)
+            .onFailure { e ->
+                logger.e(e) { "Failed to sync discovery recipes" }
+                if (observeDiscoveryRecipes().first().isEmpty()) {
+                    updateState { it.copy(uiState = UiState.ERROR) }
                 }
-            }.onFailure { e ->
-                logger.e(e) { "Failed to fetch random recipes" }
-                updateState { it.copy(uiState = UiState.ERROR) }
             }
     }
 
@@ -121,7 +122,23 @@ internal class HomeViewModel(
                 }
             }
             .collectLatest { (slice, popularRecipes) ->
-                if (slice.discoveryRecipes.isEmpty()) return@collectLatest
+                if (slice.discoveryRecipes.isEmpty()) {
+                    updateState { state ->
+                        if (state.uiState == UiState.SUCCESS) {
+                            state
+                        } else {
+                            state.copy(
+                                uiState = when (state.uiState) {
+                                    UiState.ERROR -> UiState.ERROR
+                                    UiState.LOADING -> UiState.LOADING
+                                    else -> UiState.EMPTY
+                                },
+                                trending = emptyList(),
+                            )
+                        }
+                    }
+                    return@collectLatest
+                }
 
                 val savedIds = slice.savedIds
                 val trending = slice.discoveryRecipes

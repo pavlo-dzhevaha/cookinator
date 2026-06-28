@@ -55,6 +55,16 @@ class DatabaseManager(
             .map(RecipeEntity::toDomainModel)
     }
 
+    fun observeAllRecipes(): Result<Flow<List<Recipe>>> = runCatching {
+        recipeDao
+            .observeAllRecipes()
+            .map { entities -> entities.map(RecipeEntity::toDomainModel) }
+    }
+
+    suspend fun getRecipeCount(): Result<Int> = runCatching {
+        recipeDao.getRecipeCount()
+    }
+
     /**
      * Fetches a single cached recipe by id from the local database.
      */

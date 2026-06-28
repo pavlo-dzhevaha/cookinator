@@ -3,7 +3,7 @@ package idp.cookinator.feature.allrecipes.screen
 import idp.cookinator.coreui.model.RecipeUiModel
 import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.MviViewModel
-import idp.cookinator.domain.recipe.GetRandomRecipesUseCase
+import idp.cookinator.domain.recipe.SyncDiscoveryRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveDiscoveryRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveLikedRecipeIdsUseCase
 import idp.cookinator.domain.recipe.ObserveRecentlyViewedUseCase
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.first
 
 internal class AllRecipesViewModel(
     private val filter: AllRecipesFilter,
-    private val getRandomRecipes: GetRandomRecipesUseCase,
+    private val syncDiscoveryRecipes: SyncDiscoveryRecipesUseCase,
     private val observeDiscoveryRecipes: ObserveDiscoveryRecipesUseCase,
     private val observeRecipesByDishType: ObserveRecipesByDishTypeUseCase,
     private val observeRecentlyViewed: ObserveRecentlyViewedUseCase,
@@ -37,7 +37,7 @@ internal class AllRecipesViewModel(
         when (intent) {
             is AllRecipesIntent.OnRecipeClick -> sendEvent(AllRecipesEvent.NavigateToRecipe(intent.model.recipe.id))
             is AllRecipesIntent.OnToggleSaved -> onToggleSaved(intent.model)
-            AllRecipesIntent.OnRetry -> fetchData(forceRefresh = true)
+            AllRecipesIntent.OnRetry -> retry()
             AllRecipesIntent.OnBack -> sendEvent(AllRecipesEvent.NavigateBack)
             is AllRecipesIntent.OnCustomizeRecipe ->
                 sendEvent(AllRecipesEvent.NavigateToCustomizeRecipe(intent.model.recipe.id))
@@ -58,17 +58,22 @@ internal class AllRecipesViewModel(
         }
     }
 
+    private fun retry() = launch {
+        val hasCachedData = observeRecipes(filter).first().isNotEmpty()
+        fetchData(forceRefresh = hasCachedData)
+    }
+
     private fun fetchData(forceRefresh: Boolean) = launch {
-        updateState { it.copy(uiState = UiState.LOADING) }
-        getRandomRecipes(forceRefresh = forceRefresh)
-            .onSuccess { list ->
-                if (list.isEmpty()) {
-                    updateState { it.copy(uiState = UiState.EMPTY) }
-                }
-            }
+        val hasCachedData = observeRecipes(filter).first().isNotEmpty()
+        if (!hasCachedData) {
+            updateState { it.copy(uiState = UiState.LOADING) }
+        }
+        syncDiscoveryRecipes(forceRefresh = forceRefresh)
             .onFailure { e ->
-                logger.e(e) { "Failed to fetch discovery recipes" }
-                updateState { it.copy(uiState = UiState.ERROR) }
+                logger.e(e) { "Failed to sync discovery recipes" }
+                if (observeRecipes(filter).first().isEmpty()) {
+                    updateState { it.copy(uiState = UiState.ERROR) }
+                }
             }
     }
 

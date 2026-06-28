@@ -4,9 +4,9 @@ import idp.cookinator.model.Recipe
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Observes the current discovery recipe list for the app session.
+ * Observes discovery recipes from Room using the persisted shuffle order.
  *
- * The order is stable until [GetRandomRecipesUseCase] is invoked with [forceRefresh].
+ * The order is stable until [SyncDiscoveryRecipesUseCase] is invoked with [forceRefresh].
  */
 interface ObserveDiscoveryRecipesUseCase {
     operator fun invoke(): Flow<List<Recipe>>

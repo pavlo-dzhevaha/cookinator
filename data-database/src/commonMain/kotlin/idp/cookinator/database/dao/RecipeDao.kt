@@ -52,6 +52,12 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes")
     suspend fun getAllRecipes(): List<RecipeEntity>
 
+    @Query("SELECT * FROM recipes")
+    fun observeAllRecipes(): Flow<List<RecipeEntity>>
+
+    @Query("SELECT COUNT(*) FROM recipes")
+    suspend fun getRecipeCount(): Int
+
     @Query("SELECT * FROM recipes WHERE id = :id LIMIT 1")
     suspend fun getRecipeById(id: Int): RecipeEntity?
 

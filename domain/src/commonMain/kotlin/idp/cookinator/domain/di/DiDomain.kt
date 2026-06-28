@@ -18,12 +18,12 @@ import idp.cookinator.domain.recipe.GetRecipeByIdUseCase
 import idp.cookinator.domain.recipe.GetRecipeByIdUseCaseImpl
 import idp.cookinator.domain.recipe.GetUserRecipeByIdUseCase
 import idp.cookinator.domain.recipe.GetUserRecipeByIdUseCaseImpl
-import idp.cookinator.domain.recipe.GetRandomRecipesUseCase
-import idp.cookinator.domain.recipe.GetRandomRecipesUseCaseImpl
+import idp.cookinator.domain.recipe.DiscoveryOrderStore
+import idp.cookinator.domain.recipe.SyncDiscoveryRecipesUseCase
+import idp.cookinator.domain.recipe.SyncDiscoveryRecipesUseCaseImpl
 import idp.cookinator.domain.recipe.ObserveDiscoveryRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveDiscoveryRecipesUseCaseImpl
 import idp.cookinator.domain.recipe.ObserveLikedRecipeIdsUseCase
-import idp.cookinator.domain.recipe.RecipeDiscoveryStore
 import idp.cookinator.domain.recipe.ObserveLikedRecipeIdsUseCaseImpl
 import idp.cookinator.domain.recipe.ObserveLikedRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveLikedRecipesUseCaseImpl
@@ -50,8 +50,8 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val domainModule = module {
-    singleOf(::RecipeDiscoveryStore)
-    singleOf(::GetRandomRecipesUseCaseImpl) bind GetRandomRecipesUseCase::class
+    singleOf(::DiscoveryOrderStore)
+    singleOf(::SyncDiscoveryRecipesUseCaseImpl) bind SyncDiscoveryRecipesUseCase::class
     singleOf(::GetRecipeByIdUseCaseImpl) bind GetRecipeByIdUseCase::class
     singleOf(::ObserveDiscoveryRecipesUseCaseImpl) bind ObserveDiscoveryRecipesUseCase::class
     singleOf(::ObserveLikedRecipeIdsUseCaseImpl) bind ObserveLikedRecipeIdsUseCase::class
