@@ -21,8 +21,12 @@ import idp.cookinator.domain.recipe.ObserveLikedRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveLikedRecipesUseCaseImpl
 import idp.cookinator.domain.recipe.ObserveRecipeDishTypesUseCase
 import idp.cookinator.domain.recipe.ObserveRecipeDishTypesUseCaseImpl
+import idp.cookinator.domain.recipe.ObserveRecentlyViewedUseCase
+import idp.cookinator.domain.recipe.ObserveRecentlyViewedUseCaseImpl
 import idp.cookinator.domain.recipe.ObserveRecipesByDishTypeUseCase
 import idp.cookinator.domain.recipe.ObserveRecipesByDishTypeUseCaseImpl
+import idp.cookinator.domain.recipe.RecordRecipeViewedUseCase
+import idp.cookinator.domain.recipe.RecordRecipeViewedUseCaseImpl
 import idp.cookinator.domain.recipe.SetRecipeLikedUseCase
 import idp.cookinator.domain.recipe.SetRecipeLikedUseCaseImpl
 import org.koin.core.module.dsl.singleOf
@@ -38,6 +42,8 @@ val domainModule = module {
     singleOf(::ObserveLikedRecipesUseCaseImpl) bind ObserveLikedRecipesUseCase::class
     singleOf(::ObserveRecipeDishTypesUseCaseImpl) bind ObserveRecipeDishTypesUseCase::class
     singleOf(::ObserveRecipesByDishTypeUseCaseImpl) bind ObserveRecipesByDishTypeUseCase::class
+    singleOf(::RecordRecipeViewedUseCaseImpl) bind RecordRecipeViewedUseCase::class
+    singleOf(::ObserveRecentlyViewedUseCaseImpl) bind ObserveRecentlyViewedUseCase::class
     singleOf(::SetRecipeLikedUseCaseImpl) bind SetRecipeLikedUseCase::class
     singleOf(::ObserveNotificationsUseCaseImpl) bind ObserveNotificationsUseCase::class
     singleOf(::MarkNotificationReadUseCaseImpl) bind MarkNotificationReadUseCase::class

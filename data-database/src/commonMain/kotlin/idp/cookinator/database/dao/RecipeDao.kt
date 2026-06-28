@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import idp.cookinator.database.model.LikedRecipeEntity
+import idp.cookinator.database.model.RecentlyViewedRecipeEntity
 import idp.cookinator.database.model.RecipeDishTypeEntity
 import idp.cookinator.database.model.RecipeEntity
 import kotlinx.coroutines.flow.Flow
@@ -78,4 +79,38 @@ interface RecipeDao {
         """,
     )
     fun observeLikedRecipes(): Flow<List<RecipeEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertRecentlyViewed(entity: RecentlyViewedRecipeEntity)
+
+    @Query(
+        """
+        SELECT recipes.* FROM recipes
+        INNER JOIN recently_viewed_recipes ON recipes.id = recently_viewed_recipes.recipeId
+        ORDER BY recently_viewed_recipes.viewedAt DESC
+        LIMIT :limit
+        """,
+    )
+    fun observeRecentlyViewedRecipes(limit: Int): Flow<List<RecipeEntity>>
+
+    @Query(
+        """
+        SELECT recipes.* FROM recipes
+        INNER JOIN recently_viewed_recipes ON recipes.id = recently_viewed_recipes.recipeId
+        ORDER BY recently_viewed_recipes.viewedAt DESC
+        """,
+    )
+    fun observeAllRecentlyViewedRecipes(): Flow<List<RecipeEntity>>
+
+    @Query(
+        """
+        DELETE FROM recently_viewed_recipes
+        WHERE recipeId NOT IN (
+            SELECT recipeId FROM recently_viewed_recipes
+            ORDER BY viewedAt DESC
+            LIMIT :maxCount
+        )
+        """,
+    )
+    suspend fun pruneRecentlyViewed(maxCount: Int)
 }

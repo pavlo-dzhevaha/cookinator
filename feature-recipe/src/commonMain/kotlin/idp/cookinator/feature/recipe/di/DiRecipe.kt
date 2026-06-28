@@ -11,6 +11,7 @@ val featureRecipeModule = module {
             getRecipeById = get(),
             observeLikedRecipeIds = get(),
             setRecipeLiked = get(),
+            recordRecipeViewed = get(),
         )
     }
 }

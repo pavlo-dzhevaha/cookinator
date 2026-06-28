@@ -4,6 +4,7 @@ import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.MviViewModel
 import idp.cookinator.domain.recipe.GetRecipeByIdUseCase
 import idp.cookinator.domain.recipe.ObserveLikedRecipeIdsUseCase
+import idp.cookinator.domain.recipe.RecordRecipeViewedUseCase
 import idp.cookinator.domain.recipe.SetRecipeLikedUseCase
 import idp.cookinator.feature.recipe.screen.detail.contract.RecipeDetailEvent
 import idp.cookinator.feature.recipe.screen.detail.contract.RecipeDetailIntent
@@ -17,6 +18,7 @@ internal class RecipeDetailViewModel(
     private val getRecipeById: GetRecipeByIdUseCase,
     private val observeLikedRecipeIds: ObserveLikedRecipeIdsUseCase,
     private val setRecipeLiked: SetRecipeLikedUseCase,
+    private val recordRecipeViewed: RecordRecipeViewedUseCase,
 ) : MviViewModel<RecipeDetailState, RecipeDetailIntent, RecipeDetailEvent>(RecipeDetailState.initialState) {
 
     private var observeLikedJob: Job? = null
@@ -45,6 +47,9 @@ internal class RecipeDetailViewModel(
         updateState { it.copy(uiState = UiState.LOADING) }
         getRecipeById(recipeId)
             .onSuccess { recipe ->
+                recordRecipeViewed(recipeId).onFailure { e ->
+                    logger.e(e) { "Failed to record recipe view $recipeId" }
+                }
                 updateState {
                     it.copy(
                         uiState = UiState.SUCCESS,

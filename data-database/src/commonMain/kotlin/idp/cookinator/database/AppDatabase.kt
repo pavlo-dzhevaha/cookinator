@@ -8,6 +8,7 @@ import idp.cookinator.database.dao.NotificationDao
 import idp.cookinator.database.dao.RecipeDao
 import idp.cookinator.database.model.LikedRecipeEntity
 import idp.cookinator.database.model.NotificationEntity
+import idp.cookinator.database.model.RecentlyViewedRecipeEntity
 import idp.cookinator.database.model.RecipeDishTypeEntity
 import idp.cookinator.database.model.RecipeEntity
 
@@ -17,8 +18,9 @@ import idp.cookinator.database.model.RecipeEntity
         LikedRecipeEntity::class,
         NotificationEntity::class,
         RecipeDishTypeEntity::class,
+        RecentlyViewedRecipeEntity::class,
     ],
-    version = 4,
+    version = 5,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {

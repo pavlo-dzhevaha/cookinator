@@ -9,4 +9,7 @@ sealed interface AllRecipesFilter {
 
     @Serializable
     data class Category(val dishType: String) : AllRecipesFilter
+
+    @Serializable
+    data object RecentlyViewed : AllRecipesFilter
 }

@@ -4,6 +4,7 @@ import idp.cookinator.database.dao.NotificationDao
 import idp.cookinator.database.dao.RecipeDao
 import idp.cookinator.database.model.LikedRecipeEntity
 import idp.cookinator.database.model.NotificationEntity
+import idp.cookinator.database.model.RecentlyViewedRecipeEntity
 import idp.cookinator.database.model.RecipeDishTypeEntity
 import idp.cookinator.database.model.RecipeEntity
 import idp.cookinator.database.model.toDomainModel
@@ -103,6 +104,29 @@ class DatabaseManager(
         } else {
             recipeDao.unlikeRecipe(recipeId)
         }
+    }
+
+    suspend fun recordRecipeViewed(recipeId: Int, maxStored: Int = MAX_RECENTLY_VIEWED_STORED) = runCatching {
+        recipeDao.upsertRecentlyViewed(
+            RecentlyViewedRecipeEntity(
+                recipeId = recipeId,
+                viewedAt = System.currentTimeMillis(),
+            ),
+        )
+        recipeDao.pruneRecentlyViewed(maxStored)
+    }
+
+    fun observeRecentlyViewedRecipes(limit: Int? = null): Result<Flow<List<Recipe>>> = runCatching {
+        val flow = if (limit != null) {
+            recipeDao.observeRecentlyViewedRecipes(limit)
+        } else {
+            recipeDao.observeAllRecentlyViewedRecipes()
+        }
+        flow.map { entities -> entities.map(RecipeEntity::toDomainModel) }
+    }
+
+    private companion object {
+        const val MAX_RECENTLY_VIEWED_STORED = 50
     }
 
     fun observeNotifications(): Result<Flow<List<AppNotification>>> = runCatching {

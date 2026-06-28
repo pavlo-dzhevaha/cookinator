@@ -6,6 +6,7 @@ import idp.cookinator.coreui.viewmodel.MviViewModel
 import idp.cookinator.domain.recipe.GetRandomRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveDiscoveryRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveLikedRecipeIdsUseCase
+import idp.cookinator.domain.recipe.ObserveRecentlyViewedUseCase
 import idp.cookinator.domain.recipe.ObserveRecipesByDishTypeUseCase
 import idp.cookinator.domain.recipe.SetRecipeLikedUseCase
 import idp.cookinator.feature.allrecipes.screen.contract.AllRecipesEvent
@@ -22,6 +23,7 @@ internal class AllRecipesViewModel(
     private val getRandomRecipes: GetRandomRecipesUseCase,
     private val observeDiscoveryRecipes: ObserveDiscoveryRecipesUseCase,
     private val observeRecipesByDishType: ObserveRecipesByDishTypeUseCase,
+    private val observeRecentlyViewed: ObserveRecentlyViewedUseCase,
     private val observeLikedRecipeIds: ObserveLikedRecipeIdsUseCase,
     private val setRecipeLiked: SetRecipeLikedUseCase,
 ) : MviViewModel<AllRecipesState, AllRecipesIntent, AllRecipesEvent>(AllRecipesState.initialState) {
@@ -48,6 +50,7 @@ internal class AllRecipesViewModel(
     }
 
     private fun ensureDataLoaded() = launch {
+        if (filter is AllRecipesFilter.RecentlyViewed) return@launch
         if (observeDiscoveryRecipes().first().isEmpty()) {
             fetchData(forceRefresh = false)
         }
@@ -82,13 +85,15 @@ internal class AllRecipesViewModel(
                 updateState { it.copy(uiState = UiState.ERROR) }
             }
             .collectLatest { items ->
-                if (items.isNotEmpty()) {
-                    updateState {
-                        it.copy(
-                            uiState = UiState.SUCCESS,
-                            items = items,
-                        )
-                    }
+                updateState {
+                    it.copy(
+                        uiState = when {
+                            items.isNotEmpty() -> UiState.SUCCESS
+                            filter is AllRecipesFilter.RecentlyViewed -> UiState.EMPTY
+                            else -> it.uiState
+                        },
+                        items = items,
+                    )
                 }
             }
     }
@@ -96,5 +101,6 @@ internal class AllRecipesViewModel(
     private fun observeRecipes(filter: AllRecipesFilter) = when (filter) {
         AllRecipesFilter.Trending -> observeDiscoveryRecipes()
         is AllRecipesFilter.Category -> observeRecipesByDishType(filter.dishType)
+        AllRecipesFilter.RecentlyViewed -> observeRecentlyViewed()
     }
 }

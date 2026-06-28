@@ -12,6 +12,7 @@ internal data class HomeState(
     val selectedCategory: String?,
     val popularRecipes: List<RecipeUiModel>,
     val showPopularSeeAll: Boolean,
+    val recentlyViewed: List<RecipeUiModel>,
 ) : BaseState {
     companion object {
         val initialState = HomeState(
@@ -22,6 +23,7 @@ internal data class HomeState(
             selectedCategory = null,
             popularRecipes = emptyList(),
             showPopularSeeAll = false,
+            recentlyViewed = emptyList(),
         )
     }
 }

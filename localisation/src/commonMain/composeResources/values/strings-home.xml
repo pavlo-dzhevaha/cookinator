@@ -12,4 +12,6 @@
     <string name="home_popular_category_time_value">%1$s Mins</string>
     <string name="home_popular_category_see_all">View all</string>
     <string name="home_all_recipes_category_title">Category %1$s</string>
+    <string name="home_recently_viewed_title">Recent recipe</string>
+    <string name="home_all_recipes_recently_viewed_title">Recently viewed</string>
 </resources>

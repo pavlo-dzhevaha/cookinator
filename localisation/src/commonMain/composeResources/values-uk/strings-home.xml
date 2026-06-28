@@ -12,4 +12,6 @@
     <string name="home_popular_category_time_value">%1$s хв</string>
     <string name="home_popular_category_see_all">Переглянути всі</string>
     <string name="home_all_recipes_category_title">Категорія %1$s</string>
+    <string name="home_recently_viewed_title">Останні переглянуті</string>
+    <string name="home_all_recipes_recently_viewed_title">Останні переглянуті</string>
 </resources>

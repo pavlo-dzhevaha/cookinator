@@ -6,6 +6,7 @@ import idp.cookinator.coreui.viewmodel.MviViewModel
 import idp.cookinator.domain.recipe.GetRandomRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveDiscoveryRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveLikedRecipeIdsUseCase
+import idp.cookinator.domain.recipe.ObserveRecentlyViewedUseCase
 import idp.cookinator.domain.recipe.ObserveRecipeDishTypesUseCase
 import idp.cookinator.domain.recipe.ObserveRecipesByDishTypeUseCase
 import idp.cookinator.domain.recipe.SetRecipeLikedUseCase
@@ -16,6 +17,7 @@ import idp.cookinator.feature.navigation.features.AllRecipesFilter
 import idp.cookinator.model.Recipe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -29,6 +31,7 @@ internal class HomeViewModel(
     private val observeRecipeDishTypes: ObserveRecipeDishTypesUseCase,
     private val observeRecipesByDishType: ObserveRecipesByDishTypeUseCase,
     private val observeLikedRecipeIds: ObserveLikedRecipeIdsUseCase,
+    private val observeRecentlyViewed: ObserveRecentlyViewedUseCase,
     private val setRecipeLiked: SetRecipeLikedUseCase,
 ) : MviViewModel<HomeState, HomeIntent, HomeEvent>(HomeState.initialState) {
 
@@ -36,6 +39,7 @@ internal class HomeViewModel(
 
     init {
         observeAndCombineData()
+        observeRecentlyViewedData()
         fetchData()
     }
 
@@ -145,6 +149,24 @@ internal class HomeViewModel(
             }
     }
 
+    private fun observeRecentlyViewedData() = launch {
+        observeRecentlyViewed(limit = RECENTLY_VIEWED_PREVIEW_COUNT)
+            .combine(observeLikedRecipeIds()) { recipes, savedIds ->
+                recipes.map { recipe ->
+                    RecipeUiModel(
+                        recipe = recipe,
+                        isSaved = savedIds.contains(recipe.id),
+                    )
+                }
+            }
+            .catch { e ->
+                logger.e(e) { "Failed to observe recently viewed recipes" }
+            }
+            .collectLatest { items ->
+                updateState { it.copy(recentlyViewed = items) }
+            }
+    }
+
     private data class HomeDataSlice(
         val discoveryRecipes: List<Recipe>,
         val categories: List<String>,
@@ -155,5 +177,6 @@ internal class HomeViewModel(
     private companion object {
         const val TRENDING_PREVIEW_COUNT = 10
         const val POPULAR_PREVIEW_COUNT = 10
+        const val RECENTLY_VIEWED_PREVIEW_COUNT = 10
     }
 }

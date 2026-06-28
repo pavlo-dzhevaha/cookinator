@@ -3,6 +3,7 @@ package idp.cookinator.feature.allrecipes.model
 import androidx.compose.runtime.Composable
 import cookinator.localisation.generated.resources.Res
 import cookinator.localisation.generated.resources.home_all_recipes_category_title
+import cookinator.localisation.generated.resources.home_all_recipes_recently_viewed_title
 import cookinator.localisation.generated.resources.home_trending_title
 import idp.cookinator.feature.navigation.features.AllRecipesFilter
 import org.jetbrains.compose.resources.stringResource
@@ -14,4 +15,5 @@ fun AllRecipesFilter.title(): String = when (this) {
         Res.string.home_all_recipes_category_title,
         dishType,
     )
+    AllRecipesFilter.RecentlyViewed -> stringResource(Res.string.home_all_recipes_recently_viewed_title)
 }
