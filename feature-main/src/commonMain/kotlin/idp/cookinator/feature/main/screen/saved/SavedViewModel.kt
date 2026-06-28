@@ -4,7 +4,7 @@ import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.MviViewModel
 import idp.cookinator.domain.recipe.ObserveLikedRecipesUseCase
 import idp.cookinator.domain.recipe.SetRecipeLikedUseCase
-import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
+import idp.cookinator.coreui.model.RecipeUiModel
 import idp.cookinator.feature.main.screen.saved.contract.SavedEvent
 import idp.cookinator.feature.main.screen.saved.contract.SavedIntent
 import idp.cookinator.feature.main.screen.saved.contract.SavedState

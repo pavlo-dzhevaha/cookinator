@@ -30,6 +30,7 @@ kotlin {
         implementation(projects.featureOnboarding)
         implementation(projects.featureMain)
         implementation(projects.featureRecipe)
+        implementation(projects.featureAllRecipes)
         implementation(projects.featureSettings)
     }
 }

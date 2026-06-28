@@ -11,12 +11,14 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.viewmodel.components.StateProvider
+import idp.cookinator.feature.allrecipes.navigation.graph
 import idp.cookinator.feature.main.navigation.graph
 import idp.cookinator.feature.navigation.PendingRecipeNavigation
 import idp.cookinator.feature.navigation.extension.appConfiguration
 import idp.cookinator.feature.navigation.extension.navigate
 import idp.cookinator.feature.navigation.extension.navigationPredictionTransitionSpec
 import idp.cookinator.feature.navigation.extension.navigationTransitionSpec
+import idp.cookinator.feature.navigation.features.NavigationAllRecipes
 import idp.cookinator.feature.navigation.features.NavigationMain
 import idp.cookinator.feature.navigation.features.NavigationOnboarding
 import idp.cookinator.feature.navigation.features.NavigationRecipe
@@ -77,6 +79,7 @@ fun App() {
                     is NavigationSplash -> key.graph(backStack)
                     is NavigationOnboarding -> key.graph(backStack)
                     is NavigationMain -> key.graph(backStack)
+                    is NavigationAllRecipes -> key.graph(backStack)
                     is NavigationRecipe -> key.graph(backStack)
                     is NavigationSettings -> key.graph(backStack)
                     else -> NavEntry(key) { Text("Unknown destination: $key") }

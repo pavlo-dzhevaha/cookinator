@@ -1,4 +1,4 @@
-package idp.cookinator.feature.main.screen.home.components
+package idp.cookinator.coreui.component.recipecard
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
@@ -37,6 +37,7 @@ import coil3.compose.AsyncImage
 import cookinator.localisation.generated.resources.Res
 import cookinator.localisation.generated.resources.home_trending_item_time
 import idp.cookinator.coreui.component.spacer.SpacerHeight
+import idp.cookinator.coreui.model.RecipeUiModel
 import idp.cookinator.coreui.styling.theme.AppTheme
 import idp.cookinator.coreui.styling.theme.LightDarkPreview
 import idp.cookinator.coreui.styling.theme.Theme
@@ -46,13 +47,12 @@ import idp.cookinator.coreui.vector.BookmarkInactive
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.coreui.vector.More
 import idp.cookinator.coreui.vector.Star
-import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
 import org.jetbrains.compose.resources.stringResource
 
 private const val ITEM_IMAGE_HEIGHT_RATIO = 280 / 180f
 
 @Composable
-internal fun HomeTrendingItem(
+fun RecipeCard(
     modifier: Modifier = Modifier,
     item: RecipeUiModel,
     imageHeight: Dp,
@@ -187,7 +187,7 @@ internal fun HomeTrendingItem(
 @LightDarkPreview
 @Composable
 private fun Preview() = AppTheme {
-    HomeTrendingItem(
+    RecipeCard(
         item = RecipeUiModel.stub,
         imageHeight = 120.dp,
         onClick = {},

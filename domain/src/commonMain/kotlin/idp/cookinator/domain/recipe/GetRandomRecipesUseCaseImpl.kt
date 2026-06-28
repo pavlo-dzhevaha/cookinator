@@ -11,15 +11,26 @@ import idp.cookinator.network.model.toDomainModels
 internal class GetRandomRecipesUseCaseImpl(
     private val network: NetworkManager,
     private val database: DatabaseManager,
+    private val discoveryStore: RecipeDiscoveryStore,
 ) : GetRandomRecipesUseCase {
-    override suspend fun invoke(): Result<List<Recipe>> = useCaseIo {
+    override suspend fun invoke(forceRefresh: Boolean): Result<List<Recipe>> = useCaseIo {
+        if (!forceRefresh) {
+            val cached = discoveryStore.get()
+            if (cached.isNotEmpty()) {
+                log { "Returning ${cached.size} recipes from discovery session cache." }
+                return@useCaseIo Result.success(cached)
+            }
+        } else {
+            discoveryStore.clear()
+        }
+
         database
             .getAllCachedRecipes()
             .onSuccess { list ->
                 log { "Fetched ${list.size} cached recipes from the database." }
                 if (list.isEmpty()) return@onSuccess
                 log { "Returning ${list.size} cached recipes from the database." }
-                return@useCaseIo Result.success(list.shuffled())
+                return@useCaseIo Result.success(saveAndReturn(list.shuffled()))
             }.onFailure { e ->
                 log { "Failed to fetch cached recipes from the database. Error: ${e.message}" }
             }
@@ -38,7 +49,7 @@ internal class GetRandomRecipesUseCaseImpl(
                         log { "Failed to save recipes fetched from the server to the database. Error: ${it.message}" }
                     }
                 log { "Returning ${models.size} recipes fetched from the server and saved to the database." }
-                return@useCaseIo Result.success(models.shuffled())
+                return@useCaseIo Result.success(saveAndReturn(models.shuffled()))
             }.onFailure {
                 log { "Failed to fetch recipes from the server. Error: ${it.message}" }
             }
@@ -51,7 +62,12 @@ internal class GetRandomRecipesUseCaseImpl(
                 database.saveRecipes(models)
             }.onFailure {
                 log { "Failed to fetch random recipes from the network. Error: ${it.message}" }
-            }.map { it.shuffled() }
+            }.map { saveAndReturn(it.shuffled()) }
+    }
+
+    private fun saveAndReturn(recipes: List<Recipe>): List<Recipe> {
+        discoveryStore.set(recipes)
+        return recipes
     }
 
     private fun log(message: () -> String) {

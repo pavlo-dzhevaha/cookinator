@@ -17,7 +17,7 @@ import idp.cookinator.feature.main.screen.home.components.HomeSearch
 import idp.cookinator.feature.main.screen.home.components.HomeTrending
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
 import idp.cookinator.feature.main.screen.home.contract.HomeState
-import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
+import idp.cookinator.coreui.model.RecipeUiModel
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

@@ -3,24 +3,22 @@ package idp.cookinator.feature.main.screen.home
 import idp.cookinator.coreui.model.UiState
 import idp.cookinator.coreui.viewmodel.MviViewModel
 import idp.cookinator.domain.recipe.GetRandomRecipesUseCase
+import idp.cookinator.domain.recipe.ObserveDiscoveryRecipesUseCase
 import idp.cookinator.domain.recipe.ObserveLikedRecipeIdsUseCase
 import idp.cookinator.domain.recipe.SetRecipeLikedUseCase
 import idp.cookinator.feature.main.screen.home.contract.HomeEvent
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
 import idp.cookinator.feature.main.screen.home.contract.HomeState
-import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
-import idp.cookinator.model.Recipe
-import kotlinx.coroutines.flow.MutableStateFlow
+import idp.cookinator.coreui.model.RecipeUiModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 
 internal class HomeViewModel(
     private val getRandomRecipes: GetRandomRecipesUseCase,
+    private val observeDiscoveryRecipes: ObserveDiscoveryRecipesUseCase,
     private val observeLikedRecipeIds: ObserveLikedRecipeIdsUseCase,
     private val setRecipeLiked: SetRecipeLikedUseCase,
 ) : MviViewModel<HomeState, HomeIntent, HomeEvent>(HomeState.initialState) {
-
-    private val rawRecipes = MutableStateFlow<List<Recipe>>(emptyList())
 
     init {
         observeAndCombineData()
@@ -33,6 +31,7 @@ internal class HomeViewModel(
             is HomeIntent.OnSearchQueryChange -> onChangeSearchQuery(intent.query)
             is HomeIntent.OnToggleSaved -> onToggleSaved(intent.model)
             is HomeIntent.OnRecipeClick -> onRecipeClick(intent.model)
+            is HomeIntent.OnSeeAllClick -> sendEvent(HomeEvent.NavigateToAllRecipes(intent.section))
         }
     }
 
@@ -53,13 +52,12 @@ internal class HomeViewModel(
 
     private fun fetchData() = launch {
         updateState { it.copy(uiState = UiState.LOADING) }
-        getRandomRecipes()
+        getRandomRecipes(forceRefresh = true)
             .onSuccess { list ->
                 if (list.isEmpty()) {
                     updateState { it.copy(uiState = UiState.EMPTY) }
                     return@launch
                 }
-                rawRecipes.value = list
             }.onFailure { e ->
                 logger.e(e) { "Failed to fetch random recipes" }
                 updateState { it.copy(uiState = UiState.ERROR) }
@@ -68,7 +66,7 @@ internal class HomeViewModel(
 
     private fun observeAndCombineData() = launch {
         combine(
-            rawRecipes,
+            observeDiscoveryRecipes(),
             observeLikedRecipeIds(),
         ) { recipes, savedIds ->
             recipes.map { recipe ->
@@ -82,10 +80,14 @@ internal class HomeViewModel(
                 updateState {
                     it.copy(
                         uiState = UiState.SUCCESS,
-                        trending = combinedUiList.take(10),
+                        trending = combinedUiList.take(TRENDING_PREVIEW_COUNT),
                     )
                 }
             }
         }
+    }
+
+    private companion object {
+        const val TRENDING_PREVIEW_COUNT = 10
     }
 }

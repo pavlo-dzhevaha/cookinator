@@ -14,8 +14,10 @@ interface GetRandomRecipesUseCase {
     /**
      * Loads recipes using the cache-first strategy described above.
      *
+     * @param forceRefresh When `true`, ignores the in-memory session order and fetches again,
+     * producing a new shuffle. When `false`, returns the cached session order when available.
      * @return [Result.success] with a shuffled list of recipes, or [Result.failure] if all
      * sources fail.
      */
-    suspend operator fun invoke(): Result<List<Recipe>>
+    suspend operator fun invoke(forceRefresh: Boolean = false): Result<List<Recipe>>
 }

@@ -1,10 +1,10 @@
-package idp.cookinator.feature.main.screen.home.model
+package idp.cookinator.coreui.model
 
 import idp.cookinator.model.Recipe
 
 data class RecipeUiModel(
     val recipe: Recipe,
-    val isSaved: Boolean
+    val isSaved: Boolean,
 ) {
     companion object {
         val stub = RecipeUiModel(

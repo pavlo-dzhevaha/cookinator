@@ -26,7 +26,9 @@ import idp.cookinator.coreui.utils.ContentDescription
 import idp.cookinator.coreui.vector.ArrowRight
 import idp.cookinator.coreui.vector.Icons
 import idp.cookinator.feature.main.screen.home.contract.HomeIntent
-import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
+import idp.cookinator.feature.navigation.features.HomeRecipeSection
+import idp.cookinator.coreui.component.recipecard.RecipeCard
+import idp.cookinator.coreui.model.RecipeUiModel
 import org.jetbrains.compose.resources.stringResource
 
 const val IMAGE_HEIGHT_RATIO = 180f / 812f
@@ -61,7 +63,7 @@ internal fun HomeTrending(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Theme.size.s4),
                 modifier = Modifier
-                    .clickable { /*TODO go to all*/ }
+                    .clickable { onIntent(HomeIntent.OnSeeAllClick(HomeRecipeSection.Trending)) }
             ) {
                 Text(
                     text = stringResource(Res.string.home_trending_action),
@@ -81,7 +83,7 @@ internal fun HomeTrending(
             horizontalArrangement = Arrangement.spacedBy(Theme.size.s16),
         ) {
             items(items) { item ->
-                HomeTrendingItem(
+                RecipeCard(
                     item = item,
                     imageHeight = imageHeight,
                     onClick = { onIntent(HomeIntent.OnRecipeClick(item)) },

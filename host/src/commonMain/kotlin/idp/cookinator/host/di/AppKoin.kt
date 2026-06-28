@@ -2,6 +2,7 @@ package idp.cookinator.host.di
 
 import idp.cookinator.database.di.dataDatabaseModule
 import idp.cookinator.domain.di.domainModule
+import idp.cookinator.feature.allrecipes.di.featureAllRecipesModule
 import idp.cookinator.feature.main.di.featureMainModule
 import idp.cookinator.feature.onboarding.di.featureOnboardingModule
 import idp.cookinator.feature.recipe.di.featureRecipeModule
@@ -22,6 +23,7 @@ val appModules = listOf(
     featureSplashModule,
     featureOnboardingModule,
     featureMainModule,
+    featureAllRecipesModule,
     featureRecipeModule,
     featureSettingsModule,
 )

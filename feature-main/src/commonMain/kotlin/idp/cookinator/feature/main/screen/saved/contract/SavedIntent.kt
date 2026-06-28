@@ -1,7 +1,7 @@
 package idp.cookinator.feature.main.screen.saved.contract
 
 import idp.cookinator.coreui.viewmodel.base.BaseIntent
-import idp.cookinator.feature.main.screen.home.model.RecipeUiModel
+import idp.cookinator.coreui.model.RecipeUiModel
 
 internal sealed interface SavedIntent : BaseIntent {
     data class OnToggleSaved(val model: RecipeUiModel) : SavedIntent

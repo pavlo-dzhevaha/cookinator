@@ -11,6 +11,7 @@ import androidx.navigation3.scene.Scene
 import androidx.navigationevent.NavigationEvent
 import androidx.savedstate.serialization.SavedStateConfiguration
 import idp.cookinator.coreui.utils.defaultTween
+import idp.cookinator.feature.navigation.features.featureAllRecipesSerializer
 import idp.cookinator.feature.navigation.features.featureMainSerializer
 import idp.cookinator.feature.navigation.features.featureOnboardingSerializer
 import idp.cookinator.feature.navigation.features.featureRecipeSerializer
@@ -37,6 +38,7 @@ val appConfiguration = SavedStateConfiguration {
         include(featureSplashSerializer)
         include(featureOnboardingSerializer)
         include(featureMainSerializer)
+        include(featureAllRecipesSerializer)
         include(featureRecipeSerializer)
         include(featureSettingsSerializer)
     }
